@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>qV on Embodied Intelligence — Board Summary</title>
+<style>
+  :root {
+    --purple: #5B2EFF;
+    --purple-soft: #EDE7FF;
+    --purple-deep: #2A1378;
+    --purple-mid: #7B5BFF;
+    --ink: #1A1A2E;
+    --ink-soft: #4A4A66;
+    --ink-light: #6B6B85;
+    --bg: #F0F0F5;
+    --card: #FFFFFF;
+    --border: #E4E4F0;
+    --amber: #F59E0B;
+    --amber-soft: #FEF3C7;
+    --green: #10B981;
+    --red: #EF4444;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif; color: var(--ink); }
+  body { display: flex; flex-direction: column; align-items: center; padding: 24px; min-height: 100vh; }
+  .controls { width: 1280px; max-width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 8px 12px; font-size: 12px; color: var(--ink-soft); }
+  .controls button { font-size: 12px; padding: 6px 12px; border: 1px solid var(--border); background: white; border-radius: 6px; cursor: pointer; color: var(--ink); }
+  .controls button:hover { background: var(--purple-soft); border-color: var(--purple); color: var(--purple-deep); }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(20,15,60,0.12);
+    padding: 32px 40px 22px;
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto auto auto;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--border); padding-bottom: 8px;
+  }
+  .brand { font-size: 11px; letter-spacing: 0.45em; color: var(--purple); font-weight: 700; }
+  .meta { font-size: 11px; color: var(--ink-light); }
+  .title-block h1 { font-size: 24px; line-height: 1.2; margin: 0 0 3px; letter-spacing: -0.02em; color: var(--ink); }
+  .title-block .sub { font-size: 12px; color: var(--ink-soft); margin: 0; }
+
+  /* Aspiration strip (slim) */
+  .aspire {
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 100%);
+    color: white; padding: 10px 18px; border-radius: 8px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .aspire .label { font-size: 9px; letter-spacing: 0.25em; opacity: 0.7; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+  .aspire .text { font-size: 14px; font-weight: 600; }
+
+  /* Primary role - compact horizontal band */
+  .primary {
+    background: white; border: 2px solid var(--purple); border-radius: 8px;
+    padding: 10px 16px; display: flex; align-items: center; gap: 14px;
+  }
+  .primary .pre {
+    background: var(--purple); color: white;
+    font-size: 9px; letter-spacing: 0.18em; font-weight: 700; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 4px; white-space: nowrap;
+  }
+  .primary .ico { font-size: 22px; }
+  .primary .role { font-size: 17px; font-weight: 700; color: var(--purple-deep); white-space: nowrap; }
+  .primary .divider { width: 1px; align-self: stretch; background: var(--border); margin: 0 4px; }
+  .primary .desc { font-size: 13px; color: var(--ink); line-height: 1.4; }
+  .primary .desc strong { color: var(--purple-deep); font-weight: 700; }
+
+  /* Secondary roles - 5 detailed cards */
+  .secondary { display: grid; grid-template-rows: auto 1fr; gap: 6px; }
+  .secondary .label { font-size: 10px; letter-spacing: 0.18em; font-weight: 700; color: var(--purple); text-transform: uppercase; }
+  .secondary-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+  }
+  .role-card {
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 10px; display: flex; flex-direction: column; gap: 4px;
+    transition: all 0.15s;
+  }
+  .role-card .ico {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--purple-soft); color: var(--purple);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .role-card .name { font-size: 13px; font-weight: 700; color: var(--purple-deep); margin-top: 4px; }
+  .role-card .desc { font-size: 11px; color: var(--ink-soft); line-height: 1.4; }
+
+  /* Engagement: 4 cards, easy to read */
+  .engage { display: grid; grid-template-rows: auto 1fr; gap: 6px; }
+  .engage .label { font-size: 10px; letter-spacing: 0.18em; font-weight: 700; color: var(--purple); text-transform: uppercase; }
+  .engage-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .engage-card {
+    background: var(--purple-soft); border-radius: 8px;
+    padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;
+    position: relative;
+  }
+  .engage-card .num {
+    position: absolute; top: 10px; right: 12px;
+    font-size: 22px; font-weight: 800; color: var(--purple); opacity: 0.25;
+    line-height: 1;
+  }
+  .engage-card .step { font-size: 13px; font-weight: 700; color: var(--purple-deep); }
+  .engage-card .text { font-size: 12px; color: var(--ink); line-height: 1.4; }
+
+  /* Bottom strip: don'ts + 2027 targets compact */
+  .bottom-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .compact-panel {
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+    padding: 9px 14px;
+  }
+  .compact-panel.danger { border-left: 3px solid var(--red); }
+  .compact-panel.target { border-left: 3px solid var(--amber); }
+  .compact-panel .label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 5px; }
+  .compact-panel.danger .label { color: var(--red); }
+  .compact-panel.target .label { color: var(--amber); }
+  .compact-panel .items { display: flex; gap: 12px; }
+  .compact-panel .item { font-size: 11px; color: var(--ink); line-height: 1.35; flex: 1; }
+  .compact-panel .item strong { color: var(--ink); font-weight: 700; }
+  .compact-panel.target .item { text-align: center; }
+  .compact-panel.target .num { font-size: 18px; font-weight: 700; color: var(--amber); display: block; line-height: 1.1; }
+  .compact-panel.target .lbl { font-size: 10px; color: var(--ink-soft); margin-top: 2px; line-height: 1.25; }
+
+  .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 6px; border-top: 1px solid var(--border);
+    font-size: 10px; color: var(--ink-light);
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .controls { display: none; }
+    .slide { box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <span>16:9 board slide · 1280×720 · open in browser, screenshot or print to PDF for the deck</span>
+  <button onclick="window.print()">Print to PDF</button>
+</div>
+
+<div class="slide">
+
+  <header class="slide-header">
+    <div><span class="brand">QONVOLV VENTURES</span></div>
+    <div class="meta">Board update · April 2026 · A Tessellation Company</div>
+  </header>
+
+  <div class="title-block">
+    <h1>Embodied Intelligence — Our Role &amp; How We Engage</h1>
+    <p class="sub">A worked example of how qonvolv Ventures positions on a frontier theme: aspiration, primary role, the roles that amplify the edge, and how we engage partners.</p>
+  </div>
+
+  <!-- Aspiration: slim strip -->
+  <div class="aspire">
+    <div class="label">Our aspiration</div>
+    <div class="text">Become a regional and global leader in textile &amp; garment production automation. Vertical depth over horizontal breadth.</div>
+  </div>
+
+  <!-- Primary role: compact band -->
+  <div class="primary">
+    <div class="pre">Primary role</div>
+    <div class="ico">🎼</div>
+    <div class="role">Curator-owner of end-to-end solutions</div>
+    <div class="divider"></div>
+    <div class="desc"><strong>Dyson model.</strong> We define the spec, commission the best parts, and own the integrated solution. We do not rebuild grippers, sensors, or foundation models.</div>
+  </div>
+
+  <!-- Secondary roles: 5 detailed cards, more space -->
+  <div class="secondary">
+    <div class="label">Secondary roles · how we amplify the edge</div>
+    <div class="secondary-grid">
+      <div class="role-card">
+        <div class="ico">🏭</div>
+        <div class="name">User</div>
+        <div class="desc">Our factories are the validation environment. Real heat, humidity, line speed.</div>
+      </div>
+      <div class="role-card">
+        <div class="ico">🚚</div>
+        <div class="name">Distributor</div>
+        <div class="desc">qonvolv Innovation channel takes proven solutions to global textile customers.</div>
+      </div>
+      <div class="role-card">
+        <div class="ico">💰</div>
+        <div class="name">Investor</div>
+        <div class="desc">Capital where it deepens alignment, captures upside beyond our vertical.</div>
+      </div>
+      <div class="role-card">
+        <div class="ico">🧠</div>
+        <div class="name">Know-how contributor</div>
+        <div class="desc">40+ years of operator depth codified into specs, SOPs, and scene libraries.</div>
+      </div>
+      <div class="role-card">
+        <div class="ico">📣</div>
+        <div class="name">Promoter</div>
+        <div class="desc">Industry events, salons, papers; we set the agenda for textile EI.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Engagement: 4 cards -->
+  <div class="engage">
+    <div class="label">How we engage partners</div>
+    <div class="engage-grid">
+      <div class="engage-card">
+        <span class="num">1</span>
+        <div class="step">Stay open</div>
+        <div class="text">Intersect with multiple EI partners across the horizontal stack.</div>
+      </div>
+      <div class="engage-card">
+        <span class="num">2</span>
+        <div class="step">Prioritise</div>
+        <div class="text">Partners with strategic intent in textile that we can pitch the vertical to.</div>
+      </div>
+      <div class="engage-card">
+        <span class="num">3</span>
+        <div class="step">Start small</div>
+        <div class="text">POC scoped to one workstation or even a single technical element.</div>
+      </div>
+      <div class="engage-card">
+        <span class="num">4</span>
+        <div class="step">Pave for JV</div>
+        <div class="text">Selectively elevate to JV or joint lab as the pipeline of solutions matures.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom: don'ts + 2027 targets compact -->
+  <div class="bottom-strip">
+    <div class="compact-panel danger">
+      <div class="label">Let's not</div>
+      <div class="items">
+        <div class="item"><strong>Build from zero / own every component.</strong> Sensors, chips, models — incumbents win.</div>
+        <div class="item"><strong>Do academic-only research.</strong> No deploy intent = no commercial signal.</div>
+      </div>
+    </div>
+    <div class="compact-panel target">
+      <div class="label">2027 targets <span style="font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--ink-light); font-size: 9px;">(draft)</span></div>
+      <div class="items">
+        <div class="item"><span class="num">5+</span><span class="lbl">Active EI partners across the stack</span></div>
+        <div class="item"><span class="num">3+</span><span class="lbl">POCs passing acceptance criteria</span></div>
+        <div class="item"><span class="num">1–2</span><span class="lbl">JV / joint-lab partnerships</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div>Condensed from EI Thematic Study (Apr 2026), Sections 6–7. Full deck and interactive companion available on request.</div>
+    <div>qV · Embodied Intelligence · Board Summary</div>
+  </footer>
+
+</div>
+
+</body>
+</html>

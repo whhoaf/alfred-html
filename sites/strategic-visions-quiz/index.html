@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which AI Governance Future Are You?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f1e8;          /* warm parchment */
+    --paper:#fbf9f2;       /* card cream */
+    --ink:#1b1a16;         /* near-black warm */
+    --ink2:#3b3830;
+    --mut:#736d5e;         /* warm gray */
+    --faint:#a39b88;
+    --line:#ddd6c4;        /* warm rule */
+    --line2:#cbc3ad;
+    --clay:#bd5b34;        /* primary accent (Anthropic clay / AI2027 rust) */
+    --clay-soft:#e9d8cb;
+    --clay-tint:rgba(189,91,52,.08);
+    --slate:#445a66;       /* secondary cool ink */
+    --serif:"Newsreader",Georgia,"Times New Roman",serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:18px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    padding:0 18px 90px;
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:100% 100%, 0 0; /* placeholder, overridden below */
+  }
+  body{background-image:none}
+  .wrap{max-width:760px;margin:0 auto;padding-top:44px}
+
+  /* type system */
+  .eyebrow{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--clay)}
+  .label{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px,5.4vw,52px);line-height:1.06;letter-spacing:-.01em;margin:.3em 0 .35em}
+  h1 em{font-style:italic;color:var(--clay)}
+  .lede{font-size:20px;line-height:1.55;color:var(--ink2);max-width:60ch}
+  .mut{color:var(--mut)}
+  .center{text-align:center}
+  .hidden{display:none}
+  a{color:var(--clay);text-underline-offset:2px}
+
+  .rule{height:1px;background:var(--line2);border:0;margin:30px 0}
+
+  .card{background:var(--paper);border:1px solid var(--line2);border-radius:4px}
+  .pad{padding:30px 32px}
+  .src{font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--mut);margin-top:26px;letter-spacing:.01em}
+
+  .btn{
+    appearance:none;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:500;
+    letter-spacing:.08em;text-transform:uppercase;
+    background:var(--clay);color:#fff;border:1px solid var(--clay);
+    padding:13px 22px;border-radius:3px;transition:background .12s,color .12s;
+  }
+  .btn:hover{background:#a44a28;border-color:#a44a28}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line2)}
+  .btn.ghost:hover{background:transparent;border-color:var(--ink);color:var(--ink)}
+  .btn.sm{padding:9px 15px;font-size:12px}
+
+  /* progress */
+  .pbar{height:3px;background:var(--line);overflow:hidden}
+  .pbar > i{display:block;height:100%;width:0;background:var(--clay);transition:width .3s ease}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:10px 0 26px}
+
+  .q{font-family:var(--serif);font-size:27px;line-height:1.22;font-weight:500;margin:2px 0 10px;letter-spacing:-.01em}
+  .qsub{color:var(--mut);margin-bottom:24px;font-size:16px;line-height:1.5}
+  .opts{display:grid;gap:10px}
+  .opt{
+    text-align:left;background:transparent;border:1px solid var(--line2);color:var(--ink);
+    padding:15px 16px;border-radius:3px;cursor:pointer;transition:border-color .12s,background .12s;
+    display:flex;gap:14px;align-items:center;font-family:var(--serif);font-size:17px;
+  }
+  .opt:hover{border-color:var(--clay);background:var(--clay-tint)}
+  .opt .dot{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--line2);flex:0 0 auto;transition:.12s}
+  .opt:hover .dot{border-color:var(--clay)}
+  .opt.sel{border-color:var(--clay);background:var(--clay-tint)}
+  .opt.sel .dot{background:var(--clay);border-color:var(--clay)}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:26px}
+  .nav .hint{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--faint);text-transform:uppercase}
+
+  /* result */
+  .badge{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--clay);border:1px solid var(--clay-soft);background:var(--clay-tint);padding:5px 12px;border-radius:99px}
+  .vtitle{font-family:var(--serif);font-size:clamp(28px,4.6vw,42px);font-weight:500;line-height:1.08;letter-spacing:-.015em;margin:16px 0 4px}
+  .rtag{font-family:var(--serif);font-style:italic;font-size:21px;color:var(--clay);margin:0 0 4px}
+
+  .rgrid{display:grid;grid-template-columns:1fr;gap:0;margin-top:26px;border-top:1px solid var(--line)}
+  .rbox{padding:20px 0;border-bottom:1px solid var(--line)}
+  .rbox h3{margin:0 0 9px;font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.16em;color:var(--mut)}
+  .rbox p{margin:0;font-size:17px;line-height:1.55}
+  .rbox.prob h3{color:var(--clay)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-family:var(--mono);font-size:12px;background:var(--bg);border:1px solid var(--line2);padding:5px 11px;border-radius:3px;color:var(--ink2);letter-spacing:.02em}
+
+  /* axis map */
+  .map{position:relative;background:var(--bg);border:1px solid var(--line2);border-radius:4px;padding:40px 40px 34px;margin-top:6px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:7px;aspect-ratio:1/.8}
+  .cell{position:relative;border:1px dashed var(--line2);border-radius:3px;display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;
+    font-family:var(--mono);font-size:10.5px;line-height:1.3;letter-spacing:.02em;color:var(--mut);transition:.15s}
+  .cell.you{border-style:solid;border-color:var(--clay);background:var(--clay-tint);color:var(--ink)}
+  .cell.you b{color:var(--clay);font-weight:600}
+  .axlbl{position:absolute;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .ax-top{top:13px;left:0;right:0;text-align:center}
+  .ax-bot{bottom:11px;left:0;right:0;text-align:center}
+  .ax-left2{left:13px;top:50%;transform:translateY(-50%) rotate(-90deg);white-space:nowrap}
+
+  .scorelist{margin-top:12px}
+  .srow{display:flex;align-items:center;gap:12px;margin:9px 0;font-family:var(--mono);font-size:13px}
+  .srow .nm{flex:0 0 48%;color:var(--mut);letter-spacing:.01em}
+  .srow .bar{flex:1;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+  .srow .bar i{display:block;height:100%;background:var(--clay)}
+  .srow.top .nm{color:var(--ink);font-weight:600}
+  .srow.top .bar i{background:var(--clay)}
+
+  details{margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+  summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--clay)}
+
+  .nine{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;margin-top:18px;background:var(--line2);border:1px solid var(--line2);border-radius:4px;overflow:hidden}
+  .ncard{background:var(--paper);padding:18px}
+  .ncluster{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--clay);margin-bottom:6px}
+  .ncard h4{margin:0 0 6px;font-family:var(--serif);font-weight:500;font-size:19px;line-height:1.15}
+  .ncard p{margin:0;font-size:15px;line-height:1.45;color:var(--mut)}
+
+  .foot{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em;margin-top:40px;text-align:center}
+
+  @media(max-width:560px){
+    body{font-size:17px}
+    .pad{padding:22px 18px}
+    .map{padding:34px 16px 28px}
+    .srow .nm{flex:0 0 56%}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- INTRO -->
+  <section id="intro">
+    <div class="eyebrow">A nine-future quiz on advanced AI</div>
+    <h1>Which AI governance future are you <em>steering toward?</em></h1>
+    <p class="lede">
+      There are nine credible visions for how humanity could navigate the road to superintelligence,
+      from today's Silicon Valley free-for-all to a single global project run jointly by rival powers.
+      Which one you favor is not really about AI. It comes down to a handful of beliefs about timelines,
+      power, and trust. Answer eight questions and find out where you land.
+    </p>
+    <hr class="rule">
+    <div class="card pad">
+      <p class="label" style="margin:0 0 6px">Format</p>
+      <p style="margin:0 0 22px;font-size:17px">8 questions. About two minutes. No right answers, just your cruxes.</p>
+      <button class="btn" onclick="start()">Start the quiz</button>
+      <button class="btn ghost sm" style="margin-left:10px" onclick="showAll()">Skip to the nine futures</button>
+    </div>
+    <p class="src">
+      Based on <a href="https://www.iaps.ai/research/strategic-visions-in-ai-governance" target="_blank" rel="noopener">"Strategic Visions in AI Governance"</a><br>
+      Oscar Delaney, Maria Kostylew, Oliver Guest, Peter Wildeford. IAPS, 2026.<br>
+      This quiz is an educational adaptation, not the authors' work.
+    </p>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="hidden">
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="pmeta"><span id="pnum">Question 1 / 8</span><span id="ptheme"></span></div>
+    <div class="q" id="qtext"></div>
+    <div class="qsub" id="qsub"></div>
+    <div class="opts" id="opts"></div>
+    <div class="nav">
+      <button class="btn ghost sm" id="backBtn" onclick="back()">Back</button>
+      <span class="hint">Pick the answer closest to your gut</span>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result" class="hidden">
+    <div class="label" style="margin-bottom:10px">Your result</div>
+    <span class="badge" id="rcluster"></span>
+    <div class="vtitle" id="rtitle"></div>
+    <p class="rtag" id="rtag"></p>
+    <p id="rdesc" style="font-size:19px;line-height:1.55;margin:14px 0 0"></p>
+
+    <div class="map" id="rmap" style="margin-top:24px">
+      <span class="axlbl ax-top">Distributed power</span>
+      <span class="axlbl ax-bot">Centralized power</span>
+      <span class="axlbl ax-left2">Private &nbsp;to&nbsp; international control</span>
+      <div class="grid3" id="grid3"></div>
+    </div>
+
+    <div class="rgrid">
+      <div class="rbox">
+        <h3>Who argues for this</h3>
+        <div class="chips" id="radv"></div>
+      </div>
+      <div class="rbox prob">
+        <h3>The main problem</h3>
+        <p id="rprob"></p>
+      </div>
+      <div class="rbox">
+        <h3>How likely it is</h3>
+        <p id="rfeas"></p>
+      </div>
+    </div>
+
+    <details>
+      <summary>See how all nine scored for you</summary>
+      <div class="scorelist" id="scorelist"></div>
+    </details>
+
+    <div style="margin-top:28px">
+      <button class="btn" onclick="start()">Retake</button>
+      <button class="btn ghost sm" style="margin-left:10px" onclick="showAll()">Compare all nine futures</button>
+    </div>
+  </section>
+
+  <!-- ALL NINE -->
+  <section id="all" class="hidden">
+    <div class="eyebrow">The full landscape</div>
+    <h1 style="font-size:clamp(26px,4.2vw,38px)">The nine strategic visions</h1>
+    <p class="lede">Mapped on two axes: who controls AI development, and whether power is spread out or concentrated.</p>
+    <div class="nine" id="ninegrid"></div>
+    <div style="margin-top:28px">
+      <button class="btn" onclick="start()">Take the quiz</button>
+    </div>
+    <p class="src">
+      Source: <a href="https://oscardelaney.substack.com/p/strategic-visions-in-ai-governance" target="_blank" rel="noopener">Strategic Visions in AI Governance</a>. Delaney et al., IAPS 2026.
+    </p>
+  </section>
+
+  <div class="foot">Strategic Visions Quiz &middot; educational adaptation</div>
+</div>
+
+<script>
+// ---------- Data: nine visions ----------
+// grid: [col 0-2, row 0-2]. col: 0 distributed -> 2 centralized. row: 0 private -> 2 international.
+const V = {
+  v1:{name:"Competing private projects",cluster:"Private company-led",tag:"The status quo we live in today.",
+    grid:[0,0],
+    desc:"Many companies (OpenAI, Anthropic, Google, Meta and others) race to build the best models under fairly light regulation. The bet: AI is a normal technology, market competition drives both progress and safety, and ordinary antitrust and tax tools keep power from concentrating.",
+    adv:["Silicon Valley techno-optimists","a16z","Meta","Microsoft"],
+    prob:"It quietly assumes alignment is easy. If it is not, competition becomes a race to the bottom on safety: every firm is pushed to ship fast, and the cost of cutting corners is paid by everyone.",
+    feas:"The default trajectory. The open question is whether a crisis or government intervention disrupts it."},
+  v2:{name:"Single private project",cluster:"Private company-led",tag:"One company pulls away and never looks back.",
+    grid:[2,0],
+    desc:"One company reaches AGI, automates its own research, and compounds an unassailable lead before governments can react. With that lead it can afford heavy investment in alignment, but it ends up holding extreme global influence.",
+    adv:["No one, publicly"],
+    prob:"A tiny group of unelected people would make civilization-shaping decisions. That kind of power concentration is illegitimate and unlikely to go well for everyone else.",
+    feas:"Currently unlikely. Several well-funded labs and countries sit near the frontier, so pulling far ahead would need a major secret breakthrough."},
+  v3:{name:"Global private project",cluster:"Private company-led",tag:"One multinational company, financed by the world.",
+    grid:[2,1],
+    desc:"Rising costs drive consolidation into a single multinational firm. Money, talent, compute, and energy come from many countries, and governments invest and approve mergers, but it stays a private company with normal shareholders and a board.",
+    adv:["Nick Bostrom"],
+    prob:"Power is less concentrated than the single-company case, but centralization still means one point of failure, and shareholders may rush monetization over careful risk management. People without shares get no real say.",
+    feas:"Needs some international cooperation, but less than formal treaties."},
+  v4:{name:"US leadership with domestic regulation",cluster:"US government-controlled",tag:"Private labs, but with a real referee.",
+    grid:[0,1],
+    desc:"Companies keep building in the US, but the government actively ensures safety: safety cases before big training runs, mandatory third-party evals, incident reporting. Power stays spread across labs and agencies. Abroad, the US uses export controls and diplomacy to hold its lead.",
+    adv:["Dario Amodei","Helen Toner","Cullen O'Keefe"],
+    prob:"Washington currently lacks the technical talent to inspect the industry hands-on. Without a crisis, oversight may stay weak, and ongoing racing can reduce safety rules to box-ticking.",
+    feas:"Needs political will but is far less radical than nationalization. The US is already part-way there via export controls."},
+  v5:{name:"US centralized government project",cluster:"US government-controlled",tag:"An Apollo program for AI, run by Washington.",
+    grid:[2,1],
+    desc:"The US decides AI is too important to leave to companies and centralizes development under government control, like a NASA-style consortium or a single prime contractor. The project builds a large lead and uses it to fund alignment work and deploy carefully.",
+    adv:["Leopold Aschenbrenner","US-China Commission"],
+    prob:"This is the vision most likely to spark an arms race or even a hot war. China would probably launch its own crash project, turning commercial rivalry into a military showdown. It also hands the executive branch enormous, hard-to-check power.",
+    feas:"Needs a big expansion of federal authority, more likely after a major incident. Experts put government control of advanced AI near 34 percent."},
+  v6:{name:"US plus allies government project",cluster:"US government-controlled",tag:"The West builds it together.",
+    grid:[2,2],
+    desc:"Like the US project, but internationalized: the US leads a coalition (EU, UK, Canada, Australia, Japan, South Korea, Taiwan) in a joint intergovernmental effort. Together they dominate chips, talent, and financing, and shared decisions ease power-concentration worries.",
+    adv:["Forethought","Haydn Belfield"],
+    prob:"Still risks provoking an aggressive Chinese response, from a rival project to sabotage of the Western one.",
+    feas:"Needs heavy coordination, and the US may prefer to go it alone rather than share control."},
+  v7:{name:"International competition and deterrence",cluster:"International approaches",tag:"Mutual fear keeps everyone careful.",
+    grid:[0,2],
+    desc:"Rivals each develop AI, but mutual deterrence prevents reckless racing. Each fears the other reaching a decisive advantage, so they threaten to sabotage anyone who races irresponsibly. Like nuclear deterrence, the standoff could push the US and China to slow down until ASI is safe.",
+    adv:["Dan Hendrycks","Eric Schmidt","Alexandr Wang"],
+    prob:"It lets non-democratic states keep major control over the future, and deterrence can be unstable: misreading each other's red lines could trigger conflict, even nuclear war.",
+    feas:"Depends on rivals genuinely fearing each other's projects and being moved by threats. A radical break from how international relations work today."},
+  v8:{name:"Global centralized government project",cluster:"International approaches",tag:"Rivals pool the whole thing into one project.",
+    grid:[2,2],
+    desc:"Major powers agree to merge frontier development into a single project jointly run by the US, China, and possibly others. Instead of competing they co-develop advanced AI with shared control and a strong safety focus, with a lead large enough to fund heavy alignment work.",
+    adv:["Baruch-Plan advocates","civil society orgs","A Narrow Path"],
+    prob:"It has some democratic legitimacy but still one point of failure. It needs governance robust enough to resist capture and to avoid sliding into de facto world government.",
+    feas:"The most ambitious vision. It needs deep cooperation between rivals on the most strategic technology, and is especially unlikely if ASI arrives soon."},
+  v9:{name:"Global coordinated regulator",cluster:"International approaches",tag:"An IAEA for AI, refereeing many builders.",
+    grid:[0,2],
+    desc:"An international body oversees all frontier projects. Many developers or governments can still build, but the regulator blocks further capability research until they prove adequate alignment and control. A stronger version enforces a hard cap until alignment is solved.",
+    adv:["2023-era OpenAI","MIRI"],
+    prob:"The regulator could be captured: countries may pressure it to fast-track their own models and stall rivals. Verification is hard without invasive data-center access, and enforcing against non-compliant states is harder still.",
+    feas:"Even tougher politically than full US domestic regulation, but it needs less trust than full consolidation since building stays distributed."}
+};
+const ORDER=["v1","v2","v3","v4","v5","v6","v7","v8","v9"];
+
+// ---------- Questions (crux-weighted) ----------
+const Q=[
+ {theme:"Timelines",q:"When does AGI (AI that matches humans across most cognitive work) arrive?",
+  sub:"Short timelines leave little room to rebuild institutions. Long ones open the door to ambitious new arrangements.",
+  opts:[
+   {b:"Within a few years",s:{v1:2,v4:1,v2:1}},
+   {b:"A decade or more out",s:{v8:2,v9:2,v6:1,v5:1}},
+   {b:"Genuinely unsure",s:{v4:1,v7:1}},
+  ]},
+ {theme:"Takeoff speed",q:"Once AGI exists, how fast does superintelligence follow?",
+  sub:"A fast jump lets one project lock in a lead. A slow climb lets laggards catch up.",
+  opts:[
+   {b:"Fast: months, an explosion",s:{v2:2,v5:2,v8:1,v3:1}},
+   {b:"Slow: many years, gradual",s:{v1:2,v4:1,v7:1,v9:1}},
+   {b:"Could go either way",s:{v4:1,v7:1}},
+  ]},
+ {theme:"Leads",q:"Can a single actor build and hold a large lead in AI?",
+  sub:"Durable leads make concentration attractive. If capability diffuses fast, no one can monopolize it.",
+  opts:[
+   {b:"Yes, compute and secrecy can lock in a lead",s:{v2:2,v5:2,v3:1,v6:1}},
+   {b:"No, it diffuses; rivals stay close",s:{v7:2,v9:2,v1:1,v4:1}},
+   {b:"Hard to say",s:{v4:1,v7:1}},
+  ]},
+ {theme:"Stakes",q:"Would the first to superintelligence gain a decisive strategic advantage over everyone else?",
+  sub:"Winner-take-all stakes push toward concentration and intense deterrence. Shareable upside favors cooperation.",
+  opts:[
+   {b:"Yes, near total dominance",s:{v5:2,v7:2,v2:1,v6:1}},
+   {b:"No, the gains can be shared or matched",s:{v9:2,v8:2,v1:1}},
+   {b:"Unclear",s:{v7:1,v4:1}},
+  ]},
+ {theme:"Alignment",q:"How hard is it to make advanced AI safe and controllable?",
+  sub:"If alignment is brutally hard, you want to kill racing and pour resources in. If it is tractable, many builders is fine.",
+  opts:[
+   {b:"Profoundly hard, an unsolved problem",s:{v8:2,v5:2,v9:1,v6:1}},
+   {b:"Tractable with normal effort",s:{v1:2,v4:2,v3:1}},
+   {b:"Moderately hard",s:{v4:1,v9:1}},
+  ]},
+ {theme:"Government",q:"Will the US government seriously prioritize and step into AI?",
+  sub:"An engaged government enables regulation and state-led projects. A hands-off one leaves the private default in place.",
+  opts:[
+   {b:"Yes, it will take a strong active role",s:{v5:2,v4:2,v6:1}},
+   {b:"No, it stays mostly hands-off",s:{v1:2,v2:1,v3:1}},
+   {b:"Somewhere in between",s:{v4:1,v9:1}},
+  ]},
+ {theme:"Cooperation",q:"Is real international cooperation on AI feasible?",
+  sub:"Optimism unlocks joint projects and global regulators. Pessimism pushes you toward US-centric paths.",
+  opts:[
+   {b:"Yes, rivals can strike binding deals",s:{v8:2,v9:2,v6:1}},
+   {b:"No, distrust runs too deep",s:{v5:2,v7:1,v2:1,v4:1}},
+   {b:"Maybe, with better verification",s:{v9:1,v7:1}},
+  ]},
+ {theme:"Trust",q:"Who do you trust more to steer this: governments or companies?",
+  sub:"This is the deepest crux. It decides whether you lean private or public, distributed or coordinated.",
+  opts:[
+   {b:"Democratic governments, for legitimacy",s:{v4:2,v5:2,v8:1,v9:1}},
+   {b:"Companies, for competence and speed",s:{v1:2,v2:2,v3:1}},
+   {b:"Neither alone; spread checks widely",s:{v9:2,v7:1}},
+  ]},
+];
+
+// ---------- State ----------
+let cur=0; const answers=new Array(Q.length).fill(null);
+const $=id=>document.getElementById(id);
+const show=id=>{["intro","quiz","result","all"].forEach(s=>$(s).classList.add("hidden"));$(id).classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});};
+
+function start(){cur=0;answers.fill(null);show("quiz");render();}
+function render(){
+  const q=Q[cur];
+  $("pfill").style.width=((cur)/Q.length*100)+"%";
+  $("pnum").textContent=`Question ${cur+1} / ${Q.length}`;
+  $("ptheme").textContent=q.theme;
+  $("qtext").textContent=q.q;
+  $("qsub").textContent=q.sub;
+  $("backBtn").style.visibility=cur===0?"hidden":"visible";
+  const box=$("opts");box.innerHTML="";
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement("button");
+    b.className="opt"+(answers[cur]===i?" sel":"");
+    b.innerHTML=`<span class="dot"></span><span>${o.b}</span>`;
+    b.onclick=()=>{answers[cur]=i;next();};
+    box.appendChild(b);
+  });
+}
+function next(){ if(cur<Q.length-1){cur++;render();} else finish(); }
+function back(){ if(cur>0){cur--;render();} }
+
+function tally(){
+  const sc={};ORDER.forEach(k=>sc[k]=0);
+  answers.forEach((ai,qi)=>{ if(ai==null)return; const s=Q[qi].opts[ai].s; for(const k in s)sc[k]+=s[k]; });
+  return sc;
+}
+function finish(){
+  const sc=tally();
+  const ranked=ORDER.slice().sort((a,b)=>sc[b]-sc[a]);
+  paintResult(ranked[0],sc,ranked);
+  show("result");
+}
+function paintResult(win,sc,ranked){
+  const v=V[win];
+  $("rcluster").textContent=v.cluster;
+  $("rtitle").textContent=v.name;
+  $("rtag").textContent=v.tag;
+  $("rdesc").textContent=v.desc;
+  $("rprob").textContent=v.prob;
+  $("rfeas").textContent=v.feas;
+  const adv=$("radv");adv.innerHTML="";
+  v.adv.forEach(a=>{const c=document.createElement("span");c.className="chip";c.textContent=a;adv.appendChild(c);});
+  buildMap(win);
+  const max=Math.max(...ORDER.map(k=>sc[k]))||1;
+  const sl=$("scorelist");sl.innerHTML="";
+  ranked.forEach((k,i)=>{
+    const row=document.createElement("div");
+    row.className="srow"+(i===0?" top":"");
+    row.innerHTML=`<span class="nm">${V[k].name}</span><span class="bar"><i style="width:${sc[k]/max*100}%"></i></span>`;
+    sl.appendChild(row);
+  });
+}
+function buildMap(win){
+  const g=$("grid3");g.innerHTML="";
+  for(let row=0;row<3;row++){
+    for(let col=0;col<3;col++){
+      const occupant=ORDER.find(k=>V[k].grid[0]===col&&V[k].grid[1]===row);
+      const cell=document.createElement("div");
+      cell.className="cell"+(occupant===win?" you":"");
+      if(occupant){
+        cell.innerHTML=occupant===win
+          ? `<small><b>You are here</b><br>${V[occupant].name}</small>`
+          : `<small>${V[occupant].name}</small>`;
+      }
+      g.appendChild(cell);
+    }
+  }
+}
+function showAll(){
+  const g=$("ninegrid");g.innerHTML="";
+  ORDER.forEach(k=>{
+    const v=V[k];
+    const c=document.createElement("div");c.className="ncard";
+    c.innerHTML=`<div class="ncluster">${v.cluster}</div><h4>${v.name}</h4><p>${v.tag} ${v.desc.split(". ")[0]}.</p>`;
+    g.appendChild(c);
+  });
+  show("all");
+}
+</script>
+</body>
+</html>

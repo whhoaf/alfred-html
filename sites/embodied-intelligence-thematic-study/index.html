@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Embodied Intelligence in Textile Manufacturing — qonvolv Ventures</title>
+<style>
+  :root {
+    --purple: #5B2EFF;
+    --purple-soft: #EDE7FF;
+    --purple-deep: #2A1378;
+    --ink: #1A1A2E;
+    --ink-soft: #4A4A66;
+    --bg: #FAFAFD;
+    --card: #FFFFFF;
+    --border: #E4E4F0;
+    --green: #10B981;
+    --amber: #F59E0B;
+    --red: #EF4444;
+    --orange: #FB923C;
+    --shadow: 0 1px 3px rgba(20,15,60,0.06), 0 8px 24px rgba(20,15,60,0.04);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 16px;
+  }
+  a { color: var(--purple); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  nav.sticky {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; gap: 16px; align-items: center;
+    overflow-x: auto;
+    font-size: 13px;
+  }
+  nav.sticky .brand {
+    font-weight: 700; color: var(--purple-deep);
+    letter-spacing: -0.02em; margin-right: 12px; white-space: nowrap;
+  }
+  nav.sticky a {
+    color: var(--ink-soft); white-space: nowrap;
+    padding: 4px 10px; border-radius: 6px;
+  }
+  nav.sticky a:hover { background: var(--purple-soft); color: var(--purple-deep); text-decoration: none; }
+  main { max-width: 1180px; margin: 0 auto; padding: 0 24px 80px; }
+  section { padding: 64px 0 24px; border-top: 1px dashed var(--border); }
+  section:first-of-type { border-top: none; padding-top: 48px; }
+  .section-tag {
+    display: inline-block; background: var(--purple-soft); color: var(--purple-deep);
+    padding: 4px 10px; border-radius: 6px; font-size: 11px;
+    font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 { font-size: 44px; line-height: 1.1; margin: 0 0 16px; letter-spacing: -0.025em; }
+  h2 { font-size: 30px; line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.02em; }
+  h3 { font-size: 20px; line-height: 1.3; margin: 0 0 8px; color: var(--purple-deep); }
+  h4 { font-size: 15px; margin: 0 0 6px; color: var(--purple); text-transform: uppercase; letter-spacing: 0.06em; }
+  p { margin: 0 0 12px; color: var(--ink-soft); }
+  .lede { font-size: 18px; color: var(--ink); margin-bottom: 24px; max-width: 820px; }
+  .grid { display: grid; gap: 18px; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-5 { grid-template-columns: repeat(5, 1fr); }
+  @media (max-width: 880px) {
+    .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+    h1 { font-size: 32px; }
+    h2 { font-size: 24px; }
+  }
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; box-shadow: var(--shadow);
+  }
+  .card-soft { background: var(--purple-soft); border-color: transparent; }
+  .card-warm { background: #FFF7E6; border-color: #FBE4A3; }
+  .stat { text-align: center; padding: 24px 16px; }
+  .stat-num { font-size: 38px; font-weight: 700; color: var(--purple); letter-spacing: -0.03em; }
+  .stat-label { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+  .stat-sub { font-size: 11px; color: var(--ink-soft); margin-top: 2px; opacity: 0.7; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; padding: 10px 12px; background: var(--purple-soft); color: var(--purple-deep); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  td { padding: 10px 12px; border-top: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: #FAFAFD; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+  .pill-green { background: #DCFCE7; color: #14532D; }
+  .pill-amber { background: #FEF3C7; color: #78350F; }
+  .pill-red   { background: #FEE2E2; color: #7F1D1D; }
+  .pill-purple { background: var(--purple-soft); color: var(--purple-deep); }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 2px; vertical-align: middle; }
+  .dot-on { background: var(--green); }
+  .dot-mid { background: var(--amber); }
+  .dot-low { background: var(--red); }
+  .dot-off { background: #E0E0E8; }
+  .ico { width: 36px; height: 36px; border-radius: 10px; background: var(--purple-soft); color: var(--purple); display: inline-flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 10px; }
+  blockquote { margin: 0; padding: 16px 20px; background: #FFF7E6; border-left: 4px solid var(--amber); border-radius: 0 8px 8px 0; font-size: 14px; color: var(--ink); }
+  .footnote { font-size: 11px; color: var(--ink-soft); }
+  .toc-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .toc-card a { display: block; padding: 8px 12px; border-radius: 8px; color: var(--ink); font-size: 14px; }
+  .toc-card a:hover { background: var(--purple-soft); color: var(--purple-deep); text-decoration: none; }
+  .toc-card a span { color: var(--purple); font-weight: 600; margin-right: 10px; font-variant-numeric: tabular-nums; }
+  .hero {
+    text-align: center; padding: 80px 24px 48px;
+    background: linear-gradient(180deg, var(--purple-soft) 0%, transparent 100%);
+    border-radius: 16px; margin-bottom: 40px;
+  }
+  .hero .brand { font-size: 14px; letter-spacing: 0.6em; color: var(--purple); font-weight: 600; }
+  .hero h1 { font-size: 52px; margin: 16px 0 8px; }
+  .hero p { font-size: 17px; max-width: 640px; margin: 0 auto; }
+  .hero .meta { font-size: 13px; color: var(--ink-soft); margin-top: 24px; }
+  .key-callout { background: var(--purple-deep); color: white; padding: 24px; border-radius: 12px; margin: 16px 0; }
+  .key-callout p { color: rgba(255,255,255,0.85); margin: 0; }
+  .key-callout strong { color: white; }
+  .arrow-row { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 12px; align-items: center; margin-bottom: 12px; }
+  .arrow-row .arrow { color: var(--purple); text-align: center; font-size: 20px; }
+  .building-block {
+    text-align: center; padding: 22px 16px; border-radius: 12px;
+    background: var(--card); border: 1px solid var(--border);
+  }
+  .bb-active { background: #FFF4E0; border-color: #FCD9A6; }
+  .bb-enabling { background: #ECE6FF; border-color: #C8B8FF; }
+  .layer-row { display: grid; grid-template-columns: 80px 1fr 200px; gap: 16px; align-items: center; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; background: var(--card); }
+  .layer-row .label { font-weight: 700; color: var(--purple-deep); font-size: 14px; }
+  .layer-row .freq { text-align: right; font-size: 13px; color: var(--ink-soft); }
+  .quad-grid { position: relative; height: 460px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+  .funnel-step { padding: 18px 20px; border-radius: 10px; margin-bottom: 8px; color: white; }
+  .funnel-1 { background: #C7BCFF; color: var(--purple-deep); }
+  .funnel-2 { background: var(--purple); }
+  .funnel-3 { background: var(--purple-deep); }
+  details { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+  details summary { cursor: pointer; font-weight: 600; color: var(--purple-deep); font-size: 16px; }
+  details[open] summary { margin-bottom: 12px; }
+  details .body-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 720px) { details .body-grid { grid-template-columns: 1fr; } }
+  .mini-list { list-style: none; padding: 0; margin: 0; font-size: 14px; }
+  .mini-list li { padding: 4px 0; color: var(--ink-soft); }
+  .mini-list li::before { content: "• "; color: var(--purple); margin-right: 4px; }
+  .reflect {
+    margin-top: 60px; padding: 32px; background: var(--purple-deep); color: white; border-radius: 16px;
+  }
+  .reflect h2 { color: white; }
+  .reflect p, .reflect li { color: rgba(255,255,255,0.85); }
+  .reflect ol { padding-left: 20px; }
+  footer { margin-top: 80px; padding: 32px 24px; text-align: center; font-size: 12px; color: var(--ink-soft); border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<nav class="sticky">
+  <span class="brand">qonvolv ventures</span>
+  <a href="#hero">Top</a>
+  <a href="#s1">1. Why Now</a>
+  <a href="#s2">2. Understanding EI</a>
+  <a href="#s3">3. Textile Challenge</a>
+  <a href="#s4">4. What We Bring</a>
+  <a href="#s5">5. Ecosystem & Portfolio</a>
+  <a href="#s6">6. Our View</a>
+  <a href="#s7">7. Conclusion</a>
+  <a href="#reflect">Open Questions</a>
+</nav>
+
+<main>
+
+<section id="hero" class="hero">
+  <div class="brand">QONVOLV VENTURES</div>
+  <h1>Embodied Intelligence in Textile Manufacturing</h1>
+  <p>The labor crisis hit. The technology converged. Textile is the last industrial frontier where the margin still lives behind a hard problem. This is how we win it.</p>
+  <div class="meta">April 2026 · Alfred Ho, Leslie Chung, Jacky Yuen · A Tessellation Company</div>
+</section>
+
+<section>
+  <h2>Read this how you want</h2>
+  <p class="lede">Seven sections following the narrative arc of the original deck, made interactive. Skim the section tags, jump via the sticky nav, or read top to bottom.</p>
+  <div class="toc-card">
+    <a href="#s1"><span>1.</span>Why this matters now: labor crisis, tech convergence, market reality</a>
+    <a href="#s2"><span>2.</span>Understanding embodied intelligence: five building blocks, three brain layers</a>
+    <a href="#s3"><span>3.</span>The textile challenge: five barriers, prior attempts, where to start</a>
+    <a href="#s4"><span>4.</span>What qonvolv brings: domain advantage and the data flywheel</a>
+    <a href="#s5"><span>5.</span>Ecosystem and portfolio: who does what, and where the gaps are</a>
+    <a href="#s6"><span>6.</span>Our view: engagement angle and the invest / partner / monitor funnel</a>
+    <a href="#s7"><span>7.</span>Conclusion: the vertical game, the dyson model, and the 2027 ask</a>
+  </div>
+</section>
+
+<!-- ==================== SECTION 1 ==================== -->
+<section id="s1">
+  <span class="section-tag">Section 1 · Why This Matters Now</span>
+  <h2>Skilled sewing operators are disappearing. The industry has nowhere left to go.</h2>
+  <p class="lede">94 million garment workers globally. The workforce is aging, wages have doubled or tripled, and there is no cheaper country left to move production to.</p>
+
+  <div class="grid grid-3">
+    <div class="card">
+      <h4>Labor pool aging</h4>
+      <p style="font-size: 32px; font-weight: 700; color: var(--purple); margin: 12px 0 4px;">+9 yrs</p>
+      <p style="font-size: 13px;">Average age of Chinese migrant garment workers rose 9 years in 15 years (2008–2023).</p>
+    </div>
+    <div class="card">
+      <h4>Wages doubled or tripled</h4>
+      <p style="font-size: 32px; font-weight: 700; color: var(--purple); margin: 12px 0 4px;">1.8x – 3.4x</p>
+      <p style="font-size: 13px;">Across China (1.8x), Vietnam (1.8x), Bangladesh (3.0x), Cambodia (3.4x).</p>
+    </div>
+    <div class="card">
+      <h4>Escape valve closed</h4>
+      <p style="font-size: 13px; margin-top: 14px;">Myanmar conscription cut output ~20%. Ethiopia AGOA suspension cost 11,500 jobs overnight. Bangladesh wage tripling killed its low-cost status.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">EI is not "a robot with AI". It is a shift from content to physical action.</h3>
+  <p>ChatGPT knows what a shirt is. An EI system knows how the shirt will drape when you lift it by the corner. That distinction is the entire difference.</p>
+  <table>
+    <thead><tr><th>Dimension</th><th>LLMs</th><th>Embodied Intelligence</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Input</strong></td><td>Text, images, audio</td><td>Camera feeds, tactile sensors, force feedback</td></tr>
+      <tr><td><strong>Output</strong></td><td>Text, images, audio</td><td>Physical motor commands: gripping, moving, folding</td></tr>
+      <tr><td><strong>Environment</strong></td><td>Frictionless digital vacuum</td><td>Messy, unpredictable physical world</td></tr>
+      <tr><td><strong>Learning signal</strong></td><td>Internet text corpus</td><td>Physical consequences of actions</td></tr>
+      <tr><td><strong>Key limitation</strong></td><td>No physical world model</td><td>Incomplete deformable object models</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top: 40px;">Textile remains one of the least automated segments in global industry.</h3>
+  <p>Yarn and fabric formation are highly automated. The bottleneck sits downstream: converting soft 2D panels into complex 3D garments.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <defs>
+          <marker id="dot" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="6" markerHeight="6"><circle cx="3" cy="3" r="3" fill="currentColor"/></marker>
+        </defs>
+        <line x1="40" y1="200" x2="380" y2="200" stroke="#CCC" stroke-width="1"/>
+        <line x1="40" y1="20" x2="40" y2="200" stroke="#CCC" stroke-width="1"/>
+        <!-- Automotive curve -->
+        <path d="M 40 190 Q 100 180 150 80 T 380 40" fill="none" stroke="#F59E0B" stroke-width="2.5"/>
+        <!-- Electronics -->
+        <path d="M 40 195 Q 130 195 200 100 T 380 60" fill="none" stroke="#EF4444" stroke-width="2.5"/>
+        <!-- Food -->
+        <path d="M 40 198 Q 200 198 280 130 T 380 80" fill="none" stroke="#10B981" stroke-width="2.5"/>
+        <!-- Textiles historical -->
+        <path d="M 40 199 Q 200 195 380 165" fill="none" stroke="#999" stroke-width="2.5"/>
+        <!-- Textiles EI projection -->
+        <path d="M 290 175 Q 320 165 380 90" fill="none" stroke="#5B2EFF" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <text x="40" y="215" font-size="10" fill="#666">1960</text>
+        <text x="160" y="215" font-size="10" fill="#666">1990</text>
+        <text x="280" y="215" font-size="10" fill="#666">2010</text>
+        <text x="365" y="215" font-size="10" fill="#666">2030</text>
+        <text x="200" y="20" font-size="11" font-weight="600" fill="#1A1A2E" text-anchor="middle">Automation curve by industry</text>
+      </svg>
+      <div style="font-size: 12px; margin-top: 8px;">
+        <span style="color: #F59E0B;">●</span> Automotive
+        <span style="color: #EF4444; margin-left: 12px;">●</span> Electronics
+        <span style="color: #10B981; margin-left: 12px;">●</span> Food
+        <span style="color: #999; margin-left: 12px;">●</span> Textile (historical)
+        <span style="color: #5B2EFF; margin-left: 12px;">●</span> Textile (EI projection)
+      </div>
+    </div>
+    <div>
+      <ul class="mini-list">
+        <li><strong>$1.7T</strong> global textile and apparel industry</li>
+        <li>Upstream (yarn, fabric): high automation. Continuous, rigid, standardized</li>
+        <li>Downstream (cut, sew, assemble): below 25% automation. Soft materials, high variety, dexterous handling</li>
+        <li><strong>$500B</strong> annual value lost to overproduction, lead times, rework</li>
+        <li>Best automated lines hit only ~75%. Remaining steps need human finger dexterity</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">Four technologies have converged. None alone was enough.</h3>
+  <div class="grid grid-2">
+    <div class="card"><div class="ico">🧠</div><h4>Foundational models for robots</h4><p style="font-size: 13px;">VLA models like π0 translate language plus camera input into motor commands. Zero-shot generalization: fold a shirt never seen before.</p></div>
+    <div class="card"><div class="ico">👆</div><h4>Tactile sensing breakthrough</h4><p style="font-size: 13px;">Electronic skins at 0.005N precision (sense an ant walking). Robots feel fabric and detect slip before it happens.</p></div>
+    <div class="card"><div class="ico">⚙️</div><h4>Simulation at scale</h4><p style="font-size: 13px;">NVIDIA Newton and Genesis simulate cloth deformation at 43M+ frames per second. Train without burning through real fabric.</p></div>
+    <div class="card"><div class="ico">⚡</div><h4>Edge computing</h4><p style="font-size: 13px;">NVIDIA Jetson AGX Thor: 2,070 TFLOPS in 130W. Real-time VLA inference on the factory floor, no cloud latency.</p></div>
+  </div>
+
+  <div class="grid grid-3" style="margin-top: 24px;">
+    <div class="stat card-soft"><div class="stat-num">$51.5B</div><div class="stat-label">Robotics market (2025)</div><div class="stat-sub">Projected $200B by 2035</div></div>
+    <div class="stat card-soft"><div class="stat-num">31.26%</div><div class="stat-label">Physical AI CAGR</div><div class="stat-sub">$5.41B → $61.19B (2025–2034)</div></div>
+    <div class="stat card-soft"><div class="stat-num">$402B</div><div class="stat-label">TAM across EI verticals</div><div class="stat-sub">UBS, within a decade</div></div>
+  </div>
+
+  <h3 style="margin-top: 40px;">The investor lens: real, growing fast, and significantly overhyped</h3>
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>Where the money is</h4>
+      <p style="font-size: 13px;">Sequoia, Microsoft, Intel Capital, Andreessen Horowitz, NVIDIA, Bessemer, Vision Knight Capital, Bain Capital Ventures, DeepMind, Alibaba.</p>
+      <p style="font-size: 13px;">Figure valued at $39B. Seven China startups breach unicorn valuation amid the EI frenzy.</p>
+    </div>
+    <div class="card card-warm">
+      <h4 style="color: var(--purple-deep);">Promise vs reality</h4>
+      <ul class="mini-list">
+        <li>Most humanoid demos are controlled lab environments, not production floors</li>
+        <li>Cloth manipulation demos exist (PI laundry folding, Noematrix garment handling) but none are production-ready for a real factory line</li>
+        <li>Sim-to-real still has 83% error rate for fabric. The "just simulate everything" narrative is premature for deformable objects</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">The EI race is splitting east and west</h3>
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>Western: foundation-model-first</h4>
+      <p style="font-size: 13px;">Build a general-purpose robot brain (Physical Intelligence, Google DeepMind), then apply to verticals. Well-funded, research-driven, far from production.</p>
+      <p style="font-size: 13px;"><em>PI discussing $1B round at >$11B valuation. LeCun's AMI Labs raised $1.03B for world models.</em></p>
+    </div>
+    <div class="card">
+      <h4>China: application-first</h4>
+      <p style="font-size: 13px;">Start with a specific industrial task; solve with whatever combination of AI and hardware works (Noematrix, Flexiv). Closer to deployment, narrower generalization.</p>
+      <p style="font-size: 13px;"><em>Unitree IPO targeting US$610m. Flexiv secured Evergreen capital for global adaptive-robot deployment.</em></p>
+    </div>
+  </div>
+  <div class="key-callout">
+    <p><strong>The structural gap is the same on both sides.</strong> Both ecosystems need real industrial problems and real factory data. That gap is where qonvolv's CVC thesis is positioned.</p>
+  </div>
+</section>
+
+<!-- ==================== SECTION 2 ==================== -->
+<section id="s2">
+  <span class="section-tag">Section 2 · Understanding Embodied Intelligence</span>
+  <h2>EI has five building blocks. Three drive action. Two make it learnable.</h2>
+  <p class="lede">An EI system is not one technology but five interdependent blocks. Understanding what each does, and what can go wrong in it, is the foundation for evaluating every company in the space.</p>
+
+  <div class="grid grid-3">
+    <div class="building-block bb-active">
+      <div class="ico" style="background: white;">👁️</div>
+      <h3>SENSE</h3>
+      <p style="font-size: 13px;">Cameras, tactile sensors, and force/torque feedback that perceive the world and build a continuously updating model of it.</p>
+    </div>
+    <div class="building-block bb-active">
+      <div class="ico" style="background: white;">🧠</div>
+      <h3>THINK</h3>
+      <p style="font-size: 13px;">AI models that reason about physical consequences, plan action sequences, and generate precise motor commands.</p>
+    </div>
+    <div class="building-block bb-active">
+      <div class="ico" style="background: white;">💪</div>
+      <h3>ACT</h3>
+      <p style="font-size: 13px;">Actuators, arms, grippers, end-effectors that execute physical commands and adapt in real time to force feedback.</p>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top: 18px;">
+    <div class="building-block bb-enabling">
+      <div class="ico" style="background: white;">📚</div>
+      <h3>DATA</h3>
+      <p style="font-size: 13px;">Real-world physical interaction data. Cannot be scraped from the internet. Must be collected one episode at a time in real environments.</p>
+    </div>
+    <div class="building-block bb-enabling">
+      <div class="ico" style="background: white;">🌐</div>
+      <h3>SIMULATION</h3>
+      <p style="font-size: 13px;">Virtual environments where robots practice at scale. Fast and cheap, but accuracy degrades sharply for deformable objects like fabric.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">Inside the robot brain: what to test at each layer</h3>
+  <div class="grid grid-3">
+    <div class="card">
+      <h4>SENSE — "What do I see?"</h4>
+      <p style="font-size: 13px;">Fuses vision, touch, audio, language into one unified representation. Builds an updating internal picture of the scene including object positions, material properties, spatial relationships.</p>
+      <ul class="mini-list">
+        <li><strong>Multi-modal fusion:</strong> vision AND touch, or vision alone?</li>
+        <li><strong>Material awareness:</strong> can it tell cotton from denim from silk by touch?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>THINK — "What if I do X?"</h4>
+      <p style="font-size: 13px;">Reasons about consequences, plans action sequences, decides what to do before committing to movement. Takes input from SENSE through a reasoning and prediction pipeline.</p>
+      <ul class="mini-list">
+        <li><strong>Multi-step planning:</strong> can it plan five or more steps ahead on an unseen task?</li>
+        <li><strong>Out-of-distribution handling:</strong> what happens when the material misbehaves?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>ACT — "How do I move?"</h4>
+      <p style="font-size: 13px;">Converts the plan into precise motor commands in real time. Generates smooth executable trajectories. Adapts in real time to contact forces.</p>
+      <ul class="mini-list">
+        <li><strong>Cross-embodiment transfer:</strong> does the policy work across different robot hardware without retraining?</li>
+        <li><strong>Sim-to-real gap:</strong> measured performance loss from simulation to real world for deformables?</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">How the industry is building the THINK layer: three model families</h3>
+  <p>Three model families dominate the landscape. They are not competing alternatives but complementary building blocks. The most capable systems stack all three. Today, most companies have built one or two. The world model layer remains the least mature and the hardest to build.</p>
+  <div>
+    <div class="layer-row">
+      <div class="label">VLA / VLTA</div>
+      <div><strong>Backbone.</strong> Understands instructions, perceives the scene. <em>Reasoning + perception.</em></div>
+      <div class="freq">~1 Hz</div>
+    </div>
+    <div class="layer-row">
+      <div class="label">World Model</div>
+      <div><strong>Predictor.</strong> Simulates consequences, plans before acting. <em>Prediction + planning.</em></div>
+      <div class="freq">~10 Hz</div>
+    </div>
+    <div class="layer-row">
+      <div class="label">Diffusion / Flow</div>
+      <div><strong>Generator.</strong> Produces precise motor trajectories. <em>Action generation.</em></div>
+      <div class="freq">~100 Hz</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">The hardware layer: durable advantage or off-the-shelf?</h3>
+  <div class="grid grid-3">
+    <div class="card">
+      <h4>SENSE (perception hardware)</h4>
+      <p style="font-size: 13px;">Vision and force sensing are commoditizing. Tactile is emerging.</p>
+      <ul class="mini-list">
+        <li>Proprietary data generation: does the sensor create unique training data per deployment?</li>
+        <li>Multi-modal integration at the hardware level</li>
+        <li>Material discrimination by touch, not just vision</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>THINK (brain hardware)</h4>
+      <p style="font-size: 13px;">Two major players: NVIDIA Jetson Thor (production standard), private custom silicon (Tesla AI5).</p>
+      <ul class="mini-list">
+        <li>On-device inference: full THINK stack without cloud dependency?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>ACT (motion + manipulation)</h4>
+      <p style="font-size: 13px;">DOF arms race is real, but DOF without touch is a constraint, not a capability.</p>
+      <ul class="mini-list">
+        <li>Drive architecture fit: compliance and backdrivability for fabric</li>
+        <li>Per-finger tactile sensing</li>
+        <li>Task-specific end-effector design vs general-purpose hand</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">The perception stack: from commodity cameras to proprietary touch</h3>
+  <table>
+    <thead><tr><th>Tier</th><th>What it is</th><th>Defensibility</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Vision sensors</strong> <span class="pill pill-amber">Commodity</span></td><td>RGB cameras, depth (stereo, ToF), LiDAR. Object shape, position, color, layout.</td><td>Low. Every robot can see.</td></tr>
+      <tr><td><strong>Force/torque</strong> <span class="pill pill-amber">Becoming commodity</span></td><td>Six-axis sensors at wrist or joints. Forces and torques at a single contact point.</td><td>Falling. Detects collisions, contact, insertion forces.</td></tr>
+      <tr><td><strong>Tactile</strong> <span class="pill pill-purple">NOT commodity</span></td><td>Distributed contact arrays embedded in fingertips or palm. Pressure, shear, texture, slip, material across the contact area.</td><td>High. Visuotactile (camera-based, micron resolution) and electronic skin (piezoresistive grids, faster sampling, lower spatial resolution) both still emerging.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top: 40px;">DATA + SIMULATION: training methods for the brain</h3>
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>DATA</h4>
+      <p style="font-size: 13px;">Physical interaction data cannot be downloaded from the internet. Must be collected episode by episode in real environments. Current robot datasets total roughly 5,000 hours combined. GPT-4 trained on 45TB of text. The shortfall exceeds 99%.</p>
+      <ul class="mini-list">
+        <li>Provenance: open-source (generic) vs proprietary (real production)</li>
+        <li>Fabric specificity: percentage of training data that involves deformables</li>
+        <li>Sensor coverage: tactile + force, or vision only?</li>
+        <li>Collection infrastructure: repeatable pipeline at scale?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>SIMULATION</h4>
+      <p style="font-size: 13px;">Lets robots train at extraordinary speed without wearing out hardware. NVIDIA Cosmos can generate full manipulation trajectories from a single image and a language instruction.</p>
+      <ul class="mini-list">
+        <li>Sim-to-real gap: measured error rate for fabric?</li>
+        <li>Deformable physics fidelity: drape, friction, elasticity per material type?</li>
+        <li>Sim-real feedback loop: real-world data calibrating the simulator?</li>
+      </ul>
+    </div>
+  </div>
+  <blockquote style="margin-top: 16px;">Neither data nor simulation alone solves the training problem for fabric. The companies that will win combine both: real-world data to ground the system, simulation to scale it, and a feedback loop between the two. This is precisely where factory access becomes a strategic asset, not just a deployment site.</blockquote>
+
+  <h3 style="margin-top: 40px;">How to assess any EI company you meet</h3>
+  <p>No company today is strong across all five blocks. The spider chart makes that visible. Use it as a scoring tool: plot any company you meet and the gaps tell you more than the pitch deck will.</p>
+  <div style="display: flex; justify-content: center; padding: 20px;">
+    <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" style="max-width: 460px; width: 100%;">
+      <g transform="translate(180,160)" font-size="11" font-weight="600" fill="#5B2EFF">
+        <!-- pentagon rings -->
+        <g fill="none" stroke="#E4E4F0" stroke-width="1">
+          <polygon points="0,-120 114,-37 70,97 -70,97 -114,-37"/>
+          <polygon points="0,-90 86,-28 53,73 -53,73 -86,-28"/>
+          <polygon points="0,-60 57,-19 35,49 -35,49 -57,-19"/>
+          <polygon points="0,-30 28.5,-9.5 17.5,24.5 -17.5,24.5 -28.5,-9.5"/>
+        </g>
+        <!-- axes -->
+        <g stroke="#E4E4F0" stroke-width="1">
+          <line x1="0" y1="0" x2="0" y2="-120"/>
+          <line x1="0" y1="0" x2="114" y2="-37"/>
+          <line x1="0" y1="0" x2="70" y2="97"/>
+          <line x1="0" y1="0" x2="-70" y2="97"/>
+          <line x1="0" y1="0" x2="-114" y2="-37"/>
+        </g>
+        <text x="0" y="-130" text-anchor="middle">SENSE</text>
+        <text x="124" y="-37" text-anchor="start">THINK</text>
+        <text x="76" y="113" text-anchor="middle">ACT</text>
+        <text x="-76" y="113" text-anchor="middle">DATA</text>
+        <text x="-124" y="-37" text-anchor="end">SIMULATION</text>
+      </g>
+    </svg>
+  </div>
+  <div class="grid grid-5" style="margin-top: 8px; font-size: 12px;">
+    <div><strong>SENSE</strong><br>Commodity vision (weak) → proprietary multi-modal tactile w/ embedded data pipeline (strong)</div>
+    <div><strong>THINK</strong><br>Reactive motor control (weak) → full world model w/ proven OOD generalization (strong)</div>
+    <div><strong>ACT</strong><br>Fixed gantry w/ rigid gripper (weak) → compliant, backdrivable, tactile-augmented (strong)</div>
+    <div><strong>DATA</strong><br>Generic open-source (weak) → proprietary fabric-specific in real production (strong)</div>
+    <div><strong>SIMULATION</strong><br>No sim or untested (weak) → demonstrated low gap on fabric-class materials (strong)</div>
+  </div>
+</section>
+
+<!-- ==================== SECTION 3 ==================== -->
+<section id="s3">
+  <span class="section-tag">Section 3 · The Textile Challenge</span>
+  <h2>Technical barriers stand between robots and garment manufacturing.</h2>
+  <p class="lede">Garment automation is not a single problem. Robots face distinct technical barriers, each requiring different solutions.</p>
+
+  <div class="grid grid-3">
+    <div class="card"><h4>Deformable object manipulation</h4><p style="font-size: 13px;"><strong>Infinite configuration:</strong> garment shape changes constantly during handling. <strong>Infinite combination:</strong> the same push produces different results depending on configuration, material, temperature, humidity.</p></div>
+    <div class="card"><h4>Precision</h4><p style="font-size: 13px;">Sub-millimeter accuracy required. Seam allowances are 5–10mm. Thread paths are nearly invisible; needle placement at speed is beyond most industrial robots.</p></div>
+    <div class="card"><h4>Occlusion</h4><p style="font-size: 13px;">Wrinkles and folds block camera views at the moment decisions must be made. When a robot grips fabric, the contact point hides from visual sensors. Self-occlusion problem.</p></div>
+    <div class="card"><h4>Variety</h4><p style="font-size: 13px;">A single factory may handle dozens of fabric types (cotton, silk, polyester, blends). Garment styles change seasonally. A robot trained on one item often fails on the next.</p></div>
+    <div class="card"><h4>Adaptability / skill</h4><p style="font-size: 13px;">Context-dependent judgment: how much force to iron with, when to adjust sewing speed for curves, how to handle a collar differently from a cuff. Skills humans build over months.</p></div>
+  </div>
+
+  <h3 style="margin-top: 40px;">How the industry has tried to solve garment automation</h3>
+  <table>
+    <thead><tr><th>Approach</th><th>How it works</th><th>What it solves</th><th>Ceiling</th></tr></thead>
+    <tbody>
+      <tr><td colspan="4" style="background: #F4F0FF; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;">BUCKET 1 · WORKAROUNDS WITHIN CONVENTIONAL MANUFACTURING</td></tr>
+      <tr><td><strong>qonvolv Systems</strong></td><td>Rigid automation purpose-built for structured 2D sewing</td><td>Reliable throughput on high-volume repetitive operations</td><td>Task-locked. Each new operation needs re-engineering.</td></tr>
+      <tr><td><strong>SoftWear Automation</strong></td><td>ThreadVision thread-tracking with vacuum-grip robotics</td><td>Precision for defined sewing steps</td><td>Product-locked. New garment style = full re-engineering.</td></tr>
+      <tr><td><strong>Sewbo</strong></td><td>Stiffens fabric with polymer so standard robots can handle it</td><td>Removes deformability during handling</td><td>Chemistry-dependent. Adds a production step. Does not generalize across fabric types.</td></tr>
+      <tr><td colspan="4" style="background: #ECE6FF; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;">BUCKET 2 · PROCESS REINVENTION (PARADIGM CHALLENGERS)</td></tr>
+      <tr><td><strong>Unspun</strong></td><td>3D weaving / knitting directly to finished shape</td><td>Eliminates flat-panel handling entirely</td><td>Material and design range limited. Not applicable to most structured construction.</td></tr>
+      <tr><td><strong>CreateMe</strong></td><td>Microadhesive bonding replaces sewn seams in specific categories</td><td>Removes needle-threading and thread-tension challenges</td><td>Limited to bonded-seam categories.</td></tr>
+      <tr><td colspan="4" style="background: var(--purple); color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;">EMBODIED INTELLIGENCE</td></tr>
+      <tr><td><strong>True EI approach</strong></td><td>Vision, touch, and adaptive AI brain working simultaneously</td><td>All five barriers. Works within the existing manufacturing paradigm. No product redesign required.</td><td>3–5 years from commercial-scale garment assembly.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top: 40px;">Automation collapses at the garment stage, exactly the most labor-intensive part</h3>
+  <p>Across the textile value chain, automation drops sharply as you move downstream. The garment assembly stage, where labor intensity and cost exposure are highest, is exactly where robots have not succeeded.</p>
+  <div class="grid grid-4">
+    <div class="card">
+      <div style="font-size: 28px; text-align: center; margin-bottom: 8px;">🧵</div>
+      <h4 style="text-align:center;">Yarn Production</h4>
+      <p style="text-align: center; font-size: 13px;"><span class="pill pill-green">High</span></p>
+      <ul class="mini-list" style="font-size: 12px;"><li>Bale plucking</li><li>Carding</li><li>Spinning</li><li>Winding <span class="pill pill-red">Yarn loading</span></li></ul>
+    </div>
+    <div class="card">
+      <div style="font-size: 28px; text-align: center; margin-bottom: 8px;">🧶</div>
+      <h4 style="text-align:center;">Fabric Formation</h4>
+      <p style="text-align: center; font-size: 13px;"><span class="pill pill-amber">Medium</span></p>
+      <ul class="mini-list" style="font-size: 12px;"><li>Warping <span class="pill pill-red">Panel handling</span></li><li>Weaving / Knitting</li><li>Dyeing <span class="pill pill-red">Straight sewing</span></li><li>Cutting <span class="pill pill-red">3D sewing</span></li></ul>
+    </div>
+    <div class="card">
+      <div style="font-size: 28px; text-align: center; margin-bottom: 8px;">👕</div>
+      <h4 style="text-align:center;">Cut & Sew Assembly</h4>
+      <p style="text-align: center; font-size: 13px;"><span class="pill pill-red">Low</span></p>
+      <ul class="mini-list" style="font-size: 12px;"><li>Fusing <span class="pill pill-red">Interlining</span></li><li>Printing/Embroidery <span class="pill pill-red">Positioning</span></li><li>2D Sewing <span class="pill pill-red">Edge uncurling</span></li><li>3D Assembly</li></ul>
+    </div>
+    <div class="card">
+      <div style="font-size: 28px; text-align: center; margin-bottom: 8px;">📦</div>
+      <h4 style="text-align:center;">Finishing & Packaging</h4>
+      <p style="text-align: center; font-size: 13px;"><span class="pill pill-red">Low</span></p>
+      <ul class="mini-list" style="font-size: 12px;"><li>Washing <span class="pill pill-red">Loading</span></li><li>Drying</li><li>Ironing <span class="pill pill-red">Flattening</span></li><li>Packing <span class="pill pill-red">Folding</span></li></ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">Start with Tier 1: high impact and tractable today</h3>
+  <p>Not all automation challenges are equally hard or equally valuable. This priority matrix separates commercially impactful tasks that can be tackled now from those that require the full tech stack to mature.</p>
+  <table>
+    <thead><tr><th>Process</th><th>Difficulty</th><th>Value</th><th>Tier</th></tr></thead>
+    <tbody>
+      <tr><td>Yarn loading</td><td>Medium</td><td>High</td><td><span class="pill pill-green">1</span></td></tr>
+      <tr><td>Interlining positioning</td><td>Medium</td><td>Medium</td><td><span class="pill pill-green">1</span></td></tr>
+      <tr><td>Flattening & ironing</td><td>High</td><td>High</td><td><span class="pill pill-green">1</span></td></tr>
+      <tr><td>Fabric panel handling</td><td>High</td><td>High</td><td><span class="pill pill-amber">2</span></td></tr>
+      <tr><td>Straight sewing</td><td>High</td><td>High</td><td><span class="pill pill-amber">2</span></td></tr>
+      <tr><td>Washing loading</td><td>Medium</td><td>High</td><td><span class="pill pill-amber">2</span></td></tr>
+      <tr><td>3D sewing & assembly</td><td>Very High</td><td>Very High</td><td><span class="pill pill-red">3</span></td></tr>
+      <tr><td>Folding & packaging</td><td>High</td><td>High</td><td><span class="pill pill-red">3</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== SECTION 4 ==================== -->
+<section id="s4">
+  <span class="section-tag">Section 4 · What We Bring</span>
+  <h2>Why EI companies want textile.</h2>
+  <p class="lede">Textile is the last frontier. Other verticals are red ocean. Textile margin remains untouched.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>What the ecosystem needs</h3>
+      <ul class="mini-list">
+        <li><strong>Domain-specific use cases.</strong> AI labs build general models; somebody has to define the specific industrial tasks.</li>
+        <li><strong>Real-world validation environments.</strong> Simulation fails for fabric (83% error rate). No substitute for a real factory.</li>
+        <li><strong>Physical interaction data.</strong> 100,000x supply gap. Only source is real robots on real materials.</li>
+        <li><strong>Path to commercialization.</strong> A breakthrough prototype is worthless without industrial infrastructure to scale it.</li>
+      </ul>
+    </div>
+    <div class="card card-soft">
+      <h3>What we own</h3>
+      <ul class="mini-list">
+        <li>Documented pain points across the full textile value chain</li>
+        <li>Active factory sites in PRC and Vietnam with real production constraints (heat, humidity, static, line speed)</li>
+        <li>Every production line generates fabric-manipulation interaction data that cannot be scraped, crowd-sourced, or simulated</li>
+        <li>Matured commercialization experience with qonvolv Innovation selling globally</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key-callout">
+    <p><strong>Domain use cases are to EI companies what training data was to LLMs.</strong> The fuel they cannot manufacture themselves. This positions us as a foundation layer for the ecosystem, not a customer shopping for robots.</p>
+  </div>
+
+  <h3 style="margin-top: 40px;">Every deployment generates proprietary data that makes the next one better</h3>
+  <p>Our position is not static. Each cycle of engagement with EI partners strengthens every layer of our advantage.</p>
+  <div class="grid grid-3">
+    <div class="card"><div class="ico">🎯</div><h4>Define pain points</h4><p style="font-size: 13px;">Scene library, SOPs, fabric specs create a structured menu of industrial challenges.</p></div>
+    <div class="card"><div class="ico">🤝</div><h4>Attract EI partners</h4><p style="font-size: 13px;">Companies building manipulation AI need real industrial problems to solve. Our pain points draw them in.</p></div>
+    <div class="card"><div class="ico">🏭</div><h4>Deploy & generate data</h4><p style="font-size: 13px;">Robots operating in our factories produce proprietary interaction data.</p></div>
+    <div class="card"><div class="ico">🧠</div><h4>Improve AI models</h4><p style="font-size: 13px;">Data trains better models for our specific use cases. Gains compound each cycle.</p></div>
+    <div class="card"><div class="ico">🤖</div><h4>Expand to more tasks</h4><p style="font-size: 13px;">Tier 1 success unlocks the data and confidence to tackle Tier 2 and 3.</p></div>
+    <div class="card"><div class="ico">💼</div><h4>Commercialize via qonvolv</h4><p style="font-size: 13px;">Proven solutions sold to broader industry. Internal R&D becomes external revenue.</p></div>
+  </div>
+</section>
+
+<!-- ==================== SECTION 5 ==================== -->
+<section id="s5">
+  <span class="section-tag">Section 5 · Ecosystem & Portfolio</span>
+  <h2>The EI ecosystem maps to five dimensions.</h2>
+  <p class="lede">The same five building blocks from Section 2 are also the five dimensions of the broader EI ecosystem. Mapping our engagement companies onto this framework reveals who does what, and where the critical gaps are.</p>
+
+  <table>
+    <thead><tr><th>Layer</th><th colspan="3">Players</th></tr></thead>
+    <tbody>
+      <tr><td><strong>SENSE</strong></td><td>LiZion Future <span style="color:var(--ink-soft);font-size:12px;">force sensors</span></td><td>TG0 <span style="color:var(--ink-soft);font-size:12px;">sensing materials</span></td><td>Sharpa <span style="color:var(--ink-soft);font-size:12px;">tactile skin</span></td></tr>
+      <tr><td><strong>THINK</strong></td><td>Physical Intelligence <span style="color:var(--ink-soft);font-size:12px;">π0 VLA</span></td><td>Noematrix <span style="color:var(--ink-soft);font-size:12px;">RISE force-centric VLA</span></td><td>Sharpa <span style="color:var(--ink-soft);font-size:12px;">CraftNet VTLA</span></td></tr>
+      <tr><td><strong>ACT</strong></td><td>LiZion Future <span style="color:var(--ink-soft);font-size:12px;">custom gripper</span></td><td>Flexiv <span style="color:var(--ink-soft);font-size:12px;">Rizon 7-axis adaptive arm</span></td><td>Sharpa <span style="color:var(--ink-soft);font-size:12px;">22-DOF dexterous hand</span></td></tr>
+      <tr><td><strong>SIMULATION</strong></td><td>Google <span style="color:var(--ink-soft);font-size:12px;">Open X dataset</span></td><td>Noematrix <span style="color:var(--ink-soft);font-size:12px;">Open X contributor</span></td><td>NVIDIA <span style="color:var(--ink-soft);font-size:12px;">Cosmos + Isaac Sim + Omniverse</span></td></tr>
+      <tr><td><strong>DATA</strong></td><td>qonvolv Ventures</td><td>Esquel Group</td><td>Tessellation</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top: 40px;">How are companies building their robot brains?</h3>
+  <p>Using the three-layer brain framework above, perception is universal. A genuine world model, the layer that plans before acting, is rare.</p>
+  <table>
+    <thead><tr><th>Company</th><th>SENSE</th><th>THINK</th><th>ACT</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Physical Intelligence (π)</strong></td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-on"></span> VLA fuses vision, language, touch. Tested at distribution shift.</td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-mid"></span> Closest to a world model in production. Multi-step planning via flow matching.</td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-on"></span> General VLA + flow matching. Same policy across 7 robot embodiments without retraining.</td></tr>
+      <tr><td><strong>Noematrix</strong></td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-on"></span> Force as primary perception input.</td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-mid"></span> RISE plans through live force feedback. Context-dependent.</td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-on"></span> Force-conditioned VLA. Motor commands adapt in real time to force readings, not just vision.</td></tr>
+      <tr><td><strong>Sharpa</strong></td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-on"></span> CraftNet VTLA fuses tactile + vision.</td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-mid"></span> Dual-system separates interaction (100Hz) from motion planning (10Hz).</td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-mid"></span> Tactile-conditioned VLA. 10Hz motion commands, 100Hz real-time adaptation.</td></tr>
+      <tr><td><strong>Flexiv</strong></td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-low"></span> Task-specific reasoning. Not a foundation model.</td><td><span class="dot dot-low"></span><span class="dot dot-off"></span><span class="dot dot-off"></span> Limited out-of-distribution generalization.</td><td><span class="dot dot-low"></span><span class="dot dot-off"></span><span class="dot dot-off"></span> Scripted action policies per task. Strong within trained tasks, brittle outside.</td></tr>
+      <tr><td><strong>LiZion</strong></td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-mid"></span> Embedded inference on sensor output only.</td><td><span class="dot dot-off"></span><span class="dot dot-off"></span><span class="dot dot-off"></span> SENSE layer player.</td><td><span class="dot dot-off"></span><span class="dot dot-off"></span><span class="dot dot-off"></span> Does not generate motor commands.</td></tr>
+      <tr><td><strong>TG0</strong></td><td><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-mid"></span> Material-level signal processing only.</td><td><span class="dot dot-off"></span><span class="dot dot-off"></span><span class="dot dot-off"></span> SENSE layer player.</td><td><span class="dot dot-off"></span><span class="dot dot-off"></span><span class="dot dot-off"></span> Does not generate motor commands.</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size: 11px; color: var(--ink-soft); margin-top: 8px;"><span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-on"></span> Strong &nbsp; <span class="dot dot-on"></span><span class="dot dot-on"></span><span class="dot dot-mid"></span> Moderate &nbsp; <span class="dot dot-low"></span><span class="dot dot-off"></span><span class="dot dot-off"></span> Early &nbsp; <span class="dot dot-off"></span><span class="dot dot-off"></span><span class="dot dot-off"></span> N/A</p>
+
+  <h3 style="margin-top: 40px;">No company sits in the top-right quadrant</h3>
+  <p>Collapsing the brain assessment and hardware assessment into a single 2x2 reveals the core portfolio insight. THINK (AI brain depth) and SENSE+ACT (hardware capability) are the two dimensions that define a company's position. Nobody is strong across both.</p>
+  <div class="quad-grid">
+    <svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+      <line x1="60" y1="380" x2="560" y2="380" stroke="#999" stroke-width="1.5"/>
+      <line x1="60" y1="20" x2="60" y2="380" stroke="#999" stroke-width="1.5"/>
+      <text x="310" y="412" text-anchor="middle" font-size="13" fill="#1A1A2E" font-weight="600">THINK capability →</text>
+      <text x="20" y="200" text-anchor="middle" font-size="13" fill="#1A1A2E" font-weight="600" transform="rotate(-90 20 200)">SENSE + ACT capability →</text>
+      <!-- Full solution zone -->
+      <rect x="430" y="40" width="130" height="130" fill="#FFF7E6" stroke="#FBE4A3" stroke-dasharray="6 4"/>
+      <text x="495" y="105" text-anchor="middle" font-size="11" fill="#78350F" font-weight="600">Full Solution</text>
+      <text x="495" y="120" text-anchor="middle" font-size="11" fill="#78350F">Zone — empty</text>
+      <!-- Companies -->
+      <g font-size="12" font-weight="600" fill="#5B2EFF">
+        <circle cx="160" cy="120" r="6" fill="#5B2EFF"/><text x="170" y="124">LiZion Future</text>
+        <circle cx="180" cy="160" r="6" fill="#5B2EFF"/><text x="190" y="164">TG0</text>
+        <circle cx="380" cy="80" r="6" fill="#5B2EFF"/><text x="390" y="84">Sharpa</text>
+        <circle cx="280" cy="220" r="6" fill="#5B2EFF"/><text x="290" y="224">Flexiv</text>
+        <circle cx="340" cy="270" r="6" fill="#5B2EFF"/><text x="350" y="274">Noematrix</text>
+        <circle cx="500" cy="320" r="6" fill="#5B2EFF"/><text x="430" y="324" text-anchor="end">Physical Intelligence</text>
+      </g>
+    </svg>
+  </div>
+
+  <h3 style="margin-top: 40px;">No company is strong across all five layers</h3>
+  <p>The heatmap view applies all five building blocks simultaneously. Every company has a clear strength zone and clear gaps. The winning combination is the best player at each layer, coordinated.</p>
+  <table>
+    <thead><tr><th>Company</th><th>SENSE</th><th>THINK</th><th>ACT</th><th>DATA</th><th>SIMULATION</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Physical Intelligence (π)</strong></td>
+        <td><span class="dot dot-low"></span> Partner sensors</td>
+        <td><span class="dot dot-on"></span> Frontier VLA</td>
+        <td><span class="dot dot-low"></span> Hardware-agnostic</td>
+        <td><span class="dot dot-mid"></span> Open X contributor</td>
+        <td><span class="dot dot-low"></span> Uses NVIDIA stack</td></tr>
+      <tr><td><strong>Noematrix</strong></td>
+        <td><span class="dot dot-mid"></span> Force-centric input</td>
+        <td><span class="dot dot-on"></span> RISE framework</td>
+        <td><span class="dot dot-mid"></span> Force policies via Flexiv</td>
+        <td><span class="dot dot-on"></span> RH20T (100TB)</td>
+        <td><span class="dot dot-mid"></span> Open X + NVIDIA partner</td></tr>
+      <tr><td><strong>Sharpa</strong></td>
+        <td><span class="dot dot-on"></span> Proprietary tactile skin</td>
+        <td><span class="dot dot-mid"></span> CraftNet VTLA</td>
+        <td><span class="dot dot-on"></span> 22 DOF hand</td>
+        <td><span class="dot dot-low"></span> Deployment-stage data</td>
+        <td><span class="dot dot-low"></span> NVIDIA partner</td></tr>
+      <tr><td><strong>Flexiv</strong></td>
+        <td><span class="dot dot-mid"></span> Wrist force/torque</td>
+        <td><span class="dot dot-low"></span> Task-specific only</td>
+        <td><span class="dot dot-on"></span> QDD Rizon arm</td>
+        <td><span class="dot dot-low"></span> Task-specific datasets</td>
+        <td><span class="dot dot-mid"></span> Via Noematrix</td></tr>
+      <tr><td><strong>LiZion</strong></td>
+        <td><span class="dot dot-on"></span> Force sensors + e-skin</td>
+        <td><span class="dot dot-off"></span> Not their layer</td>
+        <td><span class="dot dot-mid"></span> Custom grippers</td>
+        <td><span class="dot dot-low"></span> Sensor-level data only</td>
+        <td><span class="dot dot-off"></span> Not their layer</td></tr>
+      <tr><td><strong>TG0</strong></td>
+        <td><span class="dot dot-mid"></span> Sensing materials</td>
+        <td><span class="dot dot-off"></span> Not their layer</td>
+        <td><span class="dot dot-off"></span> Not their layer</td>
+        <td><span class="dot dot-off"></span> Not their layer</td>
+        <td><span class="dot dot-off"></span> Not their layer</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size: 11px; color: var(--ink-soft); margin-top: 8px;"><span class="dot dot-on"></span> Primary strength &nbsp; <span class="dot dot-mid"></span> Capable &nbsp; <span class="dot dot-low"></span> Early stage &nbsp; <span class="dot dot-off"></span> Not their layer</p>
+
+  <h3 style="margin-top: 40px;">Company deep-dives</h3>
+  <p>Click each card to expand. Pulled from Section 5 deep-dive slides.</p>
+
+  <details>
+    <summary>Physical Intelligence (π) — SF, ~2024 · $400M+ raised, ~$5.6B valuation</summary>
+    <div class="body-grid">
+      <div>
+        <h4>Company at a glance</h4>
+        <ul class="mini-list">
+          <li>Founded San Francisco, 2024</li>
+          <li>Team: Sergey Levine (UC Berkeley), Karol Hausman (Stanford), 100+</li>
+          <li>Vision: foundation model for general-purpose robotics</li>
+        </ul>
+        <h4 style="margin-top: 12px;">Core product</h4>
+        <ul class="mini-list">
+          <li>π₀: VLA model (PaliGemma VLM + diffusion action expert); 68 tasks, 7 robot types; open-sourced</li>
+          <li>π₀-FAST: 5x faster training via novel tokenizer</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Technical edge</h4>
+        <ul class="mini-list">
+          <li>50Hz real-time control; zero-shot generalization to unseen garments</li>
+          <li>Chose laundry folding as benchmark: hardest deformable object task</li>
+          <li>L3 dominant; L4 strong</li>
+        </ul>
+        <h4 style="margin-top: 12px;">Our engagement</h4>
+        <ul class="mini-list">
+          <li>MNDA signed (Jan 2026); task deck shared (Feb 2026)</li>
+          <li>PI exploring 3 tasks; ironing/folding SOPs shared</li>
+          <li>Physical materials shipping to SF warehouse</li>
+          <li><strong>Not investing — $5.6B too expensive</strong></li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Noematrix / 穹彻智能 — Shanghai, 2023 · ~$700M valuation</summary>
+    <div class="body-grid">
+      <div>
+        <h4>Company at a glance</h4>
+        <ul class="mini-list">
+          <li>Founded Shanghai, 2023 (spun from Flexiv)</li>
+          <li>Team: Wang Shiquan (Stanford PhD), Lu Cewu (SJTU / MIT TR35), Liu Yang (ex-Alibaba). 100+</li>
+          <li>Vision: force-centric EI brain for general-purpose robots</li>
+          <li>Funding: RMB 5B (~$700M). Current round targeting RMB 3B</li>
+        </ul>
+        <h4 style="margin-top: 12px;">Core product</h4>
+        <ul class="mini-list">
+          <li>Force-centric VLA (RISE framework)</li>
+          <li>AnyGrasp: >95% success, 900+ MPPH</li>
+          <li>RH20T: 100TB, 40M robot visual frames</li>
+          <li>ICRA 2025 Best Paper; only Chinese institution in Open X Dataset</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Textile applications</h4>
+        <ul class="mini-list">
+          <li>Yarn loading (上纱), interlining positioning (粘朴), ironing/folding (烫折)</li>
+          <li>First Chinese EI company to demonstrate laundry folding (2024)</li>
+        </ul>
+        <h4 style="margin-top: 12px;">Our engagement</h4>
+        <ul class="mini-list">
+          <li>Two factory visits (Changzhou, Gaoming)</li>
+          <li>NDA sent; MOU under discussion; dataroom pending</li>
+          <li>Investors: Sequoia China, Alibaba, Prosperity7</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Flexiv / 非夕科技 — Silicon Valley + Shanghai + Beijing + Munich + Singapore, 2016 · ~$1.4B valuation</summary>
+    <div class="body-grid">
+      <div>
+        <h4>Company at a glance</h4>
+        <ul class="mini-list">
+          <li>Founded 2016, multi-region</li>
+          <li>Team: Wang Shiquan (CEO, Stanford)</li>
+          <li>Vision: world's leading adaptive robot company</li>
+          <li>Funding: $322M+ / ~$1.4B. Latest: Invus (March 2026)</li>
+        </ul>
+        <h4 style="margin-top: 12px;">Core product</h4>
+        <ul class="mini-list">
+          <li>Rizon: 7-axis adaptive arms, whole-body force control</li>
+          <li>IP65, dual CE + ETL certified</li>
+          <li>Proven for car seat ironing (transferable to garments)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Strategic positioning</h4>
+        <ul class="mini-list">
+          <li>L1 dominant; production-ready at L5</li>
+          <li>NVIDIA simulation partnership (2025)</li>
+          <li>20%+ shareholder of Noematrix</li>
+          <li>Global: NA, China, Europe, Japan, India, Singapore</li>
+        </ul>
+        <h4 style="margin-top: 12px;">Our engagement</h4>
+        <ul class="mini-list">
+          <li>Attended product launch in Shanghai</li>
+          <li>Indirect exposure via Noematrix</li>
+          <li>Scheduling factory visit</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>LiZion Future / 立智未来 — Guangzhou, March 2025 · ~RMB 80M valuation</summary>
+    <div class="body-grid">
+      <div>
+        <h4>Company at a glance</h4>
+        <ul class="mini-list">
+          <li>Founded Guangzhou, March 2025</li>
+          <li>Team: Li Xuyang (李旭阳), Shi Guangming (石光明), ~20 FT + grad students</li>
+          <li>Vision: making robots feel</li>
+        </ul>
+        <h4 style="margin-top: 12px;">Breakthrough technology</h4>
+        <ul class="mini-list">
+          <li>Six-axis force sensor: 72% cost reduction, 39% performance gain vs market</li>
+          <li>Flexible e-skin: 0.1mm resolution, 10,000x super-resolution</li>
+          <li>Fabric-state recognition model in milliseconds</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Textile engagement</h4>
+        <ul class="mini-list">
+          <li>Two factory visits (Changzhou, Gaoming)</li>
+          <li>Live demo with our fabric samples</li>
+          <li>Phase 1 pilot: ~RMB 100K, targeting 80–90% pick success by month 6</li>
+          <li>PI uses LiZion sensors (via Guanghetong)</li>
+        </ul>
+        <h4 style="margin-top: 12px;">Our engagement</h4>
+        <ul class="mini-list">
+          <li>Negotiating exclusive/priority textile cooperation rights</li>
+          <li>Three-layer agreement: investment + framework + per-project</li>
+          <li>Pre-existing IP stays with originator; joint IP belongs to qonvolv</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>TG0 — London + Hong Kong Science Park, 2015</summary>
+    <div class="body-grid">
+      <div>
+        <h4>Company at a glance</h4>
+        <ul class="mini-list">
+          <li>Team: Ming Kong, Dr. Liucheng Guo (Royal Academy of Engineering). ~50</li>
+          <li>Vision: AI-powered sensing materials for touch</li>
+          <li>Recognition: Deloitte UK Fast50 #1 hardware; No. 10 Downing Street; EIC backed</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Core technology + engagement</h4>
+        <ul class="mini-list">
+          <li>Transforms ordinary materials into intelligent sensing interfaces; no discrete sensors needed</li>
+          <li>Touch sensing on metal (impossible for capacitive/resistive)</li>
+          <li>Minimal wiring, no failure points, ultra-low power</li>
+          <li>Initial evaluation; company intro received. Next: assess data room.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Sharpa — Singapore + Shanghai + Mountain View, 2024 · Unicorn (~$1B+)</summary>
+    <div class="body-grid">
+      <div>
+        <h4>Company at a glance</h4>
+        <ul class="mini-list">
+          <li>Founded 2024, multi-region</li>
+          <li>Team from Hesai Technology (global LiDAR leader). 100+</li>
+          <li>Vision: manufacture time by making robots useful</li>
+          <li>Series A ~$100M. Meituan invested.</li>
+        </ul>
+        <h4 style="margin-top: 12px;">Core technology</h4>
+        <ul class="mini-list">
+          <li>22 DOF, 1:1 human scale</li>
+          <li>1,000+ tactile pixels/fingertip, 0.005N precision, 180Hz update</li>
+          <li>30+ consecutive autonomous steps (longest on record)</li>
+          <li>CraftNet: hierarchical VTLA model</li>
+          <li>Mass production Oct 2025; ~$50K/unit</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Textile engagement</h4>
+        <ul class="mini-list">
+          <li>Tactile sensitivity ideal for Tier 3: 3D sewing, complex assembly</li>
+          <li>CraftNet's fine manipulation aligns with fabric handling</li>
+          <li>CES 2026 Innovation Award; NVIDIA Inception member</li>
+          <li>Early stage; on radar for Shanghai visit</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- ==================== SECTION 6 ==================== -->
+<section id="s6">
+  <span class="section-tag">Section 6 · Our View & Recommendation</span>
+  <h2>We invest to build together, not just to hold a position.</h2>
+  <p class="lede">Capital is the entry ticket. The value-add is everything else. The companies best positioned to win in textile EI are those that build in deep strategic alignment with a domain partner who understands what the problem actually requires.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Our engagement angle</h3>
+      <ul class="mini-list">
+        <li><strong>Collaboration first.</strong> Investment can follow.</li>
+        <li>We value partnership more than market hype</li>
+        <li><strong>Target:</strong> early-stage companies in the enabling layers (sensing, perception, domain-specific manipulation tools). Companies where our involvement changes what they can build, not just where they deploy.</li>
+        <li>The right partner values domain expertise as a strategic asset: our factories as data infrastructure, our SOPs as training material, our operational knowledge as a moat.</li>
+      </ul>
+    </div>
+    <div class="card card-warm">
+      <h3>Humanoid? Our view</h3>
+      <ul class="mini-list">
+        <li>Humanoids are still expensive and best destined for applications with social/emotional value (domestic, retail, service, edutainment)</li>
+        <li>Humanoids are overkill for industrial automation, especially low-margin settings like garment</li>
+        <li><strong>Our focus:</strong> modular approaches and purpose-built designs for form-task fit</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">What we bring to every partnership · what the right partner looks like</h3>
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>What we bring</h4>
+      <ul class="mini-list">
+        <li><strong>Domain expertise.</strong> 40+ years of textile manufacturing knowledge that cannot be bought, simulated, or scraped.</li>
+        <li><strong>Factory validation.</strong> Real production lines in China and Vietnam. The only environment where any EI claim is actually tested.</li>
+        <li><strong>Data generation.</strong> Every robot deployment on our lines produces proprietary fabric-interaction data. Our factories are data infrastructure.</li>
+        <li><strong>Commercialization path.</strong> qonvolv's track record taking factory-floor innovations to global markets. A portfolio company does not need to build a sales engine from scratch.</li>
+      </ul>
+    </div>
+    <div class="card card-soft">
+      <h4>What the right partner looks like</h4>
+      <ul class="mini-list">
+        <li>Building in the enabling layers, not trying to own the full stack</li>
+        <li>Early enough that our contribution changes the trajectory of what they build</li>
+        <li>Willing to codevelop: shared IP frameworks, joint dataset contributions, genuine skin in the game</li>
+        <li>Understands textile automation as a complex domain problem to solve together, not a market to sell into</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">Invest, partner, or monitor: how we engage at each stage</h3>
+  <p>Every company in our pipeline is assessed against one question: how much does our involvement change what they can build? The answer determines the engagement tier.</p>
+  <div>
+    <div class="funnel-step funnel-1"><strong>Monitor.</strong> Promising technology. Fit or stage not yet right for deeper engagement. Stay close; do not commit capital.</div>
+    <div class="funnel-step funnel-2"><strong>Partner.</strong> Critical capability at a specific layer. Valuable collaboration, but equity alignment is premature or too expensive. Structure as task collaboration, data-sharing, or MOU.</div>
+    <div class="funnel-step funnel-3"><strong>Invest.</strong> Deep strategic alignment. Mutual dependency. We change what they build; they change what we can do. Co-develop IP, share data, grow together.</div>
+  </div>
+  <div class="key-callout" style="margin-top: 16px;">
+    <p><strong>What deep strategic alignment requires:</strong> building in enabling layers where our domain contribution is the unlock; valuation reflecting co-development upside not just financial return; IP and data terms creating joint ownership; a clear path for validated solutions to flow through qonvolv to external markets.</p>
+  </div>
+</section>
+
+<!-- ==================== SECTION 7 ==================== -->
+<section id="s7">
+  <span class="section-tag">Section 7 · Conclusion</span>
+  <h2>We play the vertical game in textile and garment.</h2>
+  <p class="lede">EI competition splits across two axes. We choose vertical depth over horizontal breadth.</p>
+
+  <div class="grid grid-3">
+    <div class="card"><h4>Two axes</h4><p style="font-size: 13px;"><strong>Horizontal:</strong> sense / think / act tech providers.<br><strong>Vertical:</strong> auto, electronics, food, textile.</p></div>
+    <div class="card"><h4>Each vertical = own rules</h4><p style="font-size: 13px;">Industry-specific data, painpoints, and economics. Horizontal wins breadth. Vertical wins margin.</p></div>
+    <div class="card card-soft"><h4>Our game</h4><p style="font-size: 13px;">Skip the horizontal tech race. Dominate via operator depth + integrated data + distribution reach. Vision: defining the status quo for tomorrow in textile and garment manufacturing excellence.</p></div>
+  </div>
+
+  <h3 style="margin-top: 40px;">We win by owning the solution, not the parts.</h3>
+  <p>Our edge is curating and commissioning the best partners, uniquely positioned as user, distributor, and investor.</p>
+  <div class="grid grid-3">
+    <div class="card">
+      <h4>What we do</h4>
+      <ul class="mini-list">
+        <li>Define spec; commission partners; white-label the rest</li>
+        <li><strong>Dyson model:</strong> curate best parts, own the user experience</li>
+        <li>No reinventing grippers, sensors, models</li>
+      </ul>
+    </div>
+    <div class="card card-soft">
+      <h4>Why we are defensible</h4>
+      <ul class="mini-list">
+        <li><strong>User:</strong> domain operators with vertical-integrated data (cotton → garment)</li>
+        <li><strong>Distributor:</strong> commercialization track record, regional reach</li>
+        <li><strong>Investor (CVC):</strong> capital + partner-engagement arm. Buy alignment, not licenses.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Why invest now</h4>
+      <ul class="mini-list">
+        <li>Deepen alignment in incentives: cap table = shared upside; partners prioritize our use cases</li>
+        <li>Buy time for exploration: extend window for deeper collaborations; more iterations before locking the stack</li>
+        <li>Capture upside beyond our vertical: horizontal partners grow beyond textile; equity catches secondary gains</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px;">Why now</h3>
+  <div class="grid grid-3">
+    <div class="card"><strong>Textile = last frontier.</strong><p style="font-size:13px;">Other verticals are red ocean. Margin lives behind the hard problems.</p></div>
+    <div class="card"><strong>Difficulty kept others out.</strong><p style="font-size:13px;">Difficulty equals margin. Now solvable.</p></div>
+    <div class="card"><strong>Integrator finally arrived.</strong><p style="font-size:13px;">EI maturity reached the threshold where a domain operator with shop-floor depth can act as integrator.</p></div>
+  </div>
+
+  <h3 style="margin-top: 40px;">We will amplify our edge, avoid the sins, and target.</h3>
+  <p>Three commitments framing what qV does next: what to double down on, what to avoid, what success looks like by 2027.</p>
+  <div class="grid grid-3">
+    <div class="card" style="border-color: var(--purple);">
+      <h4>DO: amplify edge</h4>
+      <ul class="mini-list">
+        <li><strong>Data assetization.</strong> Capture shop-floor data systematically; structure into a monetizable asset</li>
+        <li><strong>Operator depth.</strong> Codify tacit knowledge into specs</li>
+        <li><strong>Vertical integration.</strong> Cotton → garment full coverage; full-context training data and deploy sites</li>
+        <li><strong>Thought leadership.</strong> Industry events, salons, papers, partner forums</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color: var(--red);">
+      <h4 style="color: var(--red);">DON'T: sins</h4>
+      <ul class="mini-list">
+        <li><strong>Don't build from zero and own every component.</strong> Sensors, chips, dye formulas — incumbents win. Today's lead becomes tomorrow's catch-up. Commission, don't build.</li>
+        <li><strong>Don't do academic-only research.</strong> No deploy intent equals no commercial signal. Research needs a landing pad in production.</li>
+      </ul>
+    </div>
+    <div class="card card-warm">
+      <h4 style="color: var(--purple-deep);">ASK: 2027 target</h4>
+      <ul class="mini-list">
+        <li>Attracted X partners actively exploring with us</li>
+        <li>>x successful pilots passing acceptance criteria</li>
+        <li><strong>Resourcing implication:</strong> hiring + BD headcount. Each pilot has a capacity ceiling.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== REFLECT ==================== -->
+<section id="reflect" class="reflect">
+  <h2>Open questions for Alfred</h2>
+  <p>The deck is settled positioning. These are the parts that are still moving, pulled from the wiki domain page and the current state of qonvolv engagements.</p>
+  <ol>
+    <li><strong>Real moat location.</strong> Hardware, foundation model, or domain data? Current thesis is data, but Sharpa's tactile skin and Flexiv's actuator architecture are doing real work too. Where would you put the chips today?</li>
+    <li><strong>VLA vs JEPA.</strong> Every company in the portfolio is VLA-lineage. LeWM (Lecun/Maes 2026) is the first end-to-end JEPA realization. Does textile DOM, with its long-horizon planning needs, become a JEPA-native problem? When does a major lab switch?</li>
+    <li><strong>PI investment ceiling.</strong> $5.6B is too expensive today. Is there a structure (data partnership, milestone equity, LP-side allocation) that gets exposure without a cap-table position?</li>
+    <li><strong>Entity List risk on PI.</strong> What is the true ceiling for qonvolv's relationship with PI given Esquel's Entity List status? Commercial partnership only, or is formal investment achievable?</li>
+    <li><strong>Defensible lead vs Chinese OEMs.</strong> Other large Asian textile groups can replicate the "domain layer" pitch. What in qonvolv's setup is hardest to copy in 12 months?</li>
+    <li><strong>Robotics breakout timing.</strong> When does this actually happen in textile specifically? Tier 1 (yarn loading, ironing, interlining) within 18 months feels right. Tier 3 (3D sewing) is still 3–5 years. Does that match your gut?</li>
+    <li><strong>Conclusion section freshness.</strong> The Section 7 slides are marked NEW. Are the Do/Don't/Ask commitments still where you'd land them today, or has anything shifted in the last few weeks?</li>
+  </ol>
+  <p style="margin-top: 24px; font-size: 13px; opacity: 0.8;">Bring reactions back to Claude Code. This artifact does not capture them — the wiki and your self-pages do.</p>
+</section>
+
+<footer>
+  <p>Embodied Intelligence Thematic Study · Interactive companion to <code>projects/archive/embodied-intelligence-thematic-study/WIP-Embodied Intelligence Thematic Study.pdf</code></p>
+  <p>Generated 2026-05-12 · Built under <code>wiki/_workflows/html.md</code> · See <code>manifest.md</code> for provenance</p>
+</footer>
+
+</main>
+</body>
+</html>

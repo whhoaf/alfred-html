@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Embodied Intelligence — Investment Committee Review · May 2026</title>
+<style>
+  :root {
+    --purple: #5B2EFF;
+    --purple-soft: #EDE7FF;
+    --purple-deep: #2A1378;
+    --purple-mid: #7B5BFF;
+    --ink: #1A1A2E;
+    --ink-soft: #4A4A66;
+    --ink-light: #6B6B85;
+    --bg: #F0F0F5;
+    --card: #FFFFFF;
+    --border: #E4E4F0;
+    --amber: #F59E0B;
+    --amber-soft: #FEF3C7;
+    --green: #10B981;
+    --red: #EF4444;
+    --shadow: 0 8px 32px rgba(20,15,60,0.10);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif; color: var(--ink); }
+  body { display: flex; flex-direction: column; align-items: center; padding: 24px 24px 80px; min-height: 100vh; }
+  a { color: var(--purple); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Top control strip */
+  .controls {
+    width: 1280px; max-width: 100%;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 8px 16px; font-size: 12px; color: var(--ink-soft);
+  }
+  .controls .left { display: flex; gap: 12px; align-items: center; }
+  .controls .deckmeta { font-weight: 600; color: var(--purple-deep); letter-spacing: 0.04em; }
+  .controls button {
+    font-size: 12px; padding: 6px 12px;
+    border: 1px solid var(--border); background: white;
+    border-radius: 6px; cursor: pointer; color: var(--ink);
+  }
+  .controls button:hover { background: var(--purple-soft); border-color: var(--purple); color: var(--purple-deep); }
+
+  /* Slide container */
+  .slide {
+    width: 1280px;
+    min-height: 720px;
+    max-width: 100%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 36px 48px 28px;
+    margin-bottom: 22px;
+    position: relative;
+    display: flex; flex-direction: column;
+  }
+
+  /* Slide header strip */
+  .slide-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--border); padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  .brand { font-size: 11px; letter-spacing: 0.45em; color: var(--purple); font-weight: 700; }
+  .slide-num { font-size: 11px; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+  .meta { font-size: 11px; color: var(--ink-light); }
+
+  /* Footer */
+  .slide-footer {
+    margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 10px; color: var(--ink-light);
+  }
+
+  /* Typography */
+  .section-tag {
+    display: inline-block; background: var(--purple-soft); color: var(--purple-deep);
+    padding: 4px 10px; border-radius: 6px; font-size: 10.5px;
+    font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 { font-size: 36px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.02em; }
+  h2 { font-size: 26px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -0.018em; }
+  h3 { font-size: 17px; line-height: 1.3; margin: 0 0 8px; color: var(--purple-deep); }
+  h4 { font-size: 12.5px; margin: 0 0 6px; color: var(--purple); text-transform: uppercase; letter-spacing: 0.08em; }
+  p { margin: 0 0 10px; color: var(--ink-soft); line-height: 1.5; font-size: 14px; }
+  .lede { font-size: 16px; color: var(--ink); margin-bottom: 18px; max-width: 980px; }
+
+  /* Grids */
+  .grid { display: grid; gap: 14px; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+  /* Cards */
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .card-soft { background: var(--purple-soft); border-color: transparent; }
+  .card-warm { background: #FFF7E6; border-color: #FBE4A3; }
+  .card-deep { background: var(--purple-deep); color: white; border-color: transparent; }
+  .card-deep h3, .card-deep h4 { color: white; }
+  .card-deep p, .card-deep li { color: rgba(255,255,255,0.88); }
+
+  /* Stat block */
+  .stat { text-align: center; padding: 18px 12px; }
+  .stat-num { font-size: 30px; font-weight: 700; color: var(--purple); letter-spacing: -0.02em; line-height: 1.1; }
+  .stat-label { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+  .stat-sub { font-size: 10.5px; color: var(--ink-soft); margin-top: 2px; opacity: 0.75; }
+
+  /* Pills */
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 10.5px; font-weight: 600; }
+  .pill-green { background: #DCFCE7; color: #14532D; }
+  .pill-amber { background: #FEF3C7; color: #78350F; }
+  .pill-red   { background: #FEE2E2; color: #7F1D1D; }
+  .pill-purple { background: var(--purple-soft); color: var(--purple-deep); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 10px; background: var(--purple-soft); color: var(--purple-deep); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  td { padding: 8px 10px; border-top: 1px solid var(--border); vertical-align: top; }
+
+  /* Mini-list */
+  ul.mini { list-style: none; padding: 0; margin: 0; font-size: 13px; }
+  ul.mini li { padding: 3px 0; color: var(--ink-soft); line-height: 1.45; }
+  ul.mini li::before { content: "• "; color: var(--purple); margin-right: 4px; font-weight: 700; }
+  ul.mini li strong { color: var(--ink); font-weight: 700; }
+
+  /* Callout */
+  .callout {
+    background: var(--purple-deep); color: white;
+    padding: 16px 20px; border-radius: 10px;
+  }
+  .callout p { color: rgba(255,255,255,0.9); margin: 0; font-size: 14px; }
+  .callout strong { color: white; }
+
+  /* Building block tiles */
+  .bb {
+    text-align: center; padding: 14px 10px; border-radius: 10px;
+    background: var(--card); border: 1px solid var(--border);
+  }
+  .bb-active { background: #FFF4E0; border-color: #FCD9A6; }
+  .bb-enabling { background: #ECE6FF; border-color: #C8B8FF; }
+  .bb .ico {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: white; color: var(--purple);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 8px;
+  }
+  .bb h3 { font-size: 14px; margin: 4px 0 4px; }
+  .bb p { font-size: 12px; margin: 0; }
+
+  /* Funnel */
+  .funnel-step {
+    padding: 12px 16px; border-radius: 8px; margin-bottom: 6px;
+    color: white; font-size: 13px;
+  }
+  .funnel-1 { background: #C7BCFF; color: var(--purple-deep); }
+  .funnel-2 { background: var(--purple); }
+  .funnel-3 { background: var(--purple-deep); }
+
+  /* DO/DON'T/ASK panels */
+  .commit-panel {
+    border-radius: 10px; padding: 14px 16px; background: white;
+    border: 1px solid var(--border);
+  }
+  .commit-panel.do { border-left: 3px solid var(--purple); }
+  .commit-panel.dont { border-left: 3px solid var(--red); }
+  .commit-panel.ask { background: #FFF7E6; border-left: 3px solid var(--amber); border-color: #FBE4A3; }
+  .commit-panel h3 { margin-bottom: 6px; }
+  .commit-panel.dont h3 { color: var(--red); }
+  .commit-panel.ask h3 { color: #78350F; }
+
+  /* Hero cover */
+  .cover {
+    text-align: center;
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 60%, var(--purple-mid) 100%);
+    color: white;
+    border-radius: 10px;
+    padding: 80px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .cover .brand { color: rgba(255,255,255,0.85); font-size: 12px; letter-spacing: 0.5em; }
+  .cover h1 { font-size: 46px; margin: 18px 0 10px; color: white; }
+  .cover .sub { font-size: 17px; color: rgba(255,255,255,0.88); max-width: 720px; margin: 0 auto 22px; }
+  .cover .meta { color: rgba(255,255,255,0.7); font-size: 13px; }
+
+  /* Aspiration strip used on board-summary patterns */
+  .aspire {
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 100%);
+    color: white; padding: 12px 18px; border-radius: 8px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .aspire .label { font-size: 10px; letter-spacing: 0.25em; opacity: 0.75; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+  .aspire .text { font-size: 14px; font-weight: 600; }
+
+  /* Primary role band */
+  .primary-band {
+    background: white; border: 2px solid var(--purple); border-radius: 10px;
+    padding: 12px 18px; display: flex; align-items: center; gap: 14px;
+  }
+  .primary-band .pre {
+    background: var(--purple); color: white;
+    font-size: 10px; letter-spacing: 0.18em; font-weight: 700; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 4px; white-space: nowrap;
+  }
+  .primary-band .ico { font-size: 22px; }
+  .primary-band .role { font-size: 17px; font-weight: 700; color: var(--purple-deep); white-space: nowrap; }
+  .primary-band .divider { width: 1px; align-self: stretch; background: var(--border); margin: 0 4px; }
+  .primary-band .desc { font-size: 13.5px; color: var(--ink); line-height: 1.4; }
+  .primary-band .desc strong { color: var(--purple-deep); font-weight: 700; }
+
+  /* Engage cards */
+  .engage-card {
+    background: var(--purple-soft); border-radius: 8px;
+    padding: 12px 14px; position: relative;
+  }
+  .engage-card .num {
+    position: absolute; top: 8px; right: 12px;
+    font-size: 22px; font-weight: 800; color: var(--purple); opacity: 0.25;
+    line-height: 1;
+  }
+  .engage-card .step { font-size: 13px; font-weight: 700; color: var(--purple-deep); margin-bottom: 2px; }
+  .engage-card .text { font-size: 12px; color: var(--ink); line-height: 1.4; }
+
+  /* Example slide treatments */
+  .example-band {
+    background: linear-gradient(90deg, var(--purple-soft) 0%, transparent 100%);
+    padding: 12px 16px; border-radius: 8px;
+    display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .example-band .tag {
+    background: var(--purple); color: white; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 4px; white-space: nowrap;
+  }
+  .example-band .name { font-size: 18px; font-weight: 700; color: var(--purple-deep); }
+  .example-band .pos { font-size: 12px; color: var(--ink-soft); }
+  .badge { display: inline-block; font-size: 11px; padding: 3px 8px; border-radius: 99px; font-weight: 600; }
+  .badge-green { background: #DCFCE7; color: #14532D; }
+  .badge-amber { background: #FEF3C7; color: #78350F; }
+
+  /* Print */
+  @media print {
+    body { background: white; padding: 0; }
+    .controls { display: none; }
+    .slide { box-shadow: none; border-radius: 0; page-break-after: always; min-height: auto; margin: 0; }
+    .cover { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <div class="left">
+    <span class="deckmeta">qV · EI · IC Review</span>
+    <span>10 slides · ~15 min · scroll or print to PDF</span>
+  </div>
+  <button onclick="window.print()">Print to PDF</button>
+</div>
+
+<!-- ==================== SLIDE 1 · COVER ==================== -->
+<div class="slide">
+  <div class="cover">
+    <div class="brand">QONVOLV VENTURES</div>
+    <h1>Embodied Intelligence</h1>
+    <p class="sub">Why this theme, what we are building, and how we engage. With two live examples: one we invest in, one we collaborate with.</p>
+    <div class="meta">Investment Committee Review · May 2026 · Alfred Ho, Leslie Chung, Jacky Yuen · A Tessellation Company</div>
+  </div>
+  <div class="slide-footer">
+    <div>Condensed from EI Thematic Study (Apr 2026) and the Board Summary Slide.</div>
+    <div>Slide 1 / 10</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 2 · VISION ==================== -->
+<div class="slide">
+  <header class="slide-header">
+    <span class="brand">QONVOLV VENTURES</span>
+    <span class="meta">IC Review · May 2026</span>
+  </header>
+  <span class="section-tag">01 · Vision</span>
+  <h2>Our embodied intelligence vision is the textile expression of autonomation: zero manual labour at the dull, dirty, and dangerous tasks.</h2>
+  <p class="lede">Autonomation is the lean-manufacturing principle behind qonvolv Ventures' parent vision. The remainder of this review shows how embodied intelligence delivers it inside the textile and apparel supply chain.</p>
+
+  <!-- Definition card: what autonomation means -->
+  <div style="background: var(--purple-soft); border-radius: 12px; padding: 22px 26px; margin-bottom: 16px;">
+    <div style="display: grid; grid-template-columns: 220px 1fr; gap: 28px; align-items: center;">
+      <div>
+        <div style="font-size: 10px; letter-spacing: 0.25em; color: var(--purple); font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Lean manufacturing concept</div>
+        <div style="font-size: 32px; font-weight: 700; color: var(--purple-deep); line-height: 1.05; margin-bottom: 6px;">Autonomation</div>
+        <div style="font-size: 13px; color: var(--ink-soft); line-height: 1.45;">自働化 · Jidoka<br>Coined by Toyota Production System</div>
+      </div>
+      <div>
+        <p style="font-size: 14px; margin: 0 0 6px; color: var(--ink); line-height: 1.55;"><strong>"Automation with a human touch."</strong> Machines automatically detect abnormalities and stop, separating human work from machine work.</p>
+        <p style="font-size: 13.5px; margin: 0; color: var(--ink-soft); line-height: 1.5;">Operators intervene only when judgment is required; machines handle the repetitive, hazardous, and degrading tasks. Workers move up the value chain rather than being replaced by it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vision statement hero -->
+  <div style="background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 100%); color: white; border-radius: 12px; padding: 26px 32px;">
+    <div style="font-size: 10px; letter-spacing: 0.35em; color: rgba(255,255,255,0.8); font-weight: 700; text-transform: uppercase; margin-bottom: 10px;">qonvolv ventures autonomation vision</div>
+    <div style="font-size: 26px; font-weight: 700; line-height: 1.35;">"Zero manual labour at <span style="color: #FCD34D;">dull</span>, <span style="color: #FCD34D;">dirty</span>, or <span style="color: #FCD34D;">dangerous</span> tasks across the textile and apparel supply chain."</div>
+  </div>
+
+  <div class="slide-footer">
+    <div>Vision per qonvolv Ventures parent deck (selected from three proposed visions). Autonomation definition per Toyota Production System / Jidoka.</div>
+    <div>Slide 2 / 10</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 3 · WHY THIS VISION ==================== -->
+<div class="slide">
+  <header class="slide-header">
+    <span class="brand">QONVOLV VENTURES</span>
+    <span class="meta">IC Review · May 2026</span>
+  </header>
+  <span class="section-tag">02 · Why This Vision</span>
+  <h2>Conventional moves are exhausted, and the vision pays off for producers, employees, and consumers at the same time.</h2>
+  <p class="lede">First, the structural problems facing textile and apparel production. Then, the case for the vision as seen from each major stakeholder group.</p>
+
+  <h3>Key issues the industry is facing</h3>
+  <div class="grid grid-3" style="margin-bottom: 18px;">
+    <div class="card">
+      <h4>Aging workforce</h4>
+      <p style="font-size: 26px; font-weight: 700; color: var(--purple); margin: 4px 0 2px;">+9 yrs</p>
+      <p style="font-size: 12px;">Average age of Chinese migrant garment workers rose nine years in fifteen (2008-2023). The pipeline of new entrants is shrinking everywhere.</p>
+    </div>
+    <div class="card">
+      <h4>Cost spiral</h4>
+      <p style="font-size: 26px; font-weight: 700; color: var(--purple); margin: 4px 0 2px;">1.8 – 3.4×</p>
+      <p style="font-size: 12px;">Garment wages multiplied across China, Vietnam, Bangladesh, and Cambodia. Production economics no longer match the consumer-price expectations they were built on.</p>
+    </div>
+    <div class="card">
+      <h4>Escape valves closing</h4>
+      <p style="font-size: 26px; font-weight: 700; color: var(--purple); margin: 4px 0 2px;">Nowhere left</p>
+      <p style="font-size: 12px;">Myanmar conscription cut output ~20%. Ethiopia AGOA suspension. Bangladesh wage tripling. No cheaper country left to move production to.</p>
+    </div>
+  </div>
+
+  <h3>Importance to each major stakeholder</h3>
+  <div class="grid grid-3">
+    <div class="card card-soft">
+      <h4 style="color: var(--purple-deep);">🏭 &nbsp; Producer</h4>
+      <p style="font-size: 12.5px;">Compressing margins, rising wage bills, fragile geographic concentration. The vision restores production economics through automation that scales without relying on labour arbitrage.</p>
+    </div>
+    <div class="card card-soft">
+      <h4 style="color: var(--purple-deep);">👷 &nbsp; Employee</h4>
+      <p style="font-size: 12.5px;">Dull, repetitive, and physically taxing work drives young workers away. The vision lifts them off the dull, dirty, and dangerous tasks and into higher-skill, better-paid roles around the automation.</p>
+    </div>
+    <div class="card card-soft">
+      <h4 style="color: var(--purple-deep);">🛍️ &nbsp; Consumer</h4>
+      <p style="font-size: 12.5px;">Faster, more responsive lead times for on-demand styles, and consistent product quality from automated production that does not depend on operator variability.</p>
+    </div>
+  </div>
+
+  <div class="slide-footer">
+    <div>Industry data from EI Thematic Study Section 1. Stakeholder framing per IC steering committee.</div>
+    <div>Slide 3 / 10</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4 · WHY NOW ==================== -->
+<div class="slide">
+  <header class="slide-header">
+    <span class="brand">QONVOLV VENTURES</span>
+    <span class="meta">IC Review · May 2026</span>
+  </header>
+  <span class="section-tag">03 · Why Now</span>
+  <h2>The barriers that kept textile automation out of reach are dissolving now, as five enabling technologies catch up with each one.</h2>
+  <p class="lede">The problems have been known for decades. What changed is that the technology to solve them has matured all at the same time.</p>
+
+  <!-- Paired grid: 4 rows of (problem, arrow, technology) -->
+  <div style="display: grid; grid-template-columns: 1fr 44px 1fr; gap: 10px 14px; align-items: stretch;">
+    <!-- Header row -->
+    <h3 style="margin: 0 0 4px; color: var(--red);">The problems that held textile automation back</h3>
+    <div></div>
+    <h3 style="margin: 0 0 4px; color: var(--purple-deep);">The enabling technologies that now solve them</h3>
+
+    <!-- Row 1 -->
+    <div class="card" style="border-left: 3px solid var(--red); padding: 12px 14px;">
+      <h4 style="color: var(--red); margin-bottom: 4px;">Fabric deforms unpredictably</h4>
+      <p style="font-size: 12px; margin: 0;">Same push, different result across material, temperature, humidity. Cannot be scripted.</p>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--purple); font-weight: 700;">→</div>
+    <div class="card card-soft" style="padding: 12px 14px;">
+      <h4 style="color: var(--purple-deep); margin-bottom: 4px;">AI brains for robots</h4>
+      <p style="font-size: 12px; margin: 0;">Models learn fabric behaviour from examples and generalize to new materials, the way ChatGPT generalizes across text.</p>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="card" style="border-left: 3px solid var(--red); padding: 12px 14px;">
+      <h4 style="color: var(--red); margin-bottom: 4px;">Sub-mm precision under occlusion</h4>
+      <p style="font-size: 12px; margin: 0;">Seam allowances are 5-10mm. Wrinkles and folds block the camera at the moment of decision.</p>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--purple); font-weight: 700;">→</div>
+    <div class="card card-soft" style="padding: 12px 14px;">
+      <h4 style="color: var(--purple-deep); margin-bottom: 4px;">A sense of touch</h4>
+      <p style="font-size: 12px; margin: 0;">Robots feel material and detect slip the instant it begins, sensing what the camera cannot.</p>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="card" style="border-left: 3px solid var(--red); padding: 12px 14px;">
+      <h4 style="color: var(--red); margin-bottom: 4px;">Dozens of fabrics per factory</h4>
+      <p style="font-size: 12px; margin: 0;">Seasonal styles change constantly. Per-fabric training was too slow and expensive.</p>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--purple); font-weight: 700;">→</div>
+    <div class="card card-soft" style="padding: 12px 14px;">
+      <h4 style="color: var(--purple-deep); margin-bottom: 4px;">Virtual training grounds</h4>
+      <p style="font-size: 12px; margin: 0;">Robots practice millions of repetitions in simulation before touching real fabric.</p>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="card" style="border-left: 3px solid var(--red); padding: 12px 14px;">
+      <h4 style="color: var(--red); margin-bottom: 4px;">Real-time judgment on the floor</h4>
+      <p style="font-size: 12px; margin: 0;">Millisecond force and trajectory calls on every stitch. Cloud latency kills them.</p>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--purple); font-weight: 700;">→</div>
+    <div class="card card-soft" style="padding: 12px 14px;">
+      <h4 style="color: var(--purple-deep); margin-bottom: 4px;">On-device computing power</h4>
+      <p style="font-size: 12px; margin: 0;">Powerful chips now fit on the robot; decisions happen instantly on the floor.</p>
+    </div>
+
+    <!-- Row 5 -->
+    <div class="card" style="border-left: 3px solid var(--red); padding: 12px 14px;">
+      <h4 style="color: var(--red); margin-bottom: 4px;">Low-margin economics</h4>
+      <p style="font-size: 12px; margin: 0;">Single-digit operating margins. Traditional robotics cells (hundreds of thousands per station) never fit the capex budget.</p>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--purple); font-weight: 700;">→</div>
+    <div class="card card-soft" style="padding: 12px 14px;">
+      <h4 style="color: var(--purple-deep); margin-bottom: 4px;">Hardware cost collapse</h4>
+      <p style="font-size: 12px; margin: 0;">Chinese ecosystem (Unitree, Flexiv) dropped adaptive arms and tactile end-effectors 5-10× in 24 months.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 14px;">
+    <p><strong>Why now.</strong> Each of these enabling technologies was still a research problem five years ago. All five are in production deployment somewhere today. The convergence is what makes textile autonomation viable as a CVC theme right now.</p>
+  </div>
+
+  <div class="slide-footer">
+    <div>Sections 1 and 3 of EI Thematic Study · paired problem-to-technology view.</div>
+    <div>Slide 4 / 10</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 5 · ZOOMING ONTO EI ==================== -->
+<div class="slide">
+  <header class="slide-header">
+    <span class="brand">QONVOLV VENTURES</span>
+    <span class="meta">IC Review · May 2026</span>
+  </header>
+  <span class="section-tag">04 · Zooming Onto EI</span>
+  <h2>Five capability blocks define embodied intelligence, and the full-stack integration layer remains open.</h2>
+  <p class="lede">First, the anatomy. Then, the landscape of who builds what.</p>
+
+  <h3>Five building blocks. Three drive action, two make it learnable.</h3>
+  <div class="grid grid-5" style="gap: 10px; margin-bottom: 10px;">
+    <div class="bb bb-active"><div class="ico">👁️</div><h3>SENSE</h3><p>Cameras, touch, force. How the robot perceives material and contact.</p></div>
+    <div class="bb bb-active"><div class="ico">🧠</div><h3>THINK</h3><p>The AI brain. Reasons, plans, decides the next move.</p></div>
+    <div class="bb bb-active"><div class="ico">💪</div><h3>ACT</h3><p>Arms, grippers, end-effectors. How the robot moves.</p></div>
+    <div class="bb bb-enabling"><div class="ico">📚</div><h3>DATA</h3><p>Real interaction recordings from factories. Cannot be scraped.</p></div>
+    <div class="bb bb-enabling"><div class="ico">🌐</div><h3>SIMULATION</h3><p>Virtual training environments. Still weak on fabric.</p></div>
+  </div>
+  <div style="display: flex; gap: 14px; font-size: 11px; color: var(--ink-soft); margin-bottom: 18px; justify-content: center;">
+    <span><span style="display: inline-block; width: 10px; height: 10px; background: #FFF4E0; border: 1px solid #FCD9A6; vertical-align: middle; margin-right: 4px;"></span>Active capabilities (drive behavior)</span>
+    <span><span style="display: inline-block; width: 10px; height: 10px; background: #ECE6FF; border: 1px solid #C8B8FF; vertical-align: middle; margin-right: 4px;"></span>Enabling capabilities (make it learnable)</span>
+  </div>
+
+  <h3>Market landscape · who builds what across the five blocks</h3>
+  <table style="font-size: 12.5px; margin-bottom: 14px;">
+    <tbody>
+      <tr><td style="width: 110px;"><strong>SENSE</strong></td><td>LiZion Future, TG0, Sharpa</td></tr>
+      <tr><td><strong>THINK</strong></td><td>Physical Intelligence (π0), Noematrix (RISE), Sharpa (CraftNet)</td></tr>
+      <tr><td><strong>ACT</strong></td><td>Flexiv, Sharpa, LiZion Future</td></tr>
+      <tr><td><strong>SIMULATION</strong></td><td>NVIDIA Cosmos / Isaac, Google Open X</td></tr>
+      <tr><td><strong>DATA</strong></td><td><span class="pill pill-purple">qonvolv Ventures · Esquel · Tessellation</span> <span style="font-size: 11px; color: var(--ink-soft); margin-left: 4px;">→ where we sit</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <p><strong>No company sits in the full-stack quadrant.</strong> Each block has 2-3 specialists; nobody owns the integration. That is the gap a vertical curator-owner with domain depth and proprietary data can fill.</p>
+  </div>
+
+  <div class="slide-footer">
+    <div>Sections 2 and 5 of EI Thematic Study · the assessment vocabulary and the ecosystem map.</div>
+    <div>Slide 5 / 10</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 6 · POSITIONING + RISKS + COMMITMENTS (MERGED) ==================== -->
+<div class="slide">
+  <header class="slide-header">
+    <span class="brand">QONVOLV VENTURES</span>
+    <span class="meta">IC Review · May 2026</span>
+  </header>
+  <span class="section-tag">05 · Our Proposed Positioning</span>
+  <h2>We win by owning the integration layer of the textile solution, while disciplined partner-selection contains the entry risks.</h2>
+  <p class="lede">Our positioning at the top, the risks it manages and the commitments it holds us to at the bottom, all on a single frame.</p>
+
+  <!-- Aspiration band -->
+  <div style="background: var(--purple-deep); color: white; border-radius: 10px; padding: 14px 20px; margin-bottom: 10px; display: flex; gap: 16px; align-items: center;">
+    <div style="font-size: 10px; letter-spacing: 0.25em; color: rgba(255,255,255,0.8); font-weight: 700; text-transform: uppercase; white-space: nowrap;">Our aspiration</div>
+    <div style="font-size: 15px; font-weight: 700; line-height: 1.3;">Become a global leader in textile &amp; garment production automation. Vertical depth over horizontal breadth.</div>
+  </div>
+
+  <!-- Primary Role band -->
+  <div style="background: white; border: 2px solid var(--purple); border-radius: 10px; padding: 12px 18px; margin-bottom: 16px;">
+    <div style="font-size: 10px; letter-spacing: 0.25em; color: var(--purple); font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Primary role</div>
+    <div style="font-size: 16px; font-weight: 700; color: var(--purple-deep); margin-bottom: 4px;">Curator-owner of end-to-end solutions</div>
+    <div style="font-size: 12.5px; color: var(--ink-soft);">We define the spec, curate the best parts, and own the integrated solution. We do not rebuild grippers, sensors, or foundational models.</div>
+  </div>
+
+  <!-- Two-col bottom: Risks (left) | Commitments (right) -->
+  <div class="grid grid-2" style="gap: 16px;">
+    <!-- Left: Risks -->
+    <div>
+      <h3 style="margin-bottom: 8px;">Risks of entering now</h3>
+      <div style="display: grid; gap: 8px;">
+        <div class="card" style="border: 2px solid var(--red); padding: 10px 14px;">
+          <h4 style="color: var(--red); margin-bottom: 4px;">HYPED VALUATIONS</h4>
+          <ul class="mini" style="font-size: 12px;">
+            <li><strong style="color: var(--red);">Risk.</strong> Brain-layer valuations at peak; Physical Intelligence at $11B, RoboScience at $5.8B, etc.</li>
+            <li><strong style="color: var(--red);">Manage.</strong> Invest only at early stage (LiZion); partner frontier names without equity.</li>
+          </ul>
+        </div>
+        <div class="card" style="border: 2px solid var(--red); padding: 10px 14px;">
+          <h4 style="color: var(--red); margin-bottom: 4px;">BRAIN LAYER CONCENTRATION</h4>
+          <ul class="mini" style="font-size: 12px;">
+            <li><strong style="color: var(--red);">Risk.</strong> THINK-layer compresses to 2-3 globally; wrong pick = single-architecture exposure.</li>
+            <li><strong style="color: var(--red);">Manage.</strong> Hedge across SENSE/ACT/DATA; domain-fuel position is layer-agnostic.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Commitments -->
+    <div>
+      <h3 style="margin-bottom: 8px;">Commitments and 2027 target</h3>
+      <div style="display: grid; gap: 8px;">
+        <div class="commit-panel do" style="padding: 10px 14px; border: 2px solid var(--purple); border-left-width: 2px;">
+          <h3 style="margin-bottom: 4px;">DO</h3>
+          <ul class="mini" style="font-size: 12px;">
+            <li><strong>Data assetization.</strong> Shop-floor → monetizable asset.</li>
+            <li><strong>Operator depth.</strong> 40y tacit → specs, SOPs.</li>
+            <li><strong>Vertical integration.</strong> Cotton → garment coverage.</li>
+          </ul>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="commit-panel dont" style="padding: 10px 14px;">
+            <h3 style="margin-bottom: 4px;">DON'T</h3>
+            <ul class="mini" style="font-size: 12px;">
+              <li><strong>Don't build from zero.</strong> Commission sensors, chips, models.</li>
+              <li><strong>Don't do academic-only research.</strong> Deploy intent required.</li>
+            </ul>
+          </div>
+          <div class="commit-panel ask" style="padding: 10px 14px;">
+            <h3 style="margin-bottom: 4px;">ASK · 2027</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px;">
+              <div style="text-align: center;"><div style="font-size: 22px; font-weight: 700; color: #78350F; line-height: 1;">5+</div><div style="font-size: 10px; color: var(--ink-soft);">active partners</div></div>
+              <div style="text-align: center;"><div style="font-size: 22px; font-weight: 700; color: #78350F; line-height: 1;">3+</div><div style="font-size: 10px; color: var(--ink-soft);">POCs passing</div></div>
+              <div style="text-align: center;"><div style="font-size: 22px; font-weight: 700; color: #78350F; line-height: 1;">1-2</div><div style="font-size: 10px; color: var(--ink-soft);">JVs / joint labs</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-footer">
+    <div>Positioning, risks, and commitments on one frame · applied to PI, Flexiv, and LiZion in the next two slides.</div>
+    <div>Slide 6 / 10</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 7 · ENGAGEMENT FUNNEL ==================== -->
+<div class="slide">
+  <header class="slide-header">
+    <span class="brand">QONVOLV VENTURES</span>
+    <span class="meta">IC Review · May 2026</span>
+  </header>
+  <span class="section-tag">06 · Engagement Funnel</span>
+  <h2>Every partner moves through three stages, and we promote them only when their textile intent and our value-add cross a clear bar.</h2>
+  <p class="lede">Where each company sits today, and the decision rule that moves a name to the next stage.</p>
+
+  <!-- MONITOR tier -->
+  <div style="background: #E3DAFF; border-radius: 10px; padding: 14px 20px; display: grid; grid-template-columns: 130px 1fr 1.1fr; gap: 18px; align-items: center;">
+    <div>
+      <div style="font-size: 10px; letter-spacing: 0.2em; color: var(--purple); font-weight: 700; text-transform: uppercase; margin-bottom: 2px;">Stage 1</div>
+      <div style="font-size: 22px; font-weight: 800; color: var(--purple-deep); letter-spacing: 0.04em;">MONITOR</div>
+    </div>
+    <p style="font-size: 12.5px; margin: 0; color: var(--ink); line-height: 1.45;">Promising technology, but stage, fit, or commercial readiness not yet right for deeper engagement. Stay close; no capital or operational commitment.</p>
+    <div>
+      <div style="font-size: 10px; letter-spacing: 0.18em; color: var(--purple); font-weight: 700; text-transform: uppercase; margin-bottom: 5px;">Currently here</div>
+      <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+        <span class="pill pill-purple">Sharpa</span>
+        <span class="pill pill-purple">TG0</span>
+        <span class="pill pill-purple">Noematrix</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Promotion rule: Monitor → Partner -->
+  <div style="display: flex; align-items: center; gap: 12px; padding: 8px 20px; font-size: 12px; color: var(--purple-deep);">
+    <span style="font-size: 22px; color: var(--purple); font-weight: 800; line-height: 1;">↓</span>
+    <span><strong style="color: var(--purple);">Promote to Partner when:</strong> the company signals textile-specific intent and the technology is mature enough for a real-world POC on our shop floor.</span>
+  </div>
+
+  <!-- PARTNER tier -->
+  <div style="background: var(--purple); color: white; border-radius: 10px; padding: 14px 20px; display: grid; grid-template-columns: 130px 1fr 1.1fr; gap: 18px; align-items: center;">
+    <div>
+      <div style="font-size: 10px; letter-spacing: 0.2em; color: rgba(255,255,255,0.8); font-weight: 700; text-transform: uppercase; margin-bottom: 2px;">Stage 2</div>
+      <div style="font-size: 22px; font-weight: 800; letter-spacing: 0.04em;">PARTNER</div>
+    </div>
+    <p style="font-size: 12.5px; margin: 0; color: rgba(255,255,255,0.95); line-height: 1.45;">Critical capability at a specific layer. Equity is premature or too expensive at current valuation. Structure as task collaboration, data-sharing, or MOU.</p>
+    <div>
+      <div style="font-size: 10px; letter-spacing: 0.18em; color: rgba(255,255,255,0.8); font-weight: 700; text-transform: uppercase; margin-bottom: 5px;">Currently here</div>
+      <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+        <span style="display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.2); color: white;">Physical Intelligence</span>
+        <span style="display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.2); color: white;">DeepCybo (深度機制)</span>
+        <span style="display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.2); color: white;">Flexiv</span>
+        <span style="display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.2); color: white;">RoboScience</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Promotion rule: Partner → Invest -->
+  <div style="display: flex; align-items: center; gap: 12px; padding: 8px 20px; font-size: 12px; color: var(--purple-deep);">
+    <span style="font-size: 22px; color: var(--purple); font-weight: 800; line-height: 1;">↓</span>
+    <span><strong style="color: var(--purple);">Promote to Invest when:</strong> our domain involvement materially changes what they can build, valuation is reachable, and deal terms can secure exclusive textile rights or joint IP.</span>
+  </div>
+
+  <!-- INVEST tier -->
+  <div style="background: var(--purple-deep); color: white; border-radius: 10px; padding: 14px 20px; display: grid; grid-template-columns: 130px 1fr 1.1fr; gap: 18px; align-items: center;">
+    <div>
+      <div style="font-size: 10px; letter-spacing: 0.2em; color: rgba(255,255,255,0.7); font-weight: 700; text-transform: uppercase; margin-bottom: 2px;">Stage 3</div>
+      <div style="font-size: 22px; font-weight: 800; letter-spacing: 0.04em;">INVEST</div>
+    </div>
+    <p style="font-size: 12.5px; margin: 0; color: rgba(255,255,255,0.95); line-height: 1.45;">Deep strategic alignment. Mutual dependency. We change what they build; they change what we can do. Co-develop IP, share data, grow together.</p>
+    <div>
+      <div style="font-size: 10px; letter-spacing: 0.18em; color: rgba(255,255,255,0.7); font-weight: 700; text-transform: uppercase; margin-bottom: 5px;">Currently here</div>
+      <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+        <span style="display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; background: #FCD34D; color: #78350F;">LiZion Future</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 14px;">
+    <p><strong>Sustained engagement at Invest stage.</strong> Three-layer structure: equity + framework cooperation + per-project SOW. LiZion is the live template; the next two slides walk through it alongside the Partner-stage deals (Physical Intelligence and Flexiv).</p>
+  </div>
+
+  <div class="slide-footer">
+    <div>Engagement framework applied across the active pipeline · status as of May 2026.</div>
+    <div>Slide 7 / 10</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 8 · COLLABORATION · PI + FLEXIV ==================== -->
+<div class="slide">
+  <header class="slide-header">
+    <span class="brand">QONVOLV VENTURES</span>
+    <span class="meta">IC Review · May 2026</span>
+  </header>
+  <span class="section-tag">07 · Collaboration Examples · Partner, Not Invest</span>
+  <h2>Physical Intelligence and Flexiv earn deep collaboration today; neither earns equity yet.</h2>
+  <p class="lede">PI as the frontier-brain POC partner, Flexiv as the integrated-hardware partner on a path to joint lab. Together they cover the THINK and ACT layers without consuming capital reserve.</p>
+
+  <div class="grid grid-2">
+    <!-- PI card -->
+    <div class="card" style="padding: 16px 18px;">
+      <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
+        <span style="background: var(--purple); color: white; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 9px; border-radius: 4px;">Partner · POC</span>
+        <span style="font-size: 16px; font-weight: 700; color: var(--purple-deep);">Physical Intelligence · π</span>
+      </div>
+      <p style="font-size: 12px; color: var(--ink-soft); margin: 0 0 10px;">San Francisco · founded 2024 · <strong>THINK</strong> layer · <strong style="color: var(--ink);">~$5.6B</strong> valuation · MNDA Jan 2026</p>
+      <h4 style="margin-bottom: 6px;">Why we partner, not invest</h4>
+      <ul class="mini" style="margin-bottom: 12px;">
+        <li><strong>~$5.6B</strong> outside CVC range; next round &gt;$11B post</li>
+        <li>π0 is general foundation model; textile not their center of gravity</li>
+        <li>Entity List complicates cap-table position</li>
+        <li>Equity does not change what they build</li>
+      </ul>
+      <h4 style="margin-bottom: 6px;">Phase 1 POC scope-locked Apr 2026</h4>
+      <ul class="mini">
+        <li>Task A: fabric panel singulation + placement</li>
+        <li>Task B: garment ironing, folding, packaging</li>
+        <li>qV ships samples · PI runs · candid feasibility report</li>
+        <li>Phase 2 (workflow) and Phase 3 (commercial) to follow</li>
+      </ul>
+    </div>
+
+    <!-- Flexiv card -->
+    <div class="card card-soft" style="padding: 16px 18px;">
+      <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
+        <span style="background: var(--purple-deep); color: white; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 9px; border-radius: 4px;">Partner · Joint-lab target</span>
+        <span style="font-size: 16px; font-weight: 700; color: var(--purple-deep);">Flexiv · 非夕科技</span>
+      </div>
+      <p style="font-size: 12px; color: var(--ink-soft); margin: 0 0 10px;">Shanghai + Silicon Valley + Singapore · founded 2016 · <strong>ACT</strong> layer · <strong style="color: var(--ink);">~$1.4B</strong> valuation · CEO relationship</p>
+      <h4 style="margin-bottom: 6px;">Why this is the joint-lab candidate</h4>
+      <ul class="mini" style="margin-bottom: 12px;">
+        <li><strong>CEO-to-CEO relationship.</strong> Our CEO knows theirs personally</li>
+        <li>Factory visits completed both sides</li>
+        <li>Rizon 7-axis adaptive arm w/ whole-body force control; car-seat ironing proven (transferable to garment)</li>
+        <li>20%+ shareholder of Noematrix → indirect frontier-VLA exposure</li>
+      </ul>
+      <h4 style="margin-bottom: 6px;">POC scoping in progress</h4>
+      <ul class="mini">
+        <li>Flexiv selecting first target task</li>
+        <li>POC kickoff once task locked</li>
+        <li>Path: POC → deeper trial → joint lab on textile + garment automation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 14px;">
+    <p><strong>The ask.</strong> Endorse capital-free collaboration for both. PI gives us the frontier-brain validation environment. Flexiv gives us the integrated-hardware path with an existing CEO-level relationship and a clear joint-lab horizon. Capital stays available for partners like LiZion where it actually changes the trajectory.</p>
+  </div>
+
+  <div class="slide-footer">
+    <div>Source: wiki/companies/Physical Intelligence.md · Flexiv deep-dive, EI Thematic Study Section 5 · CEO-to-CEO contact.</div>
+    <div>Slide 8 / 10</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9 · INVESTMENT CASE · LIZION FUTURE ==================== -->
+<div class="slide">
+  <header class="slide-header">
+    <span class="brand">QONVOLV VENTURES</span>
+    <span class="meta">IC Review · May 2026</span>
+  </header>
+  <span class="section-tag">08 · Investment Case · Active Deal</span>
+  <h2>LiZion Future is the one investment-ready deal in the pipeline: sensor stack already validated in our factories, at a valuation we can reach.</h2>
+
+  <div class="example-band">
+    <span class="tag">Invest</span>
+    <span class="name">Guangzhou · Mar 2025 · SENSE+ACT</span>
+    <span class="badge badge-green">Valuation reachable</span>
+    <span class="badge badge-amber">Active DD</span>
+  </div>
+
+  <div class="grid grid-3" style="margin-bottom: 14px;">
+    <div class="stat card-soft"><div class="stat-num">~$11M</div><div class="stat-label">Current valuation</div><div class="stat-sub">Early, ~1y in market (~RMB 80M)</div></div>
+    <div class="stat card-soft"><div class="stat-num">−72% / +39%</div><div class="stat-label">Cost / performance</div><div class="stat-sub">vs market 6-axis force sensor</div></div>
+    <div class="stat card-soft"><div class="stat-num">~$14K</div><div class="stat-label">Phase 1 pilot</div><div class="stat-sub">80-90% pick success, m6 (~RMB 100K)</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom: 14px;">
+    <h3>Why we like it</h3>
+    <ul class="mini">
+      <li><strong>HW breakthrough.</strong> 6-axis force sensor + 0.1mm e-skin, 10,000× super-resolution.</li>
+      <li><strong>qonvolv Innovation pull-through.</strong> Phase 1 pilot live, PD team integrated.</li>
+      <li><strong>Market voting.</strong> PI already uses LiZion sensors via Guanghetong.</li>
+      <li><strong>Valuation reachable</strong> for early-stage sensor specialist w/ factory traction.</li>
+    </ul>
+  </div>
+
+  <h3>The deal structure under negotiation: a three-layer stack.</h3>
+  <svg viewBox="0 0 1180 130" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+    <!-- Layer 1: Equity -->
+    <rect x="20" y="30" width="370" height="70" rx="10" fill="#2A1378"/>
+    <text x="40" y="55" font-size="12" font-weight="700" fill="white" letter-spacing="0.1em">LAYER 1 · EQUITY</text>
+    <text x="40" y="78" font-size="13" fill="white">Cap-table position. Aligned incentives.</text>
+    <!-- plus -->
+    <text x="410" y="74" font-size="24" font-weight="700" fill="#5B2EFF">+</text>
+    <!-- Layer 2: Framework -->
+    <rect x="430" y="30" width="370" height="70" rx="10" fill="#5B2EFF"/>
+    <text x="450" y="55" font-size="12" font-weight="700" fill="white" letter-spacing="0.1em">LAYER 2 · FRAMEWORK</text>
+    <text x="450" y="78" font-size="13" fill="white">Exclusive textile cooperation. Joint IP → qV.</text>
+    <!-- plus -->
+    <text x="820" y="74" font-size="24" font-weight="700" fill="#5B2EFF">+</text>
+    <!-- Layer 3: SOW -->
+    <rect x="840" y="30" width="320" height="70" rx="10" fill="#EDE7FF" stroke="#5B2EFF" stroke-width="2"/>
+    <text x="860" y="55" font-size="12" font-weight="700" fill="#2A1378" letter-spacing="0.1em">LAYER 3 · PER-PROJECT SOW</text>
+    <text x="860" y="78" font-size="13" fill="#2A1378">~$14K Phase 1 pilot. 80-90% pick / m6.</text>
+  </svg>
+
+  <div class="callout" style="margin-top: 14px;">
+    <p><strong>The ask.</strong> Endorse LiZion investment structuring. Sensor stack our factories already validate, qonvolv Innovation channel ready, valuation in range. Flywheel partnership.</p>
+  </div>
+
+  <div class="slide-footer">
+    <div>Section 5 deep-dive · LiZion Future. Status: NDA in place; investment structuring in progress.</div>
+    <div>Slide 9 / 10</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 10 · APPENDIX · ENGAGEMENT TRACKER ==================== -->
+<div class="slide">
+  <header class="slide-header">
+    <span class="brand">QONVOLV VENTURES</span>
+    <span class="meta">IC Review · May 2026</span>
+  </header>
+  <span class="section-tag">09 · Appendix · Engagement Tracker</span>
+  <h2>The full active pipeline at a glance, with status, valuation, layer focus, and next step for each name.</h2>
+  <p class="lede">Reference snapshot as of May 2026. Live tracking in the EI Company Assessment Spreadsheet.</p>
+
+  <table style="font-size: 11.5px; margin-top: 8px;">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>qV Stage</th>
+        <th>HQ · Founded</th>
+        <th>Valuation</th>
+        <th>Layer Focus</th>
+        <th>Core Product / Tech</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- INVEST -->
+      <tr style="background: #FFF7E6;">
+        <td><strong>LiZion Future</strong><br><span style="font-size: 10px; color: var(--ink-soft);">立智未来</span></td>
+        <td><span class="pill" style="background: var(--purple-deep); color: white;">Invest</span></td>
+        <td>Guangzhou<br><span style="font-size: 10px; color: var(--ink-soft);">Mar 2025</span></td>
+        <td><strong>~$11M</strong><br><span style="font-size: 10px; color: var(--ink-soft);">Early-stage · ~RMB 80M</span></td>
+        <td>SENSE + ACT</td>
+        <td>6-axis force sensor + e-skin + grippers</td>
+        <td><span class="pill pill-green">Term sheet</span><br><span style="font-size: 10px; color: var(--ink-soft); margin-top: 3px; display: inline-block;">Phase 1 pilot live</span></td>
+      </tr>
+
+      <!-- PARTNER -->
+      <tr>
+        <td><strong>Physical Intelligence</strong><br><span style="font-size: 10px; color: var(--ink-soft);">π</span></td>
+        <td><span class="pill pill-purple">Partner</span></td>
+        <td>San Francisco<br><span style="font-size: 10px; color: var(--ink-soft);">2024</span></td>
+        <td><strong>~$5.6B</strong><br><span style="font-size: 10px; color: var(--ink-soft);">Next round &gt;$11B</span></td>
+        <td>THINK</td>
+        <td>π0 generalist VLA</td>
+        <td><span class="pill pill-green">POC live</span><br><span style="font-size: 10px; color: var(--ink-soft); margin-top: 3px; display: inline-block;">Phase 1 scope locked Apr 26</span></td>
+      </tr>
+      <tr>
+        <td><strong>Flexiv</strong><br><span style="font-size: 10px; color: var(--ink-soft);">非夕科技</span></td>
+        <td><span class="pill pill-purple">Partner</span></td>
+        <td>Shanghai + SV + Singapore<br><span style="font-size: 10px; color: var(--ink-soft);">2016</span></td>
+        <td><strong>~$1.4B</strong><br><span style="font-size: 10px; color: var(--ink-soft);">Series D+ (Invus, Mar 2026)</span></td>
+        <td>ACT</td>
+        <td>Rizon 7-axis adaptive arm</td>
+        <td><span class="pill pill-amber">POC scoping</span><br><span style="font-size: 10px; color: var(--ink-soft); margin-top: 3px; display: inline-block;">Task selection pending</span></td>
+      </tr>
+      <tr>
+        <td><strong>DeepCybo</strong><br><span style="font-size: 10px; color: var(--ink-soft);">深度機制</span></td>
+        <td><span class="pill pill-purple">Partner</span></td>
+        <td>China<br><span style="font-size: 10px; color: var(--ink-soft);">TBD</span></td>
+        <td>TBD</td>
+        <td>THINK (brain-only)</td>
+        <td>Foundation model (brain-only)</td>
+        <td><span class="pill pill-amber">Early eval</span><br><span style="font-size: 10px; color: var(--ink-soft); margin-top: 3px; display: inline-block;">Capability assessment</span></td>
+      </tr>
+      <tr>
+        <td><strong>RoboScience</strong><br><span style="font-size: 10px; color: var(--ink-soft);">机器科学</span></td>
+        <td><span class="pill pill-purple">Partner</span></td>
+        <td>Shenzhen<br><span style="font-size: 10px; color: var(--ink-soft);">2024</span></td>
+        <td>TBD</td>
+        <td>Full-stack EI</td>
+        <td>World model + general robotics control</td>
+        <td><span class="pill pill-amber">Early eval</span><br><span style="font-size: 10px; color: var(--ink-soft); margin-top: 3px; display: inline-block;">Shenzhen lab visit pending</span></td>
+      </tr>
+
+      <!-- MONITOR -->
+      <tr>
+        <td><strong>Sharpa</strong></td>
+        <td><span class="pill" style="background: #E3DAFF; color: var(--purple-deep);">Monitor</span></td>
+        <td>Singapore + Shanghai + Mountain View<br><span style="font-size: 10px; color: var(--ink-soft);">2024</span></td>
+        <td><strong>~$1B+</strong><br><span style="font-size: 10px; color: var(--ink-soft);">Series A ~$100M (Meituan)</span></td>
+        <td>SENSE + THINK + ACT</td>
+        <td>22-DOF hand + CraftNet VTLA</td>
+        <td><span class="pill" style="background: #E3DAFF; color: var(--purple-deep);">On radar</span><br><span style="font-size: 10px; color: var(--ink-soft); margin-top: 3px; display: inline-block;">Shanghai visit on radar</span></td>
+      </tr>
+      <tr>
+        <td><strong>Noematrix</strong><br><span style="font-size: 10px; color: var(--ink-soft);">穹彻智能</span></td>
+        <td><span class="pill" style="background: #E3DAFF; color: var(--purple-deep);">Monitor</span></td>
+        <td>Shanghai<br><span style="font-size: 10px; color: var(--ink-soft);">2023</span></td>
+        <td><strong>~$700M</strong><br><span style="font-size: 10px; color: var(--ink-soft);">Round in market: ~$420M (RMB 3B)</span></td>
+        <td>THINK + DATA</td>
+        <td>RISE VLA + RH20T dataset</td>
+        <td><span class="pill pill-amber">MOU pending</span><br><span style="font-size: 10px; color: var(--ink-soft); margin-top: 3px; display: inline-block;">Dataroom requested</span></td>
+      </tr>
+      <tr>
+        <td><strong>TG0</strong></td>
+        <td><span class="pill" style="background: #E3DAFF; color: var(--purple-deep);">Monitor</span></td>
+        <td>London + HK Science Park<br><span style="font-size: 10px; color: var(--ink-soft);">2015</span></td>
+        <td>TBD<br><span style="font-size: 10px; color: var(--ink-soft);">EIC-backed</span></td>
+        <td>SENSE (materials)</td>
+        <td>AI sensing materials</td>
+        <td><span class="pill" style="background: #E3DAFF; color: var(--purple-deep);">On radar</span><br><span style="font-size: 10px; color: var(--ink-soft); margin-top: 3px; display: inline-block;">Data room assessment</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="margin-top: 14px;">
+    <p><strong>Reference only.</strong> Live data maintained in the EI Company Assessment Spreadsheet (3+2 framework scoring, software / hardware layer scoring, full DD notes). This appendix is the IC-facing snapshot.</p>
+  </div>
+
+  <div class="slide-footer">
+    <div>Snapshot as of May 2026. Source: wiki/concepts/EI Company Assessment Spreadsheet + active engagement notes.</div>
+    <div>Slide 10 / 10</div>
+  </div>
+</div>
+
+</body>
+</html>

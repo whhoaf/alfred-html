@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frontier AI Governance Map</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>How Frontier AI Is Governed Today</h1>
+  <p>A living map for BlueDot Frontier AI Governance, Unit 2: Power, Windows, and Dependencies.
+     Organized by geography, then governance layer. Color shows how much real power each mechanism
+     has, not just that it exists. Click any node to trace what it depends on (blue) and what it
+     fights with (red). Dashed cards are stalled. The red band at the bottom is what is missing.</p>
+</header>
+
+<div class="controls">
+  <div class="group">
+    <span class="title">Layers</span>
+    <label><input type="checkbox" data-layer-toggle="Legal" checked> Legal</label>
+    <label><input type="checkbox" data-layer-toggle="Institutional" checked> Institutional</label>
+    <label><input type="checkbox" data-layer-toggle="Corporate" checked> Corporate</label>
+    <label><input type="checkbox" data-layer-toggle="Voluntary" checked> Voluntary</label>
+  </div>
+  <div class="sep"></div>
+  <div class="group">
+    <label><input type="checkbox" id="powerToggle"> Only high/medium power</label>
+  </div>
+  <div class="sep"></div>
+  <div class="group">
+    <button id="edgesToggle">Show all dependencies</button>
+    <button id="resetBtn">Reset</button>
+  </div>
+</div>
+
+<div id="detail"><div class="inner"></div></div>
+
+<div id="boardWrap">
+  <svg id="edges" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"></svg>
+  <div class="board" id="board"></div>
+</div>
+
+<div class="legend">
+  <div class="item"><span class="swatch" style="background:var(--power-high)"></span>High power (binding, enforced)</div>
+  <div class="item"><span class="swatch" style="background:var(--power-medium)"></span>Medium power</div>
+  <div class="item"><span class="swatch" style="background:var(--power-low)"></span>Low power (voluntary, informational)</div>
+  <div class="item"><span class="swatch" style="background:var(--power-none)"></span>No power yet / stalled</div>
+  <div class="item"><span class="ln" style="border-color:var(--dep)"></span>Depends on</div>
+  <div class="item"><span class="ln" style="border-color:var(--tension);border-top-style:dashed"></span>In tension with</div>
+</div>
+
+<div class="gaps">
+  <h3>Windows &amp; Gaps: what is missing</h3>
+  <div class="sub">The dependencies above expose where governance has no teeth. These are the openings Unit 2 asks you to spot.</div>
+  <div class="gap-grid" id="gapGrid"></div>
+</div>
+
+<footer>
+  Round 1 built from BlueDot Unit 2 readings + existing wiki (China AI Governance Stack, AI+ Initiative, UK AI Security Institute, Brussels Effect).
+  To log a new mechanism, add one object to <code>GOVERNANCE_NODES</code> in <code>data.js</code>. No layout code to touch.
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master's Programs 2027 — Alfred's Overview</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3352;
+    --accent: #6c8ef5;
+    --accent2: #f5a623;
+    --accent3: #4ecdc4;
+    --danger: #ff6b6b;
+    --text: #e2e6f0;
+    --text-muted: #7c85a8;
+    --tier1: #4ecdc4;
+    --tier2: #6c8ef5;
+    --tier3: #9b8fd4;
+    --china-high: #f5a623;
+    --china-med: #e8c96a;
+    --china-low: #4a4f6a;
+    --funded: #56d364;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; }
+
+  /* Header */
+  .header { padding: 28px 32px 20px; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .header h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header .subtitle { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+  .urgent-banner { background: linear-gradient(90deg, rgba(255,107,107,0.15), rgba(255,107,107,0.05)); border: 1px solid rgba(255,107,107,0.4); border-radius: 8px; padding: 12px 16px; margin-top: 16px; display: flex; align-items: center; gap: 12px; }
+  .urgent-banner .icon { font-size: 20px; }
+  .urgent-banner strong { color: var(--danger); }
+  .urgent-banner span { color: var(--text); font-size: 13px; }
+
+  /* Layout */
+  .main { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 120px); }
+  .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 20px 16px; }
+  .content { padding: 24px 28px; overflow-x: hidden; }
+
+  /* Sidebar */
+  .sidebar-section { margin-bottom: 24px; }
+  .sidebar-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+  .filter-btn { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 6px; cursor: pointer; transition: background 0.15s; border: none; background: transparent; color: var(--text-muted); font-size: 13px; width: 100%; text-align: left; }
+  .filter-btn:hover { background: var(--surface2); color: var(--text); }
+  .filter-btn.active { background: var(--surface2); color: var(--text); }
+  .filter-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-all { background: var(--text-muted); }
+  .dot-tier1 { background: var(--tier1); }
+  .dot-tier2 { background: var(--tier2); }
+  .dot-tier3 { background: var(--tier3); }
+  .dot-china { background: var(--china-high); }
+  .dot-funded { background: var(--funded); }
+  .dot-nondegree { background: var(--accent2); }
+
+  /* Alfred context box */
+  .alfred-box { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 14px; margin-bottom: 24px; }
+  .alfred-box h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 10px; font-weight: 700; }
+  .path-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 4px; font-size: 11px; margin: 2px; border: 1px solid; }
+  .path-chip.p1 { background: rgba(108,142,245,0.1); border-color: rgba(108,142,245,0.3); color: #8da8f7; }
+  .path-chip.p2 { background: rgba(78,205,196,0.1); border-color: rgba(78,205,196,0.3); color: #6dd8d0; }
+  .path-chip.p3 { background: rgba(155,143,212,0.1); border-color: rgba(155,143,212,0.3); color: #b5a8e0; }
+  .path-chip.p4 { background: rgba(245,166,35,0.1); border-color: rgba(245,166,35,0.3); color: #f7bc5a; }
+  .tension-item { font-size: 12px; color: var(--text-muted); padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .tension-item:last-child { border-bottom: none; }
+  .tension-item strong { color: var(--text); }
+
+  /* Section headers */
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--text); }
+  .section-count { font-size: 12px; color: var(--text-muted); background: var(--surface2); padding: 2px 8px; border-radius: 12px; }
+
+  /* Program cards */
+  .programs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; margin-bottom: 32px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; position: relative; transition: border-color 0.15s, transform 0.1s; cursor: default; }
+  .card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .card.tier1 { border-left: 3px solid var(--tier1); }
+  .card.tier2 { border-left: 3px solid var(--tier2); }
+  .card.tier3 { border-left: 3px solid var(--tier3); }
+  .card.nondegree { border-left: 3px solid var(--accent2); }
+  .card.hidden { display: none; }
+
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 8px; }
+  .card-rank { font-size: 11px; color: var(--text-muted); font-weight: 700; flex-shrink: 0; }
+  .card-name { font-size: 13px; font-weight: 700; color: var(--text); flex: 1; line-height: 1.3; }
+  .tier-badge { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 700; flex-shrink: 0; }
+  .tier-badge.t1 { background: rgba(78,205,196,0.15); color: var(--tier1); }
+  .tier-badge.t2 { background: rgba(108,142,245,0.15); color: var(--tier2); }
+  .tier-badge.t3 { background: rgba(155,143,212,0.15); color: var(--tier3); }
+  .tier-badge.nd { background: rgba(245,166,35,0.15); color: var(--accent2); }
+
+  .card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .meta-pill { font-size: 11px; padding: 2px 8px; border-radius: 3px; background: var(--surface2); color: var(--text-muted); }
+  .meta-pill.flag { color: var(--accent2); background: rgba(245,166,35,0.08); }
+  .meta-pill.funded-yes { color: var(--funded); background: rgba(86,211,100,0.08); }
+  .meta-pill.urgent { color: var(--danger); background: rgba(255,107,107,0.1); font-weight: 700; }
+
+  .card-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; }
+  .bar-item { }
+  .bar-label { font-size: 10px; color: var(--text-muted); margin-bottom: 3px; }
+  .bar-track { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+  .bar-aigov { background: var(--tier1); }
+  .bar-china { background: var(--china-high); }
+  .bar-thesis { background: var(--accent); }
+  .bar-funding { background: var(--funded); }
+
+  .card-why { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
+  .card-why strong { color: var(--text); }
+
+  .card-alfred { font-size: 11px; background: rgba(108,142,245,0.05); border: 1px solid rgba(108,142,245,0.15); border-radius: 5px; padding: 7px 10px; color: #8da8f7; line-height: 1.5; }
+  .card-alfred::before { content: "↳ Alfred: "; font-weight: 700; }
+
+  .card-downside { font-size: 11px; color: #ff9a9a; background: rgba(255,107,107,0.05); border: 1px solid rgba(255,107,107,0.15); border-radius: 5px; padding: 6px 10px; line-height: 1.5; margin-top: 8px; }
+  .card-downside::before { content: "⚠ "; }
+
+  .deadline-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  .deadline-label { color: var(--text-muted); }
+  .deadline-val { color: var(--text); font-weight: 600; }
+  .deadline-val.urgent { color: var(--danger); }
+
+  /* Decision matrix */
+  .matrix-section { margin-bottom: 32px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .matrix-table th { padding: 8px 10px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); background: var(--surface); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .matrix-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .matrix-table tr:last-child td { border-bottom: none; }
+  .matrix-table tr:hover td { background: var(--surface2); }
+  .prog-name-cell { font-weight: 600; color: var(--text); max-width: 200px; }
+  .prog-sub { font-size: 10px; color: var(--text-muted); font-weight: 400; }
+  .dot-score { display: inline-flex; gap: 2px; }
+  .dot-score span { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .ds-filled { background: var(--tier1); }
+  .ds-half { background: var(--tier3); }
+  .ds-empty { background: var(--border); }
+  .yes-badge { color: var(--funded); font-weight: 600; }
+  .no-badge { color: var(--text-muted); }
+  .partial-badge { color: var(--accent2); }
+  .na-badge { color: var(--border); }
+  .tier-tag { font-size: 10px; padding: 1px 6px; border-radius: 3px; font-weight: 700; }
+
+  /* Non-degree section */
+  .nondegree-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-bottom: 32px; }
+  .nd-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent2); border-radius: 10px; padding: 14px; }
+  .nd-card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .nd-card .nd-meta { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .nd-roibar { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .nd-roibar span { font-size: 10px; color: var(--text-muted); width: 40px; }
+  .nd-roibar .roi-track { flex: 1; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .nd-roibar .roi-fill { height: 100%; border-radius: 2px; background: var(--accent2); }
+  .nd-note { font-size: 11px; color: var(--text-muted); }
+  .nd-highlight { color: var(--funded); font-weight: 600; }
+
+  /* Tensions */
+  .tensions-section { margin-bottom: 32px; }
+  .tension-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .tension-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .tension-card h4 { font-size: 12px; font-weight: 700; color: var(--accent2); margin-bottom: 8px; }
+  .tension-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  .tension-card p strong { color: var(--text); }
+
+  /* Open questions */
+  .questions-list { list-style: none; }
+  .questions-list li { padding: 10px 14px; border-left: 2px solid var(--accent); margin-bottom: 8px; background: var(--surface); border-radius: 0 6px 6px 0; font-size: 13px; color: var(--text-muted); }
+  .questions-list li strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+  /* Legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 2px; margin-bottom: 20px; background: var(--surface); padding: 4px; border-radius: 8px; border: 1px solid var(--border); width: fit-content; }
+  .tab { padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--text-muted); border: none; background: transparent; transition: 0.15s; }
+  .tab.active { background: var(--surface2); color: var(--text); }
+  .tab:hover:not(.active) { color: var(--text); }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Master's Programs 2027 — Overview Dashboard</h1>
+  <div class="subtitle">Alfred Ho &middot; HK citizen, CVC background, targeting AI governance / policy / China-bridge &middot; Exit: Dec 2026 &middot; Intake: Sep 2027</div>
+  <div class="urgent-banner">
+    <div class="icon">🚨</div>
+    <span><strong>URGENT — 7 days left:</strong> Schwarzman Scholars HK/China applicant deadline is <strong>May 20, 2026</strong>. US/Global deadline = Sep 9, 2026. Decide now whether to apply via HK channel.</span>
+  </div>
+</div>
+
+<div class="main">
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Filter Programs</div>
+      <button class="filter-btn active" onclick="filterCards('all', this)"><span class="filter-dot dot-all"></span>All programs (13)</button>
+      <button class="filter-btn" onclick="filterCards('tier1', this)"><span class="filter-dot dot-tier1"></span>Tier 1 — Best fit (3)</button>
+      <button class="filter-btn" onclick="filterCards('tier2', this)"><span class="filter-dot dot-tier2"></span>Tier 2 — Alternates (4)</button>
+      <button class="filter-btn" onclick="filterCards('tier3', this)"><span class="filter-dot dot-tier3"></span>Tier 3 — Specialist (6)</button>
+      <button class="filter-btn" onclick="filterCards('china', this)"><span class="filter-dot dot-china"></span>High China-bridge</button>
+      <button class="filter-btn" onclick="filterCards('funded', this)"><span class="filter-dot dot-funded"></span>Strong funding</button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Alfred's Career Context</div>
+      <div class="alfred-box">
+        <h3>Active Paths (80K taxonomy)</h3>
+        <div style="margin-bottom:10px">
+          <div class="path-chip p1">Path 1: Inside lab</div>
+          <div class="path-chip p2">Path 2: Govt/standards</div>
+          <div class="path-chip p3">Path 3: Think tanks</div>
+          <div class="path-chip p4">Path 4: China bridge</div>
+        </div>
+        <div class="sidebar-label" style="margin-top:8px">Key constraints</div>
+        <div class="tension-item"><strong>Urgency trap:</strong> degree delays entry during most consequential window</div>
+        <div class="tension-item"><strong>HK Bridge Thesis:</strong> structural weakening under export controls; must rebuild or retire</div>
+        <div class="tension-item"><strong>US security clearance:</strong> blocks senior US govt roles for non-citizens</div>
+        <div class="tension-item"><strong>Thesis requirement:</strong> must include "research X, publish Y" or degenerates into time-buying</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Program Axes Legend</div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--tier1)"></div>AI Gov depth</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--china-high)"></div>China-bridge relevance</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Thesis / publish pathway</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--funded)"></div>Funding availability</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="tabs">
+      <button class="tab active" onclick="switchView('cards', this)">Cards</button>
+      <button class="tab" onclick="switchView('matrix', this)">Matrix</button>
+      <button class="tab" onclick="switchView('nondegree', this)">Non-degree paths</button>
+      <button class="tab" onclick="switchView('tensions', this)">Tensions &amp; questions</button>
+    </div>
+
+    <!-- CARDS VIEW -->
+    <div id="view-cards" class="view active">
+      <div class="section-header">
+        <div class="section-title">All Programs</div>
+        <div class="section-count" id="card-count">13 programs</div>
+      </div>
+
+      <div class="programs-grid" id="programs-grid">
+
+        <!-- TIER 1 -->
+
+        <div class="card tier1" data-tier="tier1" data-china="low" data-funded="yes">
+          <div class="card-header">
+            <div class="card-rank">#1</div>
+            <div class="card-name">Oxford Internet Institute — MSc Social Science of the Internet</div>
+            <div class="tier-badge t1">Tier 1</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">UK &middot; 10 months</span>
+            <span class="meta-pill">No GRE</span>
+            <span class="meta-pill funded-yes">Clarendon / Sparck</span>
+            <span class="meta-pill">~£28-30k</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:90%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:15%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:85%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:75%"></div></div>
+            </div>
+          </div>
+          <div class="card-why"><strong>Why:</strong> "Governing in the Age of AI" research group. Direct GovAI alumni overlap. Publishable thesis. Alumni at UK AISI, Anthropic policy, EU advisory roles.</div>
+          <div class="card-alfred">Primary anchor. Single fastest path to rooms where international AI governance is shaped. Apply first; Clarendon deadline January.</div>
+          <div class="card-downside">Minimal China engagement. Highly selective (~20 accepted from 350+). Empirical social science culture, not legal-institutional.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">~Jan–Jul 2027 (rolling)</span></div>
+        </div>
+
+        <div class="card tier1" data-tier="tier1" data-china="low" data-funded="partial">
+          <div class="card-header">
+            <div class="card-rank">#2</div>
+            <div class="card-name">Cambridge Bennett School — MPhil Digital Policy</div>
+            <div class="tier-badge t1">Tier 1</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">UK &middot; 9 months</span>
+            <span class="meta-pill">No GRE</span>
+            <span class="meta-pill funded-yes">Cambridge Trust / Gates</span>
+            <span class="meta-pill flag">NEW — Oct 2025 launch</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:80%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:15%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:75%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:60%"></div></div>
+            </div>
+          </div>
+          <div class="card-why"><strong>Why:</strong> Led by Dame Diane Coyle. Cross-disciplinary: digital econ, AI governance, regulatory frameworks. CSER affiliation for existential-risk governance community. Cambridge brand travels in China-adjacent institutions.</div>
+          <div class="card-alfred">High upside, uncertain execution. Zero alumni track record yet. Check first cohort placement data (June 2026) before committing as primary bet.</div>
+          <div class="card-downside">Brand-new programme — no placement pipeline. High risk to bet on as sole application.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">~April 2027 (funding Dec 2026)</span></div>
+        </div>
+
+        <div class="card tier1" data-tier="tier1" data-china="high" data-funded="yes">
+          <div class="card-header">
+            <div class="card-rank">#3</div>
+            <div class="card-name">Sciences Po PSIA — MA Technology &amp; Global Affairs</div>
+            <div class="tier-badge t1">Tier 1</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">France+Spain &middot; 2 years</span>
+            <span class="meta-pill">No GRE</span>
+            <span class="meta-pill funded-yes">Boutmy / CSC / Eiffel</span>
+            <span class="meta-pill flag">NEW — 2024 launch</span>
+            <span class="meta-pill">~€15k/yr</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:72%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:80%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:60%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:70%"></div></div>
+            </div>
+          </div>
+          <div class="card-why"><strong>Why:</strong> Strongest East-West bridge on full list. UNESCO AI Ethics observatory registered. CSC scholarship partnership. Alumni in Tsinghua, SIIS Shanghai, CITIC think tanks. HK bilingual identity = genuine differentiator in cohort.</div>
+          <div class="card-alfred">China-bridge anchor. Your bilingual HK identity + CVC background is a real differentiator in this cohort. Apply simultaneously with OII. Applications open October 2026.</div>
+          <div class="card-downside">2-year commitment. Year 1 in Paris requires functional French for social integration. Weaker pipeline into US-facing roles (CSET, NSC). AI governance embedded within intl affairs — less pure than OII.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">Opens Oct 2026 &rarr; ~Feb 2027</span></div>
+        </div>
+
+        <!-- TIER 2 -->
+
+        <div class="card tier2" data-tier="tier2" data-china="low" data-funded="partial">
+          <div class="card-header">
+            <div class="card-rank">#4</div>
+            <div class="card-name">Harvard Kennedy School — MPP</div>
+            <div class="tier-badge t2">Tier 2</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">USA &middot; 2 years</span>
+            <span class="meta-pill">GRE/GMAT</span>
+            <span class="meta-pill">~$70k/yr</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:80%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:30%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:80%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:40%"></div></div>
+            </div>
+          </div>
+          <div class="card-why"><strong>Why:</strong> Jake Sullivan teaching "Policy and Geopolitics of AI." Belfer Center. Alumni at CSET, RAND, Brookings, Anthropic policy. 2-year thesis format.</div>
+          <div class="card-alfred">US-centric. May dilute China-bridge angle. GRE prep required. Very expensive; limited intl funding. Strong if US-adjacent think tank / lab policy is primary target.</div>
+          <div class="card-downside">~$140k total. Limited international funding vs. cost. US-centric = weaker China positioning.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">December 2026</span></div>
+        </div>
+
+        <div class="card tier2" data-tier="tier2" data-china="low" data-funded="yes">
+          <div class="card-header">
+            <div class="card-rank">#5</div>
+            <div class="card-name">Oxford Blavatnik School — MPP</div>
+            <div class="tier-badge t2">Tier 2</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">UK &middot; 1 year</span>
+            <span class="meta-pill">No GRE</span>
+            <span class="meta-pill funded-yes">76% full funding</span>
+            <span class="meta-pill">~£40k</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:55%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:20%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:40%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:90%"></div></div>
+            </div>
+          </div>
+          <div class="card-why"><strong>Why:</strong> Most globally connected public policy school per capita. 63 countries in 2025 class. OII cross-listed modules. 87% receive funding; 76% receive full scholarships. Strong HK/China representation historically.</div>
+          <div class="card-alfred">Best if speed + brand + funding is priority. Generalist MPP — AI governance is a track option, not programme identity. Coursework-focused (weaker thesis pathway). Better for government/civil-service than frontier-lab policy teams.</div>
+          <div class="card-downside">Generalist. Less thesis-bearing than OII MSc. Not the sharpest signal for frontier-lab policy roles.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">~2 December 2026</span></div>
+        </div>
+
+        <div class="card tier2" data-tier="tier2" data-china="low" data-funded="yes">
+          <div class="card-header">
+            <div class="card-rank">#6</div>
+            <div class="card-name">UCL — MPA Digital Technologies &amp; Policy</div>
+            <div class="tier-badge t2">Tier 2</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">UK &middot; 1 year</span>
+            <span class="meta-pill">No GRE</span>
+            <span class="meta-pill funded-yes">Sparck: full tuition + £22,780</span>
+            <span class="meta-pill">£39,200</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:78%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:10%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:65%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:85%"></div></div>
+            </div>
+          </div>
+          <div class="card-why"><strong>Why:</strong> UCL IIPP leads AI governance research with direct UK/EU policy impact. Sparck AI Scholarship: full tuition + £22,780 stipend. Tailor-made non-technical policy-first AI governance programme.</div>
+          <div class="card-alfred">Best funded UK option. IIPP alumni at UK DSIT, Nesta, OECD. Weaker global brand than OII/Cambridge. Zero China engagement.</div>
+          <div class="card-downside">Weaker brand internationally. Minimal China engagement. Relatively new programme identity.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">~June 2027</span></div>
+        </div>
+
+        <div class="card tier2" data-tier="tier2" data-china="high" data-funded="yes">
+          <div class="card-header">
+            <div class="card-rank">#7</div>
+            <div class="card-name">Tsinghua University — MIA Global Governance</div>
+            <div class="tier-badge t2">Tier 2</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">China &middot; 2 years</span>
+            <span class="meta-pill">No GRE</span>
+            <span class="meta-pill funded-yes">CSC Scholarship (essentially free)</span>
+            <span class="meta-pill flag">~$11-14k/yr (pre-scholarship)</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:58%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:95%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:50%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:80%"></div></div>
+            </div>
+          </div>
+          <div class="card-why"><strong>Why:</strong> AIIG = China's premier AI governance research hub. 2 years in Beijing builds Mandarin-medium research networks. HK students treated as international applicants. Opens Chinese think tanks (CISS, SIIS) and UN agency doors no Western program can replicate.</div>
+          <div class="card-alfred">China depth anchor. Best as complement to Western credential (OII or Sciences Po), not standalone. Free with CSC scholarship. Could complicate future US-facing roles — weigh carefully.</div>
+          <div class="card-downside">Research constraints post-2022. Ideological sensitivity limits critical research space. Could create clearance complications for future US-government roles.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">~March–May 2027</span></div>
+        </div>
+
+        <!-- TIER 3 -->
+
+        <div class="card tier3" data-tier="tier3" data-china="low" data-funded="yes">
+          <div class="card-header">
+            <div class="card-rank">#8</div>
+            <div class="card-name">Edinburgh — MSc Data &amp; AI Ethics</div>
+            <div class="tier-badge t3">Tier 3</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">UK &middot; 1 year</span>
+            <span class="meta-pill">No GRE</span>
+            <span class="meta-pill funded-yes">Sparck eligible</span>
+            <span class="meta-pill">~£29-32k</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:60%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:55%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:70%"></div></div>
+            </div>
+          </div>
+          <div class="card-why">Edinburgh Futures Institute. Algorithmic accountability, AI standards, tech regulation. Sparck scholarship eligible.</div>
+          <div class="card-alfred">Best if specific Edinburgh faculty connections are central. Lighter on geopolitics/international coordination. Less prestige for senior policy rooms than OII/Cambridge/HKS.</div>
+          <div class="card-downside">Domestic regulation focus, not international coordination. Weaker brand for senior global roles.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">~May 2027</span></div>
+        </div>
+
+        <div class="card tier3" data-tier="tier3" data-china="high" data-funded="yes">
+          <div class="card-header">
+            <div class="card-rank">#9</div>
+            <div class="card-name">Schwarzman Scholars — Global Affairs MA (Tsinghua)</div>
+            <div class="tier-badge t3">Tier 3</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill urgent">⚡ HK deadline: May 20, 2026</span>
+            <span class="meta-pill">China &middot; 1 year</span>
+            <span class="meta-pill funded-yes">Fully funded</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:35%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:85%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:100%"></div></div>
+            </div>
+          </div>
+          <div class="card-why">Fully funded. 200 global leaders/year. Tsinghua senior leadership access. Chinese government and business networks. AI policy / global affairs track. HK applicant narrative (China bridge, East-West, private-sector CVC) is strong fit.</div>
+          <div class="card-alfred">Not a research degree — no thesis, no publication pathway. Relationship-building tool, not an academic credential. Best combined with a research degree (apply simultaneously or sequentially). Previously listed as your canonical option in wiki.</div>
+          <div class="card-downside">No thesis. No publication. Admission famously competitive and leadership-dependent. Positive framing on China limits critical research space.</div>
+          <div class="deadline-row"><span class="deadline-label">HK deadline</span><span class="deadline-val urgent">May 20, 2026 — 7 days</span></div>
+        </div>
+
+        <div class="card tier3" data-tier="tier3" data-china="low" data-funded="partial">
+          <div class="card-header">
+            <div class="card-rank">#10</div>
+            <div class="card-name">ETH Zurich — MSc Science, Technology &amp; Policy</div>
+            <div class="tier-badge t3">Tier 3</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">Switzerland &middot; 2 years</span>
+            <span class="meta-pill">No GRE</span>
+            <span class="meta-pill funded-yes">~CHF 1,460/yr tuition</span>
+            <span class="meta-pill flag">BSc in science/eng required</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:60%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:70%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:65%"></div></div>
+            </div>
+          </div>
+          <div class="card-why">Engineering literacy + policy. ITU/ISO standards committees are Geneva-adjacent. Cheapest tuition on list. Strong EU/WEF/WHO pipeline.</div>
+          <div class="card-alfred">Probably blocked — requires BSc in natural sciences/engineering/maths. HKUST background needs verification. Verify directly with ISTP before investing time.</div>
+          <div class="card-downside">Hard eligibility bar. Switzerland-centric. No China engagement. Low Asia-Pacific brand recognition.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">~December 2026</span></div>
+        </div>
+
+        <div class="card tier3" data-tier="tier3" data-china="low" data-funded="partial">
+          <div class="card-header">
+            <div class="card-rank">#11</div>
+            <div class="card-name">NUS Lee Kuan Yew School — MPP/MPA</div>
+            <div class="tier-badge t3">Tier 3</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">Singapore &middot; 1-2 years</span>
+            <span class="meta-pill">GRE optional</span>
+            <span class="meta-pill">~SGD 50-60k/yr</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:38%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:45%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:35%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:40%"></div></div>
+            </div>
+          </div>
+          <div class="card-why">Singapore as neutral node between China, ASEAN, West. Chinese politics and ASEAN tech governance faculty. Regional digital governance forums. Strong ASEAN government alumni network.</div>
+          <div class="card-alfred">Regional positioning play, not Western credentialing. Weaker in GovAI/CSET/Anthropic pipelines. Best if ASEAN-Pacific AI coordination is primary target.</div>
+          <div class="card-downside">AI governance not a standalone track. Thinner publication culture. Lower Western AI governance brand recognition.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">Aug–Dec 2026</span></div>
+        </div>
+
+        <div class="card tier3" data-tier="tier3" data-china="low" data-funded="partial">
+          <div class="card-header">
+            <div class="card-rank">#12</div>
+            <div class="card-name">Georgetown Walsh School — MA Security Studies</div>
+            <div class="tier-badge t3">Tier 3</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">USA &middot; 2 years</span>
+            <span class="meta-pill">GRE/GMAT</span>
+            <span class="meta-pill flag">Security clearance constraint</span>
+            <span class="meta-pill">~$30k/yr</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:55%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:15%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:65%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:25%"></div></div>
+            </div>
+          </div>
+          <div class="card-why">CSET adjacency. Premier US AI policy research. Congress/NSC/intelligence community pipeline.</div>
+          <div class="card-alfred">Structurally blocked at senior roles — most CSET-proximate positions require US security clearance. HK passport = hard ceiling on most valuable roles. Verify with current international students before applying.</div>
+          <div class="card-downside">US security clearance requirement blocks HK citizens from most senior CSET-adjacent positions. Hard ceiling as non-US citizen.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">~Jan–Feb 2027</span></div>
+        </div>
+
+        <div class="card tier3" data-tier="tier3" data-china="low" data-funded="partial">
+          <div class="card-header">
+            <div class="card-rank">#13</div>
+            <div class="card-name">CMU Heinz College — MS AI Systems Management</div>
+            <div class="tier-badge t3">Tier 3</div>
+          </div>
+          <div class="card-meta">
+            <span class="meta-pill">USA &middot; 12-16 months</span>
+            <span class="meta-pill">No GRE</span>
+            <span class="meta-pill flag">NEW — 2024 launch</span>
+            <span class="meta-pill">~$60-70k total</span>
+          </div>
+          <div class="card-bars">
+            <div class="bar-item">
+              <div class="bar-label">AI Gov depth</div>
+              <div class="bar-track"><div class="bar-fill bar-aigov" style="width:50%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">China-bridge</div>
+              <div class="bar-track"><div class="bar-fill bar-china" style="width:5%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Thesis pathway</div>
+              <div class="bar-track"><div class="bar-fill bar-thesis" style="width:30%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">Funding</div>
+              <div class="bar-track"><div class="bar-fill bar-funding" style="width:20%"></div></div>
+            </div>
+          </div>
+          <div class="card-why">Explicitly targets AI governance specialist, AI trust/safety officer, AI ethicist roles. Combines Heinz public policy DNA with technical AI systems. Non-technical enough for policy; technical enough to speak to engineers.</div>
+          <div class="card-alfred">US labour-market oriented. Thin alumni placement data in policy vs. industry. No China engagement. Best if frontier-lab policy/strategy in US is the sole target.</div>
+          <div class="card-downside">New programme, thin placement data. US-only orientation. No China engagement. Low funding.</div>
+          <div class="deadline-row"><span class="deadline-label">2027 deadline</span><span class="deadline-val">Dec 2026 (R1) – Feb 2027</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MATRIX VIEW -->
+    <div id="view-matrix" class="view">
+      <div class="section-header">
+        <div class="section-title">Decision Matrix</div>
+        <div class="section-count">13 programs</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Program</th>
+              <th>Country</th>
+              <th>Duration</th>
+              <th>AI Gov</th>
+              <th>China</th>
+              <th>Thesis</th>
+              <th>Funding</th>
+              <th>GRE</th>
+              <th>Clearance risk</th>
+              <th>HK Open</th>
+              <th>Tier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td class="prog-name-cell">Oxford OII MSc<div class="prog-sub">Social Science of the Internet</div></td>
+              <td>UK</td>
+              <td>10 mo</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span></div></td>
+              <td><span class="yes-badge">Clarendon / Sparck</span></td>
+              <td><span class="yes-badge">No</span></td>
+              <td><span class="yes-badge">None</span></td>
+              <td><span class="yes-badge">Yes</span></td>
+              <td><span class="tier-tag" style="background:rgba(78,205,196,0.15);color:var(--tier1)">T1</span></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td class="prog-name-cell">Cambridge Bennett MPhil<div class="prog-sub">Digital Policy (NEW 2025)</div></td>
+              <td>UK</td>
+              <td>9 mo</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span></div></td>
+              <td><span class="partial-badge">Cambridge Trust / Gates</span></td>
+              <td><span class="yes-badge">No</span></td>
+              <td><span class="yes-badge">None</span></td>
+              <td><span class="yes-badge">Yes</span></td>
+              <td><span class="tier-tag" style="background:rgba(78,205,196,0.15);color:var(--tier1)">T1</span></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td class="prog-name-cell">Sciences Po PSIA MA<div class="prog-sub">Technology &amp; Global Affairs</div></td>
+              <td>FR+ES</td>
+              <td>2 yr</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><span class="yes-badge">Boutmy / CSC / Eiffel</span></td>
+              <td><span class="yes-badge">No</span></td>
+              <td><span class="yes-badge">None</span></td>
+              <td><span class="yes-badge">Yes</span></td>
+              <td><span class="tier-tag" style="background:rgba(78,205,196,0.15);color:var(--tier1)">T1</span></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td class="prog-name-cell">Harvard Kennedy School MPP</td>
+              <td>USA</td>
+              <td>2 yr</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span></div></td>
+              <td><span class="partial-badge">Partial intl aid</span></td>
+              <td><span class="no-badge">Yes (GRE)</span></td>
+              <td><span class="yes-badge">None</span></td>
+              <td><span class="yes-badge">Yes</span></td>
+              <td><span class="tier-tag" style="background:rgba(108,142,245,0.15);color:var(--tier2)">T2</span></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td class="prog-name-cell">Oxford Blavatnik MPP</td>
+              <td>UK</td>
+              <td>1 yr</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><span class="yes-badge">76% full funded</span></td>
+              <td><span class="yes-badge">No</span></td>
+              <td><span class="yes-badge">None</span></td>
+              <td><span class="yes-badge">Yes</span></td>
+              <td><span class="tier-tag" style="background:rgba(108,142,245,0.15);color:var(--tier2)">T2</span></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td class="prog-name-cell">UCL MPA Digital Technologies &amp; Policy</td>
+              <td>UK</td>
+              <td>1 yr</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><span class="yes-badge">Sparck: full + £22,780</span></td>
+              <td><span class="yes-badge">No</span></td>
+              <td><span class="yes-badge">None</span></td>
+              <td><span class="yes-badge">Yes</span></td>
+              <td><span class="tier-tag" style="background:rgba(108,142,245,0.15);color:var(--tier2)">T2</span></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td class="prog-name-cell">Tsinghua MIA–Global Governance</td>
+              <td>China</td>
+              <td>2 yr</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><span class="yes-badge">CSC (essentially free)</span></td>
+              <td><span class="yes-badge">No</span></td>
+              <td><span class="partial-badge">Future US roles risk</span></td>
+              <td><span class="yes-badge">Yes (intl)</span></td>
+              <td><span class="tier-tag" style="background:rgba(108,142,245,0.15);color:var(--tier2)">T2</span></td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td class="prog-name-cell">Edinburgh MSc AI Ethics</td>
+              <td>UK</td>
+              <td>1 yr</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><span class="yes-badge">Sparck eligible</span></td>
+              <td><span class="yes-badge">No</span></td>
+              <td><span class="yes-badge">None</span></td>
+              <td><span class="yes-badge">Yes</span></td>
+              <td><span class="tier-tag" style="background:rgba(155,143,212,0.15);color:var(--tier3)">T3</span></td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td class="prog-name-cell">Schwarzman Scholars<div class="prog-sub" style="color:var(--danger)">HK deadline: May 20, 2026</div></td>
+              <td>China</td>
+              <td>1 yr</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><span class="yes-badge">Fully funded</span></td>
+              <td><span class="yes-badge">No</span></td>
+              <td><span class="partial-badge">Future US roles risk</span></td>
+              <td><span class="yes-badge">Yes</span></td>
+              <td><span class="tier-tag" style="background:rgba(155,143,212,0.15);color:var(--tier3)">T3</span></td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td class="prog-name-cell">ETH Zurich MSc STP<div class="prog-sub" style="color:var(--danger)">BSc engineering required</div></td>
+              <td>CH</td>
+              <td>2 yr</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span></div></td>
+              <td><span class="partial-badge">Low tuition (~$1,600/yr)</span></td>
+              <td><span class="yes-badge">No</span></td>
+              <td><span class="yes-badge">None</span></td>
+              <td><span class="partial-badge">Check eligibility</span></td>
+              <td><span class="tier-tag" style="background:rgba(155,143,212,0.15);color:var(--tier3)">T3</span></td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td class="prog-name-cell">NUS LKY School MPP/MPA</td>
+              <td>SG</td>
+              <td>1-2 yr</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><span class="partial-badge">Some scholarships</span></td>
+              <td><span class="yes-badge">Optional</span></td>
+              <td><span class="yes-badge">None</span></td>
+              <td><span class="yes-badge">Yes</span></td>
+              <td><span class="tier-tag" style="background:rgba(155,143,212,0.15);color:var(--tier3)">T3</span></td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td class="prog-name-cell">Georgetown MA Security Studies<div class="prog-sub" style="color:var(--danger)">Security clearance ceiling</div></td>
+              <td>USA</td>
+              <td>2 yr</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><span class="no-badge">Low</span></td>
+              <td><span class="no-badge">Yes (GRE)</span></td>
+              <td><span class="no-badge">Hard ceiling (HK)</span></td>
+              <td><span class="partial-badge">Unclassified roles only</span></td>
+              <td><span class="tier-tag" style="background:rgba(155,143,212,0.15);color:var(--tier3)">T3</span></td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td class="prog-name-cell">CMU Heinz AIM<div class="prog-sub">MS AI Systems Management</div></td>
+              <td>USA</td>
+              <td>12-16 mo</td>
+              <td><div class="dot-score"><span class="ds-filled"></span><span class="ds-filled"></span><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><div class="dot-score"><span class="ds-half"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span><span class="ds-empty"></span></div></td>
+              <td><span class="no-badge">Low</span></td>
+              <td><span class="yes-badge">No</span></td>
+              <td><span class="yes-badge">None</span></td>
+              <td><span class="yes-badge">Yes</span></td>
+              <td><span class="tier-tag" style="background:rgba(155,143,212,0.15);color:var(--tier3)">T3</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- NON-DEGREE VIEW -->
+    <div id="view-nondegree" class="view">
+      <div class="section-header">
+        <div class="section-title">Non-Degree Alternatives</div>
+        <div class="section-count">6 paths</div>
+      </div>
+      <div class="nondegree-grid">
+
+        <div class="nd-card">
+          <h4>GovAI Seasonal Fellowship</h4>
+          <div class="nd-meta">London or DC &middot; 3 months &middot; £12k / $15-22k stipend</div>
+          <div class="nd-roibar"><span>ROI</span><div class="roi-track"><div class="roi-fill" style="width:95%"></div></div></div>
+          <div class="nd-note">~18,000 applicants, ~100 places (2025). <span class="nd-highlight">60% of alumni in AI governance roles 1 yr later.</span> Alumni at UK AISI, US Senate, Google DeepMind, Anthropic. Highest-ROI non-degree option on list. 3-month format: doable between roles or while job-searching. Signals GovAI has vetted you to every relevant employer.</div>
+        </div>
+
+        <div class="nd-card">
+          <h4>IAPS AI Policy Fellowship</h4>
+          <div class="nd-meta">DC residency &middot; 3 months (Jun–Aug) &middot; $15k-22k stipend</div>
+          <div class="nd-roibar"><span>ROI</span><div class="roi-track"><div class="roi-fill" style="width:75%"></div></div></div>
+          <div class="nd-note">Open to all nationalities. DC residency = US-facing policy network. Alumni at RAND, think tanks, government. Strongest US-facing equivalent to GovAI fellowship. Fully funded.</div>
+        </div>
+
+        <div class="nd-card">
+          <h4>Stanford CISAC Fellowship (AI track)</h4>
+          <div class="nd-meta">1 academic year &middot; Varies by applicant &middot; Deadline: Jun 2026</div>
+          <div class="nd-roibar"><span>ROI</span><div class="roi-track"><div class="roi-fill" style="width:70%"></div></div></div>
+          <div class="nd-note">Geopolitics of AI + AI in Strategic Stability tracks. Open to all nationalities. <span class="nd-highlight">Highest-ceiling option for AI-geopolitics and strategic stability research.</span> Produces publications + Stanford network. Deadline already passed for 2026-27 cycle (Jun 8, 2026).</div>
+        </div>
+
+        <div class="nd-card">
+          <h4>GovAI Research Scholar</h4>
+          <div class="nd-meta">London &middot; 1 year &middot; Competitive salary</div>
+          <div class="nd-roibar"><span>ROI</span><div class="roi-track"><div class="roi-fill" style="width:60%"></div></div></div>
+          <div class="nd-note">Visiting position. Secondments to UK DSIT, OECD. More senior profile required — likely not entry-level. Track as a future target once 1-2 years of AI governance experience is on the record.</div>
+        </div>
+
+        <div class="nd-card">
+          <h4>FLI US-China AI Governance PhD Fellowship</h4>
+          <div class="nd-meta">5 years &middot; $40k/yr &middot; Requires PhD enrolment &middot; Deadline: November</div>
+          <div class="nd-roibar"><span>ROI</span><div class="roi-track"><div class="roi-fill" style="width:65%"></div></div></div>
+          <div class="nd-note">Explicitly US-China AI governance focus. Open all nationalities. Requires PhD programme enrolment — not a standalone fellowship. <span class="nd-highlight">Perfect fit on paper for China-bridge angle. Paired with a research PhD = 5-year funded China-bridge career track.</span></div>
+        </div>
+
+        <div class="nd-card">
+          <h4>Schwarzman Scholars</h4>
+          <div class="nd-meta">Tsinghua &middot; 1 year &middot; Fully funded &middot; HK deadline: May 20, 2026</div>
+          <div class="nd-roibar"><span>ROI</span><div class="roi-track"><div class="roi-fill" style="width:55%"></div></div></div>
+          <div class="nd-note">Not a research degree. No thesis. Relationship-building + Beijing residency + Tsinghua leadership access. Works best combined with a research degree. <span class="nd-highlight">Apply now if applying at all — HK channel closes May 20.</span></div>
+        </div>
+
+      </div>
+      <div class="alfred-box" style="max-width:600px">
+        <h3>Alfred's key tension: degree vs. fellowship</h3>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.6">The GovAI fellowship delivers comparable alumni placement outcomes to most Tier 2-3 master's programmes — in 3 months at zero cost. The master's adds: (a) publishable thesis, (b) 9-24 month immersion, (c) brand credential that gates senior think-tank rooms. If the policy-first lever matters more than the publication record, the fellowship path is worth stress-testing before committing to a 1-2 year degree. But urgency trap cuts both ways: the field also rewards credential signals in a world with 18,000 applicants per fellowship slot.</div>
+      </div>
+    </div>
+
+    <!-- TENSIONS VIEW -->
+    <div id="view-tensions" class="view">
+      <div class="section-header">
+        <div class="section-title">Tensions &amp; Open Questions</div>
+        <div class="section-count">From wiki + Perplexity synthesis</div>
+      </div>
+      <div class="tension-grid" style="margin-bottom:28px">
+
+        <div class="tension-card">
+          <h4>Urgency trap vs. credential gate</h4>
+          <p>Wiki confirms: urgency trap applies to technical-alignment paths. But for policy/governance paths, <strong>credentials ARE the access mechanism</strong> — no degree means no seat in the room. The question is whether a fellowship (GovAI, IAPS) achieves the same door-opening in practice. Still unresolved.</p>
+        </div>
+
+        <div class="tension-card">
+          <h4>HK Bridge Thesis — rebuild or retire?</h4>
+          <p>Sciences Po and Tsinghua MIA-GG both reward the bridge identity. But wiki notes: <strong>HK neutrality no longer holds under export controls</strong>. Both DC and Beijing increasingly read HK actors as compliance liabilities. The China-bridge programs only pay off if the thesis is rebuilt with a different asset (ground-truth / bilingual pipeline / low-stakes sandbox) rather than "HK is neutral."</p>
+        </div>
+
+        <div class="tension-card">
+          <h4>Research degree vs. network fellowship</h4>
+          <p>OII MSc = thesis + GovAI alumni pipeline. Schwarzman = fully funded + Beijing network but <strong>zero thesis</strong>. Policy-first career (wiki Pattern 46) prioritizes legislative/government access over publication record. The two are complementary — but which comes first?</p>
+        </div>
+
+        <div class="tension-card">
+          <h4>US-facing roles: ceiling risk</h4>
+          <p>Georgetown CSET is structurally blocked. Harvard MPP is US-centric. Tsinghua MIA-GG and Schwarzman could complicate future US government-facing roles. <strong>If policy-first = US legislative bodies, then UK/EU programs (OII, UCL, Blavatnik) are structurally superior</strong> to China-based options for Alfred's HK passport.</p>
+        </div>
+
+        <div class="tension-card">
+          <h4>Zero-sum theory (Pattern 34)</h4>
+          <p>Wiki flags as highest-leverage strategic question: <strong>if US-China AI coordination is rational strategic competition (not cultural misunderstanding), most China-bridge work targets the wrong bottleneck.</strong> If zero-sum, Sciences Po and Tsinghua MIA-GG are much weaker bets. If not, they're the top picks.</p>
+        </div>
+
+        <div class="tension-card">
+          <h4>Cambridge Bennett risk</h4>
+          <p>Ranked Tier 1 by Perplexity but <strong>launched October 2025 — zero alumni data</strong>. High upside if Diane Coyle's practice-oriented policy identity delivers. High risk if the programme lacks placement infrastructure in its first 2-3 cohorts. First cohort placement data available June 2026. Decide after seeing it.</p>
+        </div>
+
+      </div>
+
+      <div class="section-header">
+        <div class="section-title">Open Questions to Resolve Before Applying</div>
+      </div>
+      <ul class="questions-list">
+        <li><strong>Schwarzman now or September?</strong> HK deadline May 20 vs. Global deadline Sep 9. The HK/China channel is separate and faster. Can a competitive application be assembled in 7 days? Is it worth trying the HK channel knowing the Global channel is still available?</li>
+        <li><strong>Zero-sum or not?</strong> Pattern 34 is the load-bearing strategic question. If US-China coordination is blocked by misaligned incentives, Sciences Po + Tsinghua are weaker bets. This must be resolved before committing to China-bridge programs.</li>
+        <li><strong>Fellowship before degree?</strong> Is GovAI Seasonal Fellowship a better first move than any master's — given placement rates, network quality, and zero cost? What's the counterfactual if the fellowship is rejected (18,000 applicants)?</li>
+        <li><strong>ETH Zurich eligibility?</strong> HKUST degree in what field? If business/social science, the programme is blocked. Verify directly with ISTP admissions before including in shortlist.</li>
+        <li><strong>Cambridge Bennett first cohort results?</strong> June 2026 = first placements. If strong, moves to Tier 1 anchor. If weak, drops to Tier 3 experimental. Worth monitoring before finalizing application list.</li>
+        <li><strong>Thesis topic?</strong> All programs require "research X, publish Y" or they degenerate into time-buying (wiki constraint). What is Alfred's thesis? China-AI governance? Compute governance? US-China Track II mechanisms? This question determines which faculty to target at OII/Bennett/Sciences Po.</li>
+        <li><strong>Policy-first vs. inside-lab: which is primary target?</strong> Wiki Pattern 46 confirms policy-first preference. But if a frontier lab (Anthropic, DeepMind) policy role opens before 2027, does the degree plan hold?</li>
+      </ul>
+    </div>
+
+  </div><!-- content -->
+</div><!-- main -->
+
+<script>
+  function filterCards(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const cards = document.querySelectorAll('#programs-grid .card');
+    let visible = 0;
+    cards.forEach(card => {
+      let show = false;
+      if (type === 'all') show = true;
+      else if (type === 'tier1') show = card.dataset.tier === 'tier1';
+      else if (type === 'tier2') show = card.dataset.tier === 'tier2';
+      else if (type === 'tier3') show = card.dataset.tier === 'tier3';
+      else if (type === 'china') show = card.dataset.china === 'high';
+      else if (type === 'funded') show = card.dataset.funded === 'yes';
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    document.getElementById('card-count').textContent = visible + ' programs';
+  }
+
+  function switchView(name, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+  }
+</script>
+</body>
+</html>
