@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>What the CERN-Style Project Needs to Survive the Intelligence Explosion</title>
+<style>
+  :root{
+    --bg:#141a1f;
+    --panel:#1b232a;
+    --panel-2:#212b33;
+    --ink:#e8ecef;
+    --muted:#9aa7b0;
+    --line:#2c3841;
+    --teal:#5fc7b8;
+    --amber:#e0a63a;
+    --red:#d9705a;
+    --serif: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.55;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:56px 28px 100px;}
+  .kicker{
+    font-family:var(--sans);
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:12px;
+    color:var(--teal);
+    margin:0 0 14px;
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:2.3rem;
+    line-height:1.18;
+    margin:0 0 8px;
+  }
+  .subtitle{
+    font-size:15px;
+    color:var(--muted);
+    margin:0 0 40px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:28px;
+  }
+  h2{
+    font-family:var(--serif);
+    font-size:1.5rem;
+    font-weight:600;
+    margin:56px 0 18px;
+    color:var(--ink);
+  }
+  h2 .num{
+    color:var(--teal);
+    font-family:var(--sans);
+    font-size:.9rem;
+    letter-spacing:.08em;
+    display:block;
+    margin-bottom:6px;
+  }
+  p{margin:0 0 14px;color:#d4dade;}
+  .lede{font-size:1.05rem;color:var(--ink);}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0;}
+  @media(max-width:760px){.cards{grid-template-columns:1fr;}}
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:18px;
+  }
+  .card h3{
+    font-family:var(--sans);
+    font-size:.78rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--amber);
+    margin:0 0 10px;
+  }
+  .card p{font-size:.92rem;margin:0 0 8px;color:#c7ced2;}
+  .card .cite{font-size:.78rem;color:var(--muted);font-style:italic;}
+  .tag{
+    display:inline-block;
+    font-size:.7rem;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    padding:3px 8px;
+    border-radius:20px;
+    margin-bottom:10px;
+  }
+  .tag.priority{background:rgba(217,112,90,.18);color:var(--red);}
+  .tag.secondary{background:rgba(224,166,58,.16);color:var(--amber);}
+  .fix-block{
+    background:var(--panel);
+    border-left:3px solid var(--teal);
+    border-radius:6px;
+    padding:18px 20px;
+    margin:16px 0;
+  }
+  .fix-block h4{margin:0 0 8px;font-size:1.02rem;color:var(--teal);font-family:var(--sans);}
+  .fix-block p{font-size:.94rem;color:#ccd3d7;margin:0 0 6px;}
+  .diagram{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:20px;
+    margin:26px 0;
+  }
+  .diagram-caption{font-size:.8rem;color:var(--muted);text-align:center;margin-top:10px;}
+  .quote{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.05rem;
+    color:var(--ink);
+    border-left:3px solid var(--muted);
+    padding-left:18px;
+    margin:20px 0;
+    color:#c9cfd3;
+  }
+  .quote .src{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:.78rem;
+    color:var(--muted);
+    margin-top:6px;
+  }
+  .cost-row{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .cost-row:last-child{border-bottom:none;}
+  .cost-dot{
+    flex:0 0 10px;
+    height:10px;
+    width:10px;
+    border-radius:50%;
+    margin-top:6px;
+  }
+  .cost-dot.high{background:var(--red);}
+  .cost-dot.med{background:var(--amber);}
+  .cost-title{font-weight:600;color:var(--ink);margin:0 0 4px;font-size:.98rem;}
+  .verdict{
+    margin-top:60px;
+    padding:26px;
+    background:linear-gradient(135deg,#1c2a2c,#1b232a);
+    border:1px solid var(--teal);
+    border-radius:10px;
+  }
+  .verdict h2{margin-top:0;}
+  .verdict p{color:#dbe4e2;font-size:1rem;}
+  .sources{
+    margin-top:48px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    font-size:.8rem;
+    color:var(--muted);
+  }
+  .sources a{color:var(--teal);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">BlueDot FAIGC &middot; Unit 4 &middot; Exercise: Governance Under Acceleration</p>
+  <h1>What the CERN-Style Global AI Project Needs to Become to Survive the Intelligence Explosion &mdash; and What That Costs</h1>
+  <p class="subtitle">Stress test of Vision 8 (Nine Strategic Visions), Alfred's most-compelling pick from Unit 3, against race dynamics and power concentration.</p>
+
+  <h2><span class="num">01 &middot; The Proposal</span>The CERN model</h2>
+  <p class="lede">A single multilateral body develops frontier AI on behalf of member states, who hold audit rights and share "launch keys" for high-risk training runs. The pitch: end the race by making the race pointless, everyone owns the outcome together instead of competing for it. Called this the world's best-case direction: cooperative, not zero-sum.</p>
+
+  <h2><span class="num">02 &middot; First Points of Failure</span>What breaks under acceleration</h2>
+  <div class="cards">
+    <div class="card">
+      <span class="tag priority">Ranked #1</span>
+      <h3>Internal Capture</h3>
+      <p>The body itself becomes the exclusive-access prize. A single CEO or director inside the project gains the ability to insert singular or secret loyalty into its AI workforce, no external coup needed, the coup happens from inside the institution built to prevent it.</p>
+      <p class="cite">AI-Enabled Coups, &sect;3.2&ndash;3.3</p>
+    </div>
+    <div class="card">
+      <span class="tag priority">Ranked #1 (tie)</span>
+      <h3>Sabotage / MAIM</h3>
+      <p>Any single project chasing an AI monopoly, however multilateral in name, reads to excluded states as a destabilizing bid for dominance. Rivals maim it: espionage, cyberattack, worst case kinetic. The 180 non-member nations have no key and no exit.</p>
+      <p class="cite">Superintelligence Strategy, &sect;4.1; own Unit 3 answer</p>
+    </div>
+    <div class="card">
+      <span class="tag secondary">Accepted, not primary</span>
+      <h3>Institutional Speed</h3>
+      <p>Treaty-based multilateral governance is slow to build and slow to adapt. Under acceleration, decision windows compress from days to minutes. Real risk, but judged secondary: severity tends to force speed to catch up, as it did for the Manhattan Project.</p>
+      <p class="cite">Preparing for the Intelligence Explosion, &sect;2; four fake graphs (Barak)</p>
+    </div>
+  </div>
+
+  <h2><span class="num">03 &middot; The Fix</span>Multiple CERNs, not one</h2>
+  <p>Replace the single centralized project with several parallel CERN-style bodies, each fully multilateral, none aligned to a single bloc. No US-led lab, no China-led lab, no EU-led lab standing in for their region, that just re-imports the race this whole model exists to end. Every major power holds a seat and a key in every body.</p>
+
+  <div class="fix-block">
+    <h4>Move 1 &mdash; No single point of failure</h4>
+    <p>If one body is captured, sabotaged, or simply fails, the others continue. Capability, and risk, is no longer pooled in one facility that ends the game if it goes wrong.</p>
+  </div>
+  <div class="fix-block">
+    <h4>Move 2 &mdash; Mutual monitoring between bodies</h4>
+    <p>Multiple projects at similar capability levels can audit each other's systems for secret loyalties in a way no project can reliably audit itself. This is the direct fix for the internal-capture failure mode.</p>
+    <p class="cite">AI-Enabled Coups, &sect;5.3: "multiple projects with similar capability levels could deploy AI systems that monitor each other in high-stakes settings, limiting the potential harm from one project's secretly loyal systems."</p>
+  </div>
+  <div class="fix-block">
+    <h4>Move 3 &mdash; Multi-key governance inside each body</h4>
+    <p>No single director or CEO holds unilateral unlock power over any one CERN. Checks-and-balances baked into each body's internal structure, plus oversight from multiple governmental bodies (legislatures, courts, allied nations), plus limited centralization (public-private partnership over outright nationalization).</p>
+    <p class="cite">AI-Enabled Coups, &sect;5.3, "Coup-proof plans for a centralised AI project"</p>
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 760 260" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <text x="130" y="24" fill="#9aa7b0" font-size="12" font-family="sans-serif" text-anchor="middle">VISION 8 (SINGLE)</text>
+      <circle cx="130" cy="120" r="60" fill="#212b33" stroke="#d9705a" stroke-width="2"/>
+      <text x="130" y="115" fill="#e8ecef" font-size="12" font-family="sans-serif" text-anchor="middle">One CERN</text>
+      <text x="130" y="132" fill="#9aa7b0" font-size="10" font-family="sans-serif" text-anchor="middle">all keys inside</text>
+      <text x="130" y="200" fill="#d9705a" font-size="11" font-family="sans-serif" text-anchor="middle">single point of failure</text>
+
+      <line x1="230" y1="120" x2="290" y2="120" stroke="#5fc7b8" stroke-width="2" marker-end="url(#arrow)"/>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 z" fill="#5fc7b8"/>
+        </marker>
+      </defs>
+
+      <text x="530" y="24" fill="#9aa7b0" font-size="12" font-family="sans-serif" text-anchor="middle">REDESIGN (MULTIPLE)</text>
+      <circle cx="450" cy="120" r="46" fill="#212b33" stroke="#5fc7b8" stroke-width="2"/>
+      <text x="450" y="124" fill="#e8ecef" font-size="11" font-family="sans-serif" text-anchor="middle">CERN A</text>
+      <circle cx="580" cy="70" r="46" fill="#212b33" stroke="#5fc7b8" stroke-width="2"/>
+      <text x="580" y="74" fill="#e8ecef" font-size="11" font-family="sans-serif" text-anchor="middle">CERN B</text>
+      <circle cx="580" cy="180" r="46" fill="#212b33" stroke="#5fc7b8" stroke-width="2"/>
+      <text x="580" y="184" fill="#e8ecef" font-size="11" font-family="sans-serif" text-anchor="middle">CERN C</text>
+
+      <line x1="480" y1="105" x2="545" y2="85" stroke="#e0a63a" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <line x1="480" y1="140" x2="545" y2="165" stroke="#e0a63a" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <line x1="605" y1="100" x2="605" y2="150" stroke="#e0a63a" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="530" y="130" fill="#e0a63a" font-size="9" font-family="sans-serif" text-anchor="middle">mutual audit</text>
+
+      <text x="503" y="240" fill="#5fc7b8" font-size="11" font-family="sans-serif" text-anchor="middle">all three fully multilateral, no bloc capture</text>
+    </svg>
+    <p class="diagram-caption">Same member states hold seats and keys across all bodies. Dashed lines = cross-body auditing for secret loyalties.</p>
+  </div>
+
+  <h2><span class="num">04 &middot; Ngo's Lens</span>Does the fix re-centralize?</h2>
+  <p>Each individual CERN is still a centralized agent internally, unified command, efficient, coherent. But the system of three is closer to a distributed structure: no single node's failure or capture ends the whole arrangement, and the nodes gain the coordination capacity centralized theory says distributed agents usually lack, because they are designed from the start to monitor each other rather than compete.</p>
+  <div class="quote">
+    "The centralization/decentralization tension... is not a matter of policy preferences but rather a structural thing... Centralized agents are more efficient but fragile and corruptible. Distributed agents are more robust but can't coordinate against catastrophic risks."
+    <span class="src">Richard Ngo, Distributed vs Centralized Agents</span>
+  </div>
+  <p>This redesign is an attempt at what Ngo calls <em>coalitional agency</em>, efficiency and robustness at once. He is explicit this is unsolved in theory. The brief inherits that same open problem rather than resolving it.</p>
+
+  <h2><span class="num">05 &middot; What This Costs</span>Named, not assumed away</h2>
+  <div class="cost-row">
+    <div class="cost-dot high"></div>
+    <div>
+      <p class="cost-title">The safety system is assumed replicable, and it isn't proven to be</p>
+      <p>Splitting into three CERNs only works if the alignment and audit tooling that keeps one body coup-proof can be reliably copied into the others. Both AI-Enabled Coups and Nielsen's ASI piece say this is the open problem, not a solved one: auditing a system smarter than its auditor is unreliable in principle, not just in practice. Accepted here as an ongoing, unsolved risk rather than something the redesign fixes. Multiple parties checking each other is judged better than one party checking itself, even without a proof that the checking works.</p>
+    </div>
+  </div>
+  <div class="cost-row">
+    <div class="cost-dot med"></div>
+    <div>
+      <p class="cost-title">Consensus is slower than a single crash program</p>
+      <p>Three multilateral bodies coordinating and auditing each other move slower than one centralized authority under wartime urgency, the actual mechanism that made the Manhattan Project fast was top-down command, the opposite of the consensus this redesign relies on. Bet: severity of stakes forces the pace to close that gap when it matters, the same way nuclear-era institutions accelerated under pressure. Not guaranteed, but judged an acceptable wager against the alternative.</p>
+    </div>
+  </div>
+  <div class="cost-row">
+    <div class="cost-dot med"></div>
+    <div>
+      <p class="cost-title">Three sites instead of one, not the alternative of zero</p>
+      <p>More facilities technically means more places a "recipe for ruin" could leak from. But the comparison is not 3 vs. 0, it is 3 multilateral, mutually-audited bodies vs. today's multipolar field of national and corporate labs racing with no mutual audit at all. On that comparison, three coordinated CERNs is a reduction in leak surface, not an increase.</p>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <h2 style="margin-top:0;">Bottom Line</h2>
+    <p>The CERN model survives acceleration only if it stops being singular. One global project recreates the exact single-point-of-failure and exclusive-access risks it was built to remove. Three or more fully multilateral bodies, cross-auditing each other with multi-key internal governance, trade some speed and some proliferation surface for something the single-project version could never have: nobody, inside or outside, ever holds all the keys.</p>
+  </div>
+
+  <div class="sources">
+    Sources: Nine Strategic Visions Framework (Vision 8) &middot; AI-Enabled Coups: How a Small Group Could Use AI to Seize Power (Davidson, Finnveden, Hadshar) &middot; Superintelligence Strategy: Expert Version (Hendrycks, Schmidt, Wang) &middot; ASI Existential Risk: Reconsidering Alignment as a Goal (Nielsen) &middot; Preparing for the Intelligence Explosion (MacAskill, Moorhouse) &middot; Distributed vs Centralized Agents (Ngo) &middot; The State of AI Safety in Four Fake Graphs (Barak)
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>The Plate, August 2026</title>
+<style>
+:root{
+  --bg:#f6f4ef; --panel:#fffdf9; --ink:#1d1b17; --ink2:#55504a; --ink3:#8d867c;
+  --line:#e0dbd1; --line2:#cec7ba; --accent:#1d1b17;
+  --warn-bg:#fdf1e3; --warn-line:#e2b072; --warn-ink:#7a4b12;
+  --stop-bg:#fceceb; --stop-line:#d99b97; --stop-ink:#8a2b24;
+  --leave:#eae5da;
+  --p-pye:#a8413f; --p-det:#2a6480; --p-coord:#6d4f96; --p-flexiv:#256a5b; --p-tech:#a96c1c; --p-bliss:#5f74a8;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#15140f; --panel:#1d1b16; --ink:#f0ece3; --ink2:#b7b0a4; --ink3:#847d71;
+    --line:#302c25; --line2:#453f36; --accent:#f0ece3;
+    --warn-bg:#2e2313; --warn-line:#8a6529; --warn-ink:#e8b76a;
+    --stop-bg:#301a18; --stop-line:#7e3b35; --stop-ink:#f0a49c;
+    --leave:#26231c;
+    --p-pye:#e08b88; --p-det:#7bb6d4; --p-coord:#b79ae0; --p-flexiv:#6bc0ab; --p-tech:#e0aa5e; --p-bliss:#9fb2e0;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--sans); font-size:15px; line-height:1.55;
+  padding:0 0 6rem;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 1.25rem}
+h1,h2,h3{font-weight:640;letter-spacing:-0.015em;margin:0}
+.kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+
+/* ---------- masthead ---------- */
+header{border-bottom:1px solid var(--line2);padding:2.5rem 0 1.5rem;margin-bottom:1.75rem}
+header h1{font-size:clamp(1.9rem,4.4vw,2.9rem);line-height:1.05}
+.sub{color:var(--ink2);margin-top:.6rem;max-width:56ch}
+.statrow{display:flex;flex-wrap:wrap;gap:0 2.25rem;margin-top:1.4rem}
+.stat b{display:block;font-size:1.55rem;font-weight:640;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.conf{margin-top:1.4rem;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink3);border-left:2px solid var(--line2);padding-left:.7rem}
+
+/* ---------- section ---------- */
+section{margin:0 0 3rem}
+.shead{display:flex;align-items:baseline;gap:.85rem;border-bottom:1px solid var(--line);padding-bottom:.5rem;margin-bottom:1.15rem}
+.shead h2{font-size:1.05rem}
+.shead .note{font-size:12.5px;color:var(--ink3);margin-left:auto;text-align:right}
+
+/* ---------- runway ---------- */
+.runwrap{overflow-x:auto;border:1px solid var(--line);border-radius:5px;background:var(--panel)}
+.runway{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(84px,1fr);min-width:1180px}
+.day{border-right:1px solid var(--line);padding:.5rem .45rem .6rem;min-height:172px;display:flex;flex-direction:column;gap:.3rem;position:relative}
+.day:last-child{border-right:0}
+.day.weekend{background:color-mix(in srgb,var(--line) 28%,transparent)}
+.day.leave{background:var(--leave)}
+.day.today{background:color-mix(in srgb,var(--p-det) 11%,transparent);box-shadow:inset 0 2px 0 var(--p-det)}
+.day.pinch{box-shadow:inset 0 2px 0 var(--stop-ink)}
+.dnum{font-family:var(--mono);font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1}
+.ddow{display:flex;justify-content:space-between;align-items:baseline;gap:.3rem;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.15rem}
+.ddow .away{color:var(--ink2);font-weight:600;letter-spacing:.08em}
+.ev{font-size:10.5px;line-height:1.3;padding:.2rem .3rem;border-radius:3px;border-left:2.5px solid var(--ink3);background:color-mix(in srgb,var(--ink) 5%,transparent);overflow-wrap:anywhere;word-break:normal;hyphens:auto}
+.ev.pye{border-color:var(--p-pye)} .ev.det{border-color:var(--p-det)} .ev.coord{border-color:var(--p-coord)}
+.ev.flexiv{border-color:var(--p-flexiv)} .ev.tech{border-color:var(--p-tech)} .ev.bliss{border-color:var(--p-bliss)}
+.ev.hard{font-weight:640}
+
+/* ---------- controls ---------- */
+.controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1.1rem}
+button{font:inherit;cursor:pointer;background:none;color:inherit}
+.chip{border:1px solid var(--line2);border-radius:100px;padding:.28rem .78rem;font-size:12.5px;line-height:1.4;transition:.12s;white-space:nowrap}
+.chip:hover{border-color:var(--ink3)}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.chip .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:.4rem;vertical-align:1px}
+.sep{width:1px;height:20px;background:var(--line2);margin:0 .35rem}
+.count{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-left:auto}
+
+/* ---------- actions ---------- */
+.bucket{margin-bottom:1.6rem}
+.bhead{display:flex;align-items:baseline;gap:.6rem;margin-bottom:.5rem}
+.bhead h3{font-size:12px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.bhead .bmeta{font-size:11.5px;color:var(--ink3)}
+.bucket.urgent .bhead h3{color:var(--stop-ink)}
+ul.acts{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+li.act{display:grid;grid-template-columns:78px 1fr auto;gap:.9rem;align-items:start;padding:.6rem .55rem;border-bottom:1px solid var(--line);transition:.1s}
+li.act:hover{background:var(--panel)}
+li.act.done .txt{text-decoration:line-through;opacity:.4}
+li.act.done .who,li.act.done .tag{opacity:.35}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;padding:.16rem .4rem;border-radius:3px;border:1px solid currentColor;white-space:nowrap;align-self:start;margin-top:.15rem}
+.tag.pye{color:var(--p-pye)} .tag.det{color:var(--p-det)} .tag.coord{color:var(--p-coord)}
+.tag.flexiv{color:var(--p-flexiv)} .tag.tech{color:var(--p-tech)} .tag.bliss{color:var(--p-bliss)}
+.txt{font-size:14px}
+.txt em{font-style:normal;color:var(--ink3);font-size:12.5px;display:block;margin-top:.15rem}
+.txt b{font-weight:640}
+.who{font-family:var(--mono);font-size:10.5px;color:var(--ink3);text-align:right;white-space:nowrap;padding-top:.2rem}
+.who.mine{color:var(--ink)}
+.blocker{color:var(--stop-ink);font-weight:640}
+.chk{width:14px;height:14px;flex:none;margin-top:.28rem;accent-color:var(--ink)}
+.actinner{display:flex;gap:.55rem;align-items:flex-start}
+.empty{padding:1.4rem .55rem;color:var(--ink3);font-size:13px;border-bottom:1px solid var(--line)}
+
+/* ---------- projects ---------- */
+.pgrid{display:grid;gap:.9rem}
+details.proj{border:1px solid var(--line);border-radius:5px;background:var(--panel);overflow:hidden}
+details.proj[open]{border-color:var(--line2)}
+summary{list-style:none;cursor:pointer;padding:.95rem 1.1rem;display:grid;grid-template-columns:auto 1fr auto;gap:.85rem;align-items:center}
+summary::-webkit-details-marker{display:none}
+.pbar{width:4px;align-self:stretch;border-radius:2px;min-height:34px}
+.ptitle{font-weight:640;font-size:15px}
+.pline{font-size:12.5px;color:var(--ink2);margin-top:.12rem}
+.pmeta{font-family:var(--mono);font-size:10.5px;color:var(--ink3);text-align:right;white-space:nowrap}
+.pbody{padding:0 1.1rem 1.2rem 1.1rem;border-top:1px solid var(--line)}
+.pbody h4{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);margin:1.2rem 0 .45rem;font-weight:600}
+.pbody p{margin:.45rem 0;font-size:13.5px;color:var(--ink2)}
+.pbody p b,.pbody li b{color:var(--ink);font-weight:640}
+.pbody ul{margin:.4rem 0;padding-left:1.05rem;font-size:13.5px;color:var(--ink2)}
+.pbody li{margin:.25rem 0}
+.nums{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0}
+.num{border:1px solid var(--line);border-radius:4px;padding:.4rem .6rem;min-width:96px}
+.num b{display:block;font-size:1rem;font-variant-numeric:tabular-nums;line-height:1.2}
+.num span{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+
+/* ---------- flags ---------- */
+.flag{border:1px solid var(--warn-line);background:var(--warn-bg);border-radius:5px;padding:1rem 1.1rem;margin-bottom:.85rem}
+.flag.stop{border-color:var(--stop-line);background:var(--stop-bg)}
+.flag h3{font-size:14px;margin-bottom:.3rem;color:var(--warn-ink)}
+.flag.stop h3{color:var(--stop-ink)}
+.flag p{margin:.35rem 0 0;font-size:13.5px;color:var(--ink2)}
+.flag .ask{margin-top:.55rem;font-size:13px;font-weight:600;color:var(--ink)}
+
+footer{border-top:1px solid var(--line);margin-top:2.5rem;padding-top:1.1rem;font-size:12px;color:var(--ink3)}
+footer code{font-family:var(--mono);font-size:11px}
+
+@media (max-width:640px){
+  li.act{grid-template-columns:1fr;gap:.35rem}
+  .who{text-align:left}
+  .tag{justify-self:start}
+  summary{grid-template-columns:auto 1fr;gap:.7rem}
+  .pmeta{grid-column:2;text-align:left;margin-top:.2rem}
+}
+@media print{
+  body{background:#fff;padding:0}
+  .controls,.runwrap{break-inside:avoid}
+  details.proj{break-inside:avoid}
+  details.proj:not([open]) .pbody{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Review console &middot; built 10 August 2026 &middot; one-time use</div>
+  <h1>The Plate</h1>
+  <p class="sub">Everything open across five active projects and the Brands &amp; Retailing coordinator seat, rebuilt from the 3 to 7 August clippings batch. Nothing here is a new commitment. It is what already exists, sorted.</p>
+  <div class="statrow">
+    <div class="stat"><b id="s-mine">0</b><span>yours, open</span></div>
+    <div class="stat"><b id="s-them">0</b><span>on others</span></div>
+    <div class="stat"><b>6</b><span>workstreams</span></div>
+    <div class="stat"><b style="color:var(--stop-ink)">4</b><span>days to the Aug 12 blocker</span></div>
+    <div class="stat"><b style="color:var(--stop-ink)">19&nbsp;Aug</b><span>the pinch, and you are away</span></div>
+  </div>
+  <div class="conf">Confidential. Contains Esquel, PYE, DETERMINANT and Flexiv financials. Local file. Do not publish to the Pages host.</div>
+</header>
+
+<!-- ============ RUNWAY ============ -->
+<section>
+  <div class="shead">
+    <div class="kicker">01</div>
+    <h2>Runway</h2>
+    <div class="note">10 August to 2 September. Scroll sideways. Shaded block is your leave.</div>
+  </div>
+  <div class="runwrap"><div class="runway" id="runway"></div></div>
+</section>
+
+<!-- ============ ACTIONS ============ -->
+<section>
+  <div class="shead">
+    <div class="kicker">02</div>
+    <h2>Open actions</h2>
+    <div class="note">Tick to strike through. Nothing is saved, this is a scratch surface.</div>
+  </div>
+
+  <div class="controls">
+    <button class="chip" data-owner="all" aria-pressed="true">Everything</button>
+    <button class="chip" data-owner="me" aria-pressed="false">Mine</button>
+    <button class="chip" data-owner="them" aria-pressed="false">Waiting on others</button>
+    <span class="sep"></span>
+    <button class="chip" data-proj="pye" aria-pressed="false"><span class="dot" style="background:var(--p-pye)"></span>PYE</button>
+    <button class="chip" data-proj="det" aria-pressed="false"><span class="dot" style="background:var(--p-det)"></span>DET</button>
+    <button class="chip" data-proj="coord" aria-pressed="false"><span class="dot" style="background:var(--p-coord)"></span>Coordinator</button>
+    <button class="chip" data-proj="flexiv" aria-pressed="false"><span class="dot" style="background:var(--p-flexiv)"></span>Flexiv</button>
+    <button class="chip" data-proj="tech" aria-pressed="false"><span class="dot" style="background:var(--p-tech)"></span>Tech map</button>
+    <button class="chip" data-proj="bliss" aria-pressed="false"><span class="dot" style="background:var(--p-bliss)"></span>Bliss</button>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div id="buckets"></div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section>
+  <div class="shead">
+    <div class="kicker">03</div>
+    <h2>Where each one stands</h2>
+    <div class="note">Click to open. Substance only, no restating the obvious.</div>
+  </div>
+  <div class="pgrid">
+
+    <details class="proj" open>
+      <summary>
+        <span class="pbar" style="background:var(--p-pye)"></span>
+        <span><span class="ptitle">pye-blind-box</span><span class="pline">Capability report for Dee and David, blind box as one case inside it. Richest evidence, most exposed conclusion.</span></span>
+        <span class="pmeta">8 yours &middot; 6 theirs</span>
+      </summary>
+      <div class="pbody">
+        <h4>What changed this week</h4>
+        <p>Sting's walkthrough handed you the business context the study never had, and Kevin's call handed you the limit that keeps it honest. Together they give the report both halves of an argument it did not have on 4 August.</p>
+
+        <h4>Sting's numbers</h4>
+        <div class="nums">
+          <div class="num"><b>77%</b><span>budget completion</span></div>
+          <div class="num"><b>-6%</b><span>year on year</span></div>
+          <div class="num"><b>-28m</b><span>FY EBITDA forecast, budget -23m</span></div>
+          <div class="num"><b>18 &rarr; 9</b><span>doors in three years</span></div>
+        </div>
+        <p>Three doors sit about RMB 1.5m a year from break-even: Guangzhou, Shanghai Grand Gateway, Chengdu IFS. Pacific Place and Xinjiang make money, Guomao needs another 500k, the rest sit on the line. Xinjiang is signed a year at a time and a new mall will dilute its traffic.</p>
+
+        <h4>The cohort analysis, which replaces your method</h4>
+        <p>Headline retention of 35% is meaningless because it pools every acquisition year. Split by cohort: <b>year-one retention runs 15 to 21%</b> against Zegna 35 and Ralph Lauren 30. The pre-2021 base decays steeply then plateaus near 3,000 and is still close to a third of sales. Sting's target curve is <b>30 / 25 / 15 / 10 / 10 / 10</b>, which compounds the old base instead of flattening it.</p>
+        <p>Two instructions he has already given Effy that this project should adopt: read by acquisition-year cohort, and move the active window from 18 months to 12. One study nobody has run: SS against FW acquisition, and whether an SS-acquired customer repurchases in SS or FW, joined to first category bought. <b>You already hold the join for it.</b></p>
+
+        <h4>Blind box, with real numbers at last</h4>
+        <div class="nums">
+          <div class="num"><b>88% / 54%</b><span>half-blind accept / pieces kept</span></div>
+          <div class="num"><b>32%</b><span>full-blind accept</span></div>
+          <div class="num"><b>1,542</b><span>addresses on file</span></div>
+          <div class="num"><b>80,000</b><span>phone numbers on file</span></div>
+        </div>
+        <p>Ship three against the one a customer would have picked and keep 1.62, so half-blind adds rather than replaces. Sting's defence of the mechanic answers Margie's cannibalisation worry directly: the box is not aimed at customers who will come in, it targets the residual who will not. The binding constraint is addresses, not targeting. New-customer capture now runs about 40% and pre-frames the future box.</p>
+
+        <h4>Kevin's limit</h4>
+        <p>5% of called customers say yes. <b>Nothing at all is recorded about the other 95%.</b> No script, no protocol, no removal count, on warm customers rather than cold leads. One bad interaction writes off a lifetime value that cost real money to acquire, and nobody is counting that. His fix is <b>opt-in rather than opt-out</b>, settled before the first batch finishes, because the second call to the same person is where the damage compounds.</p>
+        <p><b>Attribution caveat:</b> the transcript has no speaker labels. The opening is unambiguously you. Two lines cannot be assigned, and they are the ones deciding who does the customer interviews. Confirm in one line before either of you assumes the other is on it.</p>
+
+        <h4>Two collisions nobody has spotted</h4>
+        <ul>
+          <li><b>Kevin's opt-in already exists</b> inside Sting's address-capture script, running at 40%. Report it as built, not proposed. The real gap is the 80,000 legacy members never opted in and now being called cold.</li>
+          <li><b>Capsules are back.</b> Your Q2 stress-test recommendation resurfaced here on Sting's Cotton Yak price-elasticity data. Dee rejected Track 3 capsules on 21 July on inventory grounds. Different case, so reintroduce it as new rather than reinstate it quietly.</li>
+        </ul>
+
+        <h4>The inventory evidence, which is your shortest path to the board</h4>
+        <p>In-season top-20 PLUs deliver <b>47%</b> against a 60 to 70% target, on a tail of <b>48 PLUs averaging 20 pieces each</b>. SS tail is MDS plus MSS, 37 of the 48. FW excess is MK, 61 styles for 610 pieces on expensive product. Planned chase buy was 14,000 against an actual of about 2,000, which <b>confirms Dee's first-buy-too-high root cause from the other side</b>. MDS shirts are down to 36% of volume while Cotton Yak proves customers will pay up for a special series.</p>
+
+        <h4>Still exposed</h4>
+        <p>The size slide. 13.6% of units against a reported 30% allocation reads as proof of incapability only if the four rival explanations are untested: never-out-of-stock mandate, buying skewed to the boss's size, leakage into a smaller-bodied resale market, Asian against US sizing. Most are answerable by asking one store manager one question.</p>
+      </div>
+    </details>
+
+    <details class="proj">
+      <summary>
+        <span class="pbar" style="background:var(--p-det)"></span>
+        <span><span class="ptitle">det-market-positioning</span><span class="pline">Market map and positioning study. Your APAC price panel came back as a baseline, not a finding.</span></span>
+        <span class="pmeta">8 yours &middot; 4 theirs</span>
+      </summary>
+      <div class="pbody">
+        <h4>The state of it</h4>
+        <p>Gate held 21 July, white space RMB 350 to 620 landed, then Dee redirected onto market sizing and channel structure. At the 5 August workshop the APAC panel was received as a baseline rather than a finding. You said it first and Annie said it plainly. The horizontal comparison works; the argument on top of it does not exist yet. That is a scoping fix, not a collection problem.</p>
+
+        <h4>Three corrections from Clement's pre-read</h4>
+        <ul>
+          <li>The same-store requirement is <b>about 68% across three years, roughly 20% a year</b>, not 70% in one step. Materially easier to defend, and it is his own framing.</li>
+          <li>Singapore's budgeted September door <b>will not open</b>. Openings stop until the operation is stable, which supersedes the roadmap.</li>
+          <li>Marketing falls from about 29% to about 15% of sales, which he calls a doubling of efficiency <b>assumed rather than planned</b>. That is Dee's 30% ceiling reached from the opposite direction, so the constraint is already an open item inside the plan rather than a challenge to it.</li>
+        </ul>
+
+        <h4>Half-year, for reference</h4>
+        <div class="nums">
+          <div class="num"><b>18.33m</b><span>APAC sales, +53.7% YoY</span></div>
+          <div class="num"><b>-13.33m</b><span>EBITDA, 5.80m better than budget</span></div>
+          <div class="num"><b>+3%</b><span>traffic, against sales +52.7%</span></div>
+          <div class="num"><b>15.0%</b><span>conversion, from 12.6%</span></div>
+        </div>
+        <p>The year came from conversion, basket and frequency, not footfall. Hong Kong turned channel positive in June, four months ahead of the budget path.</p>
+
+        <h4>Distributor</h4>
+        <p>Malaysia leads on nil ASEAN duty. The shortlisted partner is <b>Valiram</b>, 600-plus stores across nine markets, scoring 4 of 5 on regional access and <b>1.5 of 5 on category fit</b> with no menswear pedigree. So the agreement needs menswear performance measures and a Singapore-first pilot rather than a volume commitment. The payback figures in the model price the Gulf door, not the Malaysian one. A year's delay swaps 2029's +4.6m for 2028's -2.3m, a 6.9m swing against 10.4m of total EBITDA.</p>
+
+        <h4>Dee's instruction, which is scoped work not a suggestion</h4>
+        <p>Replace the average with the distribution. Crawl <b>every product, every shirt at minimum, listed price against discounted</b>, and map the curve. She tied it explicitly to the white-space question. This is the third time the same defect has been named from a different angle: at the workshop she said the panel plots where the bulk sells rather than the ceiling, and that the roster undercounts below HK$300 to 400. The product-level crawl fixes both.</p>
+        <p>Her brand thesis in her own words, worth putting into the D-series argument: there is a class of consumer with the money to buy Polo who will happily buy local if the local one is as interesting and as good, storytelling included, because they grew up middle class with products that were good enough. Being cheaper then captures the trade-down and the aspirational set together. Her examples are Songmont and Pane / Nice Rice.</p>
+      </div>
+    </details>
+
+    <details class="proj">
+      <summary>
+        <span class="pbar" style="background:var(--p-coord)"></span>
+        <span><span class="ptitle">B&amp;R coordinator seat</span><span class="pline">Standing operational seat across PYE, DET Mainland and DET APAC. Real job, still no folder.</span></span>
+        <span class="pmeta">6 yours &middot; 3 theirs</span>
+      </summary>
+      <div class="pbody">
+        <h4>The job, as Dee defined it</h4>
+        <p>She named the trap in the same breath as the job. Her words: the person who does the collating should be a <b>second reader who comes up with questions</b>, and then, "Be the asshole. covey doesnt dare." So the value of the seat is the questions. A pass that only assembles slides has already failed on her terms. Her diagnosis of the predecessor is the same thing stated as temperament: he could not hold a format and the GMs batted him away.</p>
+
+        <h4>The mechanics, from Covey's call</h4>
+        <p>EHI is <b>four slides, not three</b>. Henry owns the title page and the left half of every business unit slide, which is the financial charts. Units supply the right half only: text highlights plus <b>not fewer than three photos</b>. The one enforceable rule is that every financial number in the narrative must be findable in Henry's chart. The Brand Marketing page was a one-off and is not repeated.</p>
+        <p>Sequence: units to you by 13 August, you assemble all four, <b>Dee reviews first</b>, then it goes to Henry. Tangram is those same three unit slides unchanged plus two HI slides, five in total. Covey, Cheng Peng and Keith produce the HI pair and hand them over.</p>
+
+        <h4>What the board actually asked for</h4>
+        <p>Edgar's framing is not neutral: performance "less than satisfactory", targets missed, "with a particular focus on reducing our working capital". The Brands and Retailing breakdown carries an explicit ask for <b>key action plans to cut down inventory</b>. That is inventory, not growth. Sting's PLU tail and the chase-buy gap are the shortest path to it, and the APAC plan presented the same afternoon is a growth plan riding on 68% same-store and six new doors. Both are true, and the pack has to carry the tension rather than let the board find it.</p>
+
+        <h4>David Wei, 31 August</h4>
+        <p>Dee's brief is a DET product plan from you and Covey, plus the HI project, the 11/11 inventory plan and how DET deals with core and running. <b>The product plan is the only net-new artifact in the whole August stack</b>, and it builds off the map, the doors and the SS27 annex rather than fresh research. Covey's draft structure: best and worst sellers across formal shirt, casual shirt and polo, then design series, then the core-running against sysno criteria, then HI. He wants to know whether to bring physical samples, and he handed you that question for Dee.</p>
+      </div>
+    </details>
+
+    <details class="proj">
+      <summary>
+        <span class="pbar" style="background:var(--p-flexiv)"></span>
+        <span><span class="ptitle">flexiv-due-diligence</span><span class="pline">Partnership and structure memo. Verdict reached: right partner, wrong price.</span></span>
+        <span class="pmeta">4 yours &middot; 3 theirs</span>
+      </summary>
+      <div class="pbody">
+        <h4>The verdict, agreed by all three on the call</h4>
+        <div class="nums">
+          <div class="num"><b>PS 39</b><span>Flexiv, on 2025 revenue 256m</span></div>
+          <div class="num"><b>PS 35.89</b><span>Unitree IPO pricing</span></div>
+          <div class="num"><b>PS ~34</b><span>Zhiyuan</span></div>
+          <div class="num"><b>-194m</b><span>net loss, narrowed 23%</span></div>
+        </div>
+        <p>Above both comparables and, unlike Unitree, not yet profitable. Your framing of how to say it: we do not invest, and he is well suited to work with. The partnership case is force control, which is exactly what flexible textile handling needs, plus <b>the highest genuine industrial deployment ratio in the peer set</b>. The 26% going to labs and universities reads low where Unitree and comparables run above 50%.</p>
+
+        <h4>Your framework got rebuilt, and the reasoning is worth keeping</h4>
+        <p>You presented five axes. Wang Ke's objection was structural rather than about scores: toolchain, autonomy and integration all resolve to the same underlying fact, that Flexiv is self-developed end to end with few external interfaces, so scoring them separately triple-counts one weakness and is what dragged the total down. Leslie's objection is the one to remember: <b>axis two assumes a supplier relationship</b>, and in a collaboration you should not need to modify the arm behind their back, you should be able to ask.</p>
+        <p>Settled shape is hardware, AI and software, ecosystem, industrial deployment ratio, compared against Zhiyuan and Unitree rather than pure-hardware makers. <b>That leaves the five-axis framework file and the four-axis deck page disagreeing, and nobody has reconciled them.</b></p>
+
+        <h4>Still open, and one of them outranks the POC</h4>
+        <ul>
+          <li><b>Data ownership.</b> Yuan proposed patentable task units accumulated into a licensable IP library; Wang rejected software licensing and wants platform and data held as a shared whole. The minutes record no conclusion. Under Yuan's model your machine data stays yours; under Wang's it becomes joint and Flexiv holds the layer everything depends on. Same question as whether the domain-expertise-layer thesis survives.</li>
+          <li>Net loss <b>194m from the deck against 263m pre-tax from the audit report</b>. Two sources, both in your own room.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="proj">
+      <summary>
+        <span class="pbar" style="background:var(--p-tech)"></span>
+        <span><span class="ptitle">tech-roadmap-viz</span><span class="pline">Group technology map. Two live blockers and a hard date on Wednesday.</span></span>
+        <span class="pmeta">4 yours &middot; 1 theirs</span>
+      </summary>
+      <div class="pbody">
+        <h4>Repointed</h4>
+        <p>July was proving a data model to an audience of two. August is getting the organisation to fill the map before the 21 August gathering. The atom is a <b>pairing</b>, technology by scenario by problem with all three required, explicitly not a project, because a project is an action. Jacky also reversed his own sequencing, from design-thinking-first to write-the-boring-thing-first.</p>
+
+        <h4>The binding date is not the 21st</h4>
+        <p>Jacky emails departments on <b>12 August</b> and phones the silent ones on the 13th and 14th, so the intake has to be live and storing on the 12th. You are away from the 17th, so ship-freeze is Friday the 14th.</p>
+
+        <h4>Two blockers, both yours</h4>
+        <ul>
+          <li><b>Storage is not wired.</b> The intake collects nothing today.</li>
+          <li><b>The published repo is still public</b> with internal strategy data on it.</li>
+        </ul>
+        <p>Current build is the weave: 21 technologies against nine departments on one canvas, with intake folded into every empty cell so the map and the collection instrument are the same object. Colour sits on the four qonvolv pillars after eight technology hues failed the palette validator.</p>
+      </div>
+    </details>
+
+    <details class="proj">
+      <summary>
+        <span class="pbar" style="background:var(--p-bliss)"></span>
+        <span><span class="ptitle">bliss-marketplace</span><span class="pline">Side gig. Untouched since 17 July and under no deadline. Safe to leave.</span></span>
+        <span class="pmeta">1 yours &middot; 1 theirs</span>
+      </summary>
+      <div class="pbody">
+        <h4>Where it sits</h4>
+        <p>Four pages live and doubling as the investor demo. Waiting on real photography across the 38 specced asset slots and on Suki's pricing chart. Onboarding spec and timeline deferred. Nothing here competes with August, and the honest call is to leave it until after the 2 September board.</p>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<!-- ============ FLAGS ============ -->
+<section>
+  <div class="shead">
+    <div class="kicker">04</div>
+    <h2>Needs a decision from you</h2>
+    <div class="note">Not tasks. Judgement calls nobody else can make.</div>
+  </div>
+
+  <div class="flag stop">
+    <h3>Your leave sits on top of the pinch</h3>
+    <p>You are off from the 17th to the 21st. Tangram materials are due to Edgar on the 19th, the Tangram meeting itself runs the 20th and 21st in Gaoming with Brands and Retailing at 11:35, and APAC business plan round two lands the same week. This is the first cycle in the coordinator seat and you are away for its delivery. Nothing in the files acknowledges the clash.</p>
+    <p class="ask">Three options: ship the pack fully assembled on Friday the 14th, hand the delivery to Covey or Henry, or move the leave.</p>
+  </div>
+
+  <div class="flag">
+    <h3>The coordinator seat has no project folder</h3>
+    <p>It spans PYE, DET Mainland and DET APAC, so it belongs inside neither existing project. Its material currently sits under det-market-positioning by precedent. It is temporary in the project sense, a fixed reporting cycle with hard dates, and output-oriented, which is what the projects directory is for.</p>
+    <p class="ask">Create projects/br-reporting-coordination and move the seat's material there?</p>
+  </div>
+
+  <div class="flag">
+    <h3>The capability report has no room to land</h3>
+    <p>Margie plans to take it to Dee and David. The 31 August David Wei meeting is the nearest slot holding both, and Dee has already scoped that agenda with nothing PYE on it. The next natural window is after the 2 September board.</p>
+    <p class="ask">Raise sequencing with Margie rather than assume the slot exists.</p>
+  </div>
+
+  <div class="flag">
+    <h3>Edgar's own deadline does not exist</h3>
+    <p>His email says input is due "by Monday, Aug 25, 2026". The 25th is a Tuesday and the Monday is the 24th. Minor, but you are the consolidation point now, so it is worth one line back to Henry rather than three GMs each guessing differently.</p>
+    <p class="ask">Confirm 24 or 25 with Henry when you next speak.</p>
+  </div>
+
+  <div class="flag">
+    <h3>One date in the record is inferred, not stated</h3>
+    <p>The Sting transcript carries no header at all. It is placed on 6 August from two markers: it postdates the 4 August Margie meeting, and Sting says Pacific Place reopens the day after tomorrow where Kevin on the 5th still describes it as under refurbishment.</p>
+    <p class="ask">Confirm with Sting rather than treat the date as fixed.</p>
+  </div>
+</section>
+
+<footer>
+  Built from <code>projects/index.md</code> and the five project logs, after filing the 3 to 7 August clippings batch. Canonical detail lives in the project folders, not here. This page is a scratch surface: ticks are not saved and nothing writes back to the vault.
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var PROJ = {
+  pye:{label:"PYE"}, det:{label:"DET"}, coord:{label:"COORD"},
+  flexiv:{label:"FLEXIV"}, tech:{label:"TECH"}, bliss:{label:"BLISS"}
+};
+
+// bucket: 0 today, 1 this week (to Fri 14), 2 before you go, 3 while away, 4 after you're back, 5 no date
+var ACTS = [
+  // ---- today, Mon 10 Aug
+  {b:0,p:"tech",o:"me",w:"you",t:"Tech map review with Jacky",n:"The jacky-deck is built for exactly this. Four questions in it are for him to answer."},
+  {b:0,p:"flexiv",o:"them",w:"Wang Ke",t:"Tell Jacky the Flexiv deck is not for this afternoon's Wilkie meeting",n:"Agreed on the 7th. Wilkie wants to know when it makes money and the deck does not answer that."},
+
+  // ---- this week, to Fri 14
+  {b:1,p:"tech",o:"me",w:"you",t:"Wire storage on the intake",n:"Hard blocker. Jacky emails departments on the 12th and the intake collects nothing today.",blk:true},
+  {b:1,p:"tech",o:"me",w:"you",t:"Take the published repo private",n:"Hard blocker. Internal strategy data is world readable and the send goes out on the 12th.",blk:true},
+  {b:1,p:"tech",o:"them",w:"Jacky",t:"Email the departments (12 Aug), phone the silent ones (13 to 14 Aug)"},
+  {b:1,p:"coord",o:"me",w:"you",t:"Verify Kin's YTD June financials actually went out",n:"They were due on 5 August. Every unit narrative is written against them, so if they are late the 13th slips."},
+  {b:1,p:"coord",o:"me",w:"you",t:"Chase Sting, Keith and Clement for their EHI right halves",n:"Due 13 Aug. Text highlights plus not fewer than three photos, every number reconciling to Henry's chart."},
+  {b:1,p:"coord",o:"them",w:"Henry Zhao",t:"Title slide and the left-hand charts on every unit slide",n:"Due 13 Aug."},
+  {b:1,p:"coord",o:"them",w:"Covey, Cheng Peng, Keith",t:"The two HI and inventory slides",n:"Due 13 Aug, handed to you for the Tangram pack."},
+  {b:1,p:"coord",o:"me",w:"you",t:"Assemble the four EHI slides and send to Dee for review",n:"Dee reviews before Henry, not after."},
+  {b:1,p:"tech",o:"me",w:"you",t:"Ship-freeze the tech map",n:"Friday the 14th, because you are away from Monday."},
+
+  // ---- before you go
+  {b:2,p:"coord",o:"me",w:"you",t:"Get the Tangram five-pager finished ahead of the 19th",n:"It is due to Edgar while you are away. Max five pages, performance against budget and last year, then topics to discuss.",blk:true},
+  {b:2,p:"coord",o:"me",w:"you",t:"Decide who covers the seat from the 17th to the 21st",n:"Tangram delivery, the Gaoming meeting and APAC round two all land inside your leave."},
+  {b:2,p:"det",o:"me",w:"you",t:"Ask Dee whether physical samples go to Shanghai",n:"Covey's question, handed to you. One line, and he needs it to plan the product review."},
+  {b:2,p:"det",o:"me",w:"you",t:"Click through Clement's distributor dashboard and send back what looks wrong",n:"He asked the room directly. The financial model inside it is unverified by his own admission."},
+
+  // ---- while away
+  {b:3,p:"det",o:"them",w:"Singapore team",t:"CIMB Plaza pop-up, 17 Aug",n:"New customer acquisition test against the office shirt-buyer."},
+  {b:3,p:"coord",o:"me",w:"you",t:"Tangram materials to Edgar, 19 Aug",n:"Two working days before the meeting."},
+  {b:3,p:"det",o:"them",w:"Clement",t:"APAC business plan round two, week of 19 Aug",n:"Monthly cash flow model with HK and Singapore split from distributor, the how behind 68% same-store, new-store criteria, full back-office cost, verified distributor model."},
+  {b:3,p:"tech",o:"them",w:"Jacky",t:"Pre-meeting pack 19 Aug, presents the map 21 Aug"},
+  {b:3,p:"coord",o:"them",w:"Dee",t:"Leads Brands and Retailing at Tangram, 21 Aug 11:35, 55 minutes"},
+
+  // ---- after you are back
+  {b:4,p:"coord",o:"me",w:"you",t:"EHI board input to Edgar, carrying inventory action plans",n:"His email says Monday 25 August; the 25th is a Tuesday. Confirm which. The ask is inventory and working capital, not growth."},
+  {b:4,p:"coord",o:"me",w:"you",t:"DET product plan with Covey for the David Wei meeting, 31 Aug",n:"The only net-new artifact in the August stack. Built off the map, the doors and the SS27 annex."},
+  {b:4,p:"coord",o:"them",w:"Covey",t:"Send you the David Wei product review framework",n:"Categories, design series, core-running against sysno criteria, then HI."},
+
+  // ---- no fixed date, PYE
+  {b:5,p:"pye",o:"me",w:"you",t:"Ask one store manager the size question",n:"Gates the size slide. Four rival explanations, none a capability failure: never-out-of-stock mandate, boss-size skew, resale leakage, Asian against US sizing.",blk:true},
+  {b:5,p:"pye",o:"me",w:"you",t:"Close Kevin's missing 95 percent",n:"Get the call protocol, the script and the removal count. Cheapest fix in the project and it is the denominator the whole effectiveness read needs."},
+  {b:5,p:"pye",o:"me",w:"you",t:"Confirm with Kevin who runs the customer interviews",n:"The transcript cannot settle whether you or he said 'I'll talk to them'. One line avoids both of you assuming the other is on it."},
+  {b:5,p:"pye",o:"me",w:"you",t:"Rebuild the retention read by acquisition-year cohort on a 12-month window",n:"Sting has already asked Effy for this. Adopting it aligns your method with his."},
+  {b:5,p:"pye",o:"me",w:"you",t:"Run Sting's unrun study: SS against FW acquisition and repurchase season",n:"Joined to first category bought. You already hold the join, so this is answering a request rather than commissioning one."},
+  {b:5,p:"pye",o:"me",w:"you",t:"Frontline interviews on blind-box effectiveness",n:"Fiona, Sting, and the stores that were pushed to run boxes. Consistent voices are evidence even where no single answer is a conclusion."},
+  {b:5,p:"pye",o:"me",w:"you",t:"Raise report sequencing with Margie",n:"She plans to take it to Dee and David. The 31 August room is scoped with nothing PYE on it."},
+  {b:5,p:"pye",o:"me",w:"you",t:"Reintroduce capsules as a new case, not a quiet reinstate",n:"Dee rejected Track 3 capsules on 21 July on inventory grounds. This is a brand-elevation and acquisition argument with Sting's price data behind it."},
+  {b:5,p:"pye",o:"them",w:"Kevin Choi",t:"Execution background for the capability report"},
+  {b:5,p:"pye",o:"them",w:"Kin",t:"Financial impact and the blind-box effectiveness numbers"},
+  {b:5,p:"pye",o:"them",w:"Joe Qiao",t:"WeCom store diary accounts, Pacific Place pilot",n:"Agreed with Sting. Decide after one or two weeks, then Fiona is notified and Olivia runs training and enforcement."},
+  {b:5,p:"pye",o:"them",w:"Sting",t:"Send the ABC deck, the detailed PLU tables and Effy's tables"},
+  {b:5,p:"pye",o:"them",w:"Margie",t:"Schedule the session with Dee and David"},
+
+  // ---- no fixed date, DET
+  {b:5,p:"det",o:"me",w:"you",t:"Product-level price crawl, shirts first, listed against discounted",n:"Dee's 7 August instruction, tied explicitly to the white-space question. Ask for their sales data too."},
+  {b:5,p:"det",o:"me",w:"you",t:"Repair the sampling frame and map competitors' premium sub-lines",n:"The roster came from mall-floor shoppers so below HK$300 to 400 is undercounted, and the panel plots the bulk rather than the ceiling."},
+  {b:5,p:"det",o:"me",w:"you",t:"Social listening to reverse out who buys each brand",n:"Dee asked whether Kan can help. Watch the videos and images, read the KOLs, work back to the customer."},
+  {b:5,p:"det",o:"me",w:"you",t:"Build the benchmark-shift argument",n:"Uniqlo and G2000 to COS and Brooks Brothers. The panel already holds the evidence; the argument is what is missing."},
+  {b:5,p:"det",o:"me",w:"you",t:"One brand truth, argued to Sales on growth",n:"Dee's mood board ask. Converts the positioning reconciliation from a comparison into an argument."},
+  {b:5,p:"det",o:"them",w:"Kin",t:"Distributor sensitivity model with Kevin",n:"Peak funding needed, partner P&L, DETERMINANT P&L, payback by door."},
+  {b:5,p:"det",o:"them",w:"Kevin Choi",t:"Marketing under the 30 percent ceiling, CAC against 12-month LTV on full selling cost",n:"Plus the commission rewrite so store staff get credited for online sales they drive, and brand-in-a-box toolkit readiness."},
+  {b:5,p:"det",o:"them",w:"Annie Kam",t:"Org charts and headcount plan for the supporting teams"},
+
+  // ---- no fixed date, Flexiv
+  {b:5,p:"flexiv",o:"me",w:"you",t:"Resolve the data-ownership term",n:"Yuan's licensable task-unit IP library against Wang's shared platform. No conclusion in the minutes, and it outranks the POC because it is the same question as whether the domain-expertise-layer thesis survives.",blk:true},
+  {b:5,p:"flexiv",o:"me",w:"you",t:"Reconcile the five-axis framework against the four-axis deck page",n:"They now disagree. Decide at closeout which goes to the wiki, or both with the audience attached."},
+  {b:5,p:"flexiv",o:"me",w:"you",t:"Reconcile net loss 194m against 263m pre-tax",n:"Deck figure against audit report, both quoted in your own room."},
+  {b:5,p:"flexiv",o:"me",w:"you",t:"Close the TODO sections in the IC memo"},
+  {b:5,p:"flexiv",o:"them",w:"Wang Ke",t:"Final strategic-cooperation page and trim the redundant competitor rows"},
+  {b:5,p:"flexiv",o:"them",w:"Leslie",t:"Add the Kassow Robots row",n:"Bosch-owned, foreign brand at a price close to Flexiv's, which breaks the expensive-foreign against cheap-domestic split."},
+  {b:5,p:"flexiv",o:"them",w:"Flexiv via Brian",t:"Strategic cooperation agreement and POC agreement drafts"},
+
+  // ---- no fixed date, Bliss
+  {b:5,p:"bliss",o:"me",w:"you",t:"Real photography across the 38 specced asset slots",n:"No deadline. Honest call is after the 2 September board."},
+  {b:5,p:"bliss",o:"them",w:"Suki",t:"Pricing chart"}
+];
+
+var BUCKETS = [
+  {id:0,label:"Today, Monday 10 August",meta:""},
+  {id:1,label:"This week, to Friday 14 August",meta:"the 12th is the hard one"},
+  {id:2,label:"Before you go",meta:"anything that falls inside 17 to 21 August"},
+  {id:3,label:"While you are away, 17 to 21 August",meta:"delivery happens without you"},
+  {id:4,label:"When you are back",meta:""},
+  {id:5,label:"No fixed date",meta:"the actual work, as opposed to the calendar"}
+];
+
+// ---------- runway ----------
+var DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+var EVENTS={
+  10:[{p:"tech",x:"Jacky review",h:1},{p:"flexiv",x:"Wilkie mtg, deck held back"}],
+  12:[{p:"tech",x:"Storage live. Jacky emails depts",h:1}],
+  13:[{p:"coord",x:"EHI slides, charts, HI pair",h:1},{p:"tech",x:"Jacky phones the quiet ones"}],
+  14:[{p:"tech",x:"Ship-freeze",h:1},{p:"coord",x:"EHI pack to Dee"}],
+  17:[{p:"det",x:"SG CIMB pop-up"}],
+  19:[{p:"coord",x:"Tangram pack to Edgar",h:1},{p:"det",x:"APAC round two"},{p:"tech",x:"Pre-meeting pack"}],
+  20:[{p:"coord",x:"Tangram dinner, Gaoming"}],
+  21:[{p:"coord",x:"Tangram. B&R 11:35",h:1},{p:"tech",x:"Map presented"}],
+  24:[{p:"coord",x:"EHI input (email says 25th)"}],
+  31:[{p:"coord",x:"David Wei, Shanghai 17:00",h:1}]
+};
+var SEP={2:[{p:"coord",x:"EHI board",h:1}]};
+
+function buildRunway(){
+  var el=document.getElementById("runway"), html="";
+  function cell(dnum,dow,month,cls,evs){
+    var s='<div class="day '+cls+'">';
+    s+='<div class="ddow"><span>'+dow+(dnum===1?" "+month:"")+'</span>'+
+       (cls.indexOf("leave")>-1?'<span class="away">away</span>':'')+'</div>';
+    s+='<div class="dnum">'+dnum+'</div>';
+    (evs||[]).forEach(function(e){
+      s+='<div class="ev '+e.p+(e.h?" hard":"")+'">'+e.x+'</div>';
+    });
+    return s+'</div>';
+  }
+  var d;
+  for(d=10;d<=31;d++){
+    var dow=new Date(2026,7,d).getDay();
+    var cls=[];
+    if(dow===0||dow===6) cls.push("weekend");
+    if(d>=17&&d<=21) cls.push("leave");
+    if(d===10) cls.push("today");
+    if(d===19) cls.push("pinch");
+    html+=cell(d,DOW[dow],"Aug",cls.join(" "),EVENTS[d]);
+  }
+  for(d=1;d<=2;d++){
+    var dow2=new Date(2026,8,d).getDay();
+    html+=cell(d,DOW[dow2],"Sep",(dow2===0||dow2===6)?"weekend":"",SEP[d]);
+  }
+  el.innerHTML=html;
+}
+
+// ---------- actions ----------
+var fOwner="all", fProj=null;
+
+function render(){
+  var host=document.getElementById("buckets"), out="", shown=0;
+  BUCKETS.forEach(function(bk){
+    var rows=ACTS.filter(function(a){
+      if(a.b!==bk.id) return false;
+      if(fOwner!=="all" && a.o!==fOwner) return false;
+      if(fProj && a.p!==fProj) return false;
+      return true;
+    });
+    if(!rows.length) return;
+    shown+=rows.length;
+    out+='<div class="bucket'+(bk.id<=2?" urgent":"")+'">';
+    out+='<div class="bhead"><h3>'+bk.label+'</h3><span class="bmeta">'+rows.length+(bk.meta?" &middot; "+bk.meta:"")+'</span></div>';
+    out+='<ul class="acts">';
+    rows.forEach(function(a){
+      out+='<li class="act">';
+      out+='<span class="tag '+a.p+'">'+PROJ[a.p].label+'</span>';
+      out+='<span class="actinner"><input type="checkbox" class="chk" aria-label="mark done"><span class="txt">'+
+           (a.blk?'<span class="blocker">Blocker. </span>':'')+a.t+
+           (a.n?'<em>'+a.n+'</em>':'')+'</span></span>';
+      out+='<span class="who'+(a.o==="me"?" mine":"")+'">'+(a.o==="me"?"you":a.w)+'</span>';
+      out+='</li>';
+    });
+    out+='</ul></div>';
+  });
+  host.innerHTML = out || '<div class="empty">Nothing matches that filter.</div>';
+  document.getElementById("count").textContent = shown+" shown of "+ACTS.length;
+  host.querySelectorAll(".chk").forEach(function(c){
+    c.addEventListener("change",function(){ c.closest("li.act").classList.toggle("done", c.checked); });
+  });
+}
+
+function wire(){
+  document.querySelectorAll(".chip[data-owner]").forEach(function(b){
+    b.addEventListener("click",function(){
+      fOwner=b.dataset.owner;
+      document.querySelectorAll(".chip[data-owner]").forEach(function(x){
+        x.setAttribute("aria-pressed", String(x===b));
+      });
+      render();
+    });
+  });
+  document.querySelectorAll(".chip[data-proj]").forEach(function(b){
+    b.addEventListener("click",function(){
+      fProj = (fProj===b.dataset.proj) ? null : b.dataset.proj;
+      document.querySelectorAll(".chip[data-proj]").forEach(function(x){
+        x.setAttribute("aria-pressed", String(x.dataset.proj===fProj));
+      });
+      render();
+    });
+  });
+}
+
+document.getElementById("s-mine").textContent = ACTS.filter(function(a){return a.o==="me";}).length;
+document.getElementById("s-them").textContent = ACTS.filter(function(a){return a.o==="them";}).length;
+buildRunway();
+wire();
+render();
+})();
+</script>
+</body>
+</html>

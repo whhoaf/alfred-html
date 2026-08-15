@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where I Stand on Open Weights</title>
+<style>
+  :root{
+    --bg:#0e1116;
+    --panel:#161b22;
+    --panel-2:#1c232d;
+    --ink:#e6edf3;
+    --ink-dim:#9aa7b4;
+    --line:#2a333d;
+    --seger:#e5677b;
+    --green:#e0a53d;
+    --kapoor:#4fb286;
+    --accent:#6ea8fe;
+    --accent-soft:rgba(110,168,254,.12);
+    --radius:14px;
+    --maxw:940px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f4f6f9; --panel:#ffffff; --panel-2:#f0f3f7;
+      --ink:#141a21; --ink-dim:#5a6672; --line:#e0e5eb;
+      --accent-soft:rgba(37,99,235,.08); --accent:#2563eb;
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; padding:44px 20px 80px;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto;}
+  .kicker{
+    font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); font-weight:700; margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(26px,4.4vw,40px); line-height:1.12; margin:0 0 14px;
+    font-weight:750; letter-spacing:-.01em;
+  }
+  .lede{color:var(--ink-dim); font-size:17px; max-width:70ch; margin:0 0 8px;}
+  .meta{color:var(--ink-dim); font-size:13px; margin:14px 0 0;}
+  .meta b{color:var(--ink); font-weight:600;}
+
+  /* spectrum */
+  .spectrum{
+    margin:34px 0 8px; background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:26px 26px 22px;
+  }
+  .spectrum h2{font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim); margin:0 0 22px; font-weight:700;}
+  .bar{
+    position:relative; height:8px; border-radius:99px;
+    background:linear-gradient(90deg,var(--seger) 0%,var(--green) 50%,var(--kapoor) 100%);
+    margin:0 8px 0;
+  }
+  .marker{
+    position:absolute; top:50%; left:82%; transform:translate(-50%,-50%);
+    width:22px; height:22px; border-radius:50%; background:var(--accent);
+    border:3px solid var(--panel); box-shadow:0 0 0 2px var(--accent);
+  }
+  .marker-label{
+    position:absolute; left:82%; top:-34px; transform:translateX(-50%);
+    background:var(--accent); color:#fff; font-size:11px; font-weight:700;
+    padding:3px 9px; border-radius:6px; white-space:nowrap;
+  }
+  .marker-label:after{
+    content:""; position:absolute; left:50%; bottom:-5px; transform:translateX(-50%);
+    border:5px solid transparent; border-top-color:var(--accent); border-bottom:0;
+  }
+  .anchors{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:26px;}
+  .anchor{border-top:3px solid var(--line); padding-top:12px;}
+  .anchor:nth-child(1){border-color:var(--seger);}
+  .anchor:nth-child(2){border-color:var(--green);}
+  .anchor:nth-child(3){border-color:var(--kapoor);}
+  .anchor .name{font-weight:700; font-size:14px; margin:0 0 3px;}
+  .anchor .who{font-size:12px; color:var(--ink-dim); margin:0 0 8px;}
+  .anchor p{font-size:13px; color:var(--ink-dim); margin:0; line-height:1.5;}
+
+  /* cards */
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:26px;}
+  .card{
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:22px 24px;
+  }
+  .card.full{grid-column:1 / -1;}
+  .card h3{
+    font-size:12px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px; font-weight:700;
+    display:flex; align-items:center; gap:8px;
+  }
+  .card h3 .n{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:20px; height:20px; border-radius:5px; background:var(--accent-soft);
+    color:var(--accent); font-size:11px; font-weight:800;
+  }
+  .card p{margin:0 0 12px;}
+  .card p:last-child{margin-bottom:0;}
+  .card strong{color:var(--ink); font-weight:650;}
+  .pull{
+    border-left:3px solid var(--accent); padding:2px 0 2px 14px;
+    color:var(--ink); font-style:italic; margin:14px 0; font-size:15px;
+  }
+
+  .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .tag{
+    font-size:12px; color:var(--ink-dim); background:var(--panel-2);
+    border:1px solid var(--line); border-radius:99px; padding:4px 12px;
+  }
+  .tag b{color:var(--ink);}
+
+  /* facts strip */
+  .facts{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:26px;}
+  .fact{background:var(--panel-2); border:1px solid var(--line); border-radius:12px; padding:16px 18px;}
+  .fact .big{font-size:24px; font-weight:750; color:var(--ink); line-height:1;}
+  .fact .cap{font-size:12px; color:var(--ink-dim); margin-top:7px; line-height:1.4;}
+
+  .sources{margin-top:34px; border-top:1px solid var(--line); padding-top:20px;}
+  .sources h4{font-size:12px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-dim); margin:0 0 12px;}
+  .src-list{display:grid; gap:8px; font-size:13px; color:var(--ink-dim);}
+  .src-list span b{color:var(--ink); font-weight:600;}
+  .foot{margin-top:26px; font-size:12px; color:var(--ink-dim);}
+
+  @media(max-width:720px){
+    .grid,.facts,.anchors{grid-template-columns:1fr;}
+    .card.full{grid-column:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">BlueDot Frontier AI Governance &middot; Unit 5 &middot; Contested Questions</p>
+  <h1>Where I Stand on Open Weights as Models Get More Capable</h1>
+  <p class="lede">My position is not "open weights are safe." It is that the right question is <strong>marginal risk</strong>, and that it must be re-measured on every new frontier open model, not settled once.</p>
+  <p class="meta"><b>Author:</b> Alfred Ho &nbsp;&middot;&nbsp; <b>Date:</b> 2026-07-11 &nbsp;&middot;&nbsp; <b>Verdict:</b> Open by default, provisionally, with engagement as the real lever</p>
+
+  <section class="spectrum">
+    <h2>The Spectrum &mdash; and where I sit</h2>
+    <div class="bar">
+      <div class="marker-label">Me: near Kapoor, framework-grounded</div>
+      <div class="marker"></div>
+    </div>
+    <div class="anchors">
+      <div class="anchor">
+        <p class="name">Restrict highly capable</p>
+        <p class="who">Seger et al., GovAI 2023</p>
+        <p>Some near-future models are too risky to open initially. Release is irreversible; offense-defense skews to offense.</p>
+      </div>
+      <div class="anchor">
+        <p class="name">Pay the blood tax</p>
+        <p class="who">Greenblatt, blog post 2025</p>
+        <p>Net-positive now (~100k expected fatalities/yr accepted to buy x-risk reduction). Flips harmful at AI-R&amp;D acceleration, ARA, or CBRN-4.</p>
+      </div>
+      <div class="anchor">
+        <p class="name">Default open, low marginal risk</p>
+        <p class="who">Kapoor &amp; Bommasani, Stanford 2024</p>
+        <p>Measure risk <em>added</em> beyond closed models plus existing tools. Current evidence for high marginal risk is weak across 7 misuse vectors.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3><span class="n">1</span> Position</h3>
+      <p>I sit close to <strong>Kapoor and Bommasani</strong>, but for a reason they do not fully spell out. I trust their six-step marginal-risk framework as a <strong>method</strong>. I do not trust any single number it produces, including Greenblatt's 100,000 fatalities per year, that figure is a stacked-assumption thought experiment from a blog post, not measured evidence.</p>
+      <p class="pull">The honest state of the field is that marginal risk is unproven in both directions.</p>
+      <p>Underneath sits a prior: open models are, on balance, good. They pull power away from three or four frontier labs, let outside researchers study safety directly, and let the rest of the world, including China, build without permission. Reading the US-China dynamic from inside both cultures, I will not treat the whole open ecosystem as a threat to contain.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="n">2</span> Uncertainty</h3>
+      <p>My weakest point: <strong>I do not have a fixed line.</strong> I believe open is good "until the capability threshold," but I cannot yet name that threshold. Greenblatt's candidates, meaningful AI R&amp;D acceleration, autonomous replication, frontier bioweapon uplift, feel directionally right but I have not defended any one.</p>
+      <p>Two things would move me:</p>
+      <p><strong>&rarr; A fresh rerun</strong> of the framework on a genuinely frontier open model (DeepSeek V4, a Fable 5-class release), not 2023-25 models. At this speed the analysis ages in months.<br>
+      <strong>&rarr; A real incident.</strong></p>
+      <p>Strongest counter, Greenblatt's own: release is irreversible, so if I misjudge the threshold there is no recall. I accept that asymmetry. It is why my position is provisional, not settled.</p>
+    </div>
+
+    <div class="card full">
+      <h3><span class="n">3</span> Coherence with my strategic vision</h3>
+      <p>My vision has always been <strong>cooperative development</strong>, not a race won by containment, with genuine US-China engagement as its precondition. My open-weight position follows from that, not the other way around. Restriction-first policy assumes the other side can be walled off. The evidence says it cannot.</p>
+      <div class="facts">
+        <div class="fact"><div class="big">Qwen &gt; Llama</div><div class="cap">Alibaba passed Meta as most-downloaded LLM family on Hugging Face (Sep 2025)</div></div>
+        <div class="fact"><div class="big">70B, no off-switch</div><div class="cap">Frontier-class models train on decentralized consumer hardware; distributed vs decentralised training erodes compute-threshold leverage</div></div>
+        <div class="fact"><div class="big">~12x</div><div class="cap">CAISI-measured jailbreak susceptibility gap for DeepSeek vs comparable US models, the concrete wedge for engagement</div></div>
+      </div>
+      <p style="margin-top:16px">China will keep shipping open regardless of what the US decides. Given that, the leverage is not a ban. It is engagement with concrete deliverables: shared evaluation standards, incident reporting, and pressure on the jailbreak-resistance gap. That is where a bridge is worth more than a wall, and it is the through-line of everything I have written in this course.</p>
+      <div class="tags">
+        <span class="tag">prior: <b>open is good</b></span>
+        <span class="tag">method: <b>marginal risk</b></span>
+        <span class="tag">stance: <b>provisional</b></span>
+        <span class="tag">lever: <b>US-China engagement</b></span>
+        <span class="tag">frame: <b>HK bridge</b></span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sources">
+    <h4>Readings behind this position</h4>
+    <div class="src-list">
+      <span><b>Seger et al. (2023)</b> &middot; Open-Sourcing Highly Capable Foundation Models &middot; GovAI</span>
+      <span><b>Kapoor &amp; Bommasani et al. (2024)</b> &middot; On the Societal Impact of Open Foundation Models &middot; Stanford</span>
+      <span><b>Greenblatt (2025)</b> &middot; When is it important that open-weight models aren't released? &middot; LessWrong</span>
+      <span><b>Krys, Sharma &amp; Egan (2025)</b> &middot; Distributed and Decentralised Training &middot; TAIG @ ICML</span>
+      <span><b>Meinhardt et al. (2025)</b> &middot; Beyond DeepSeek: China's Diverse Open-Weight AI Ecosystem &middot; Stanford HAI / DigiChina</span>
+    </div>
+  </div>
+
+  <p class="foot">Wiki concepts: Open Weights vs Open Source &middot; Marginal Risk (Open Models) &middot; Distributed vs Decentralised Training &middot; HK Bridge Thesis &nbsp;|&nbsp; Canonical text: wiki/outputs/bluedot/2026-07-11-bluedot-fg-unit5-open-weights-position.md</p>
+
+</div>
+</body>
+</html>

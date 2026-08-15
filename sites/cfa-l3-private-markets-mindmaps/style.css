@@ -1,0 +1,171 @@
+/* CFA L3 Review Companion — artifact CSS on top of pakco base + swiss-grid */
+
+:root{
+  /* section accents: printable, distinguishable, dark enough for white-on-chip */
+  --aa:#234a8c;   /* Asset Allocation: indigo */
+  --pc:#0e7a5f;   /* Portfolio Construction: pine */
+  --pm:#b0611c;   /* Performance Measurement: ochre */
+  --dr:#6b3fa0;   /* Derivatives & Risk Mgmt: violet */
+  --et:#a3253a;   /* Ethics: crimson */
+  --pvm:#0f7a99;  /* Private Markets: teal */
+  --flag:#d6001c; /* exam-tip flag, swiss red */
+  --ink:var(--text-1);
+  --hair:rgba(17,17,17,.18);
+}
+
+/* dark scheme: tokens only; explicit choice beats OS */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141416;--bg-soft:#1c1c1f;--surface:#141416;--surface-2:#202024;
+    --border:#d8d8d8;--border-strong:#d8d8d8;
+    --text-1:#ececec;--text-2:#b9b9bc;--text-3:#8a8a90;
+    --hair:rgba(236,236,236,.22);
+    --aa:#7d9fe0;--pc:#57b99c;--pm:#dd9a58;--dr:#ab86d8;--et:#dd7086;--pvm:#5cb6d1;
+    --flag:#ff5c6e;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141416;--bg-soft:#1c1c1f;--surface:#141416;--surface-2:#202024;
+  --border:#d8d8d8;--border-strong:#d8d8d8;
+  --text-1:#ececec;--text-2:#b9b9bc;--text-3:#8a8a90;
+  --hair:rgba(236,236,236,.22);
+  --aa:#7d9fe0;--pc:#57b99c;--pm:#dd9a58;--dr:#ab86d8;--et:#dd7086;--pvm:#5cb6d1;
+  --flag:#ff5c6e;
+}
+
+html{scroll-behavior:smooth}
+body.webpage{background:var(--bg);color:var(--text-1);font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;margin:0;line-height:1.5}
+body.webpage .page{max-width:780px;margin:0 auto;padding:0 20px 80px}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:var(--bg);
+  border-bottom:1px solid var(--border-strong);padding:10px 0 0}
+.topbar-inner{max-width:780px;margin:0 auto;padding:0 20px}
+.topbar .brand{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.topbar .brand b{font-size:13px;letter-spacing:-.02em;white-space:nowrap}
+.topbar .brand span{font-size:11px;color:var(--text-3);white-space:nowrap}
+.pills{display:flex;gap:6px;overflow-x:auto;padding:8px 0 10px;scrollbar-width:none}
+.pills::-webkit-scrollbar{display:none}
+.pill{flex:0 0 auto;font-size:11.5px;font-weight:600;letter-spacing:.02em;
+  padding:4px 10px;border:1px solid var(--hair);color:var(--text-2);
+  text-decoration:none;white-space:nowrap;border-left:3px solid var(--s,var(--text-3))}
+.pill:hover{color:var(--text-1);border-color:var(--border-strong)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:44px 0 28px;border-bottom:2px solid var(--ink)}
+.masthead .kicker{font-size:12px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-3);margin:0 0 10px}
+.masthead h1{font-size:clamp(30px,7vw,44px);line-height:1.04;letter-spacing:-.035em;
+  margin:0 0 14px;text-wrap:balance}
+.masthead p{font-size:14px;color:var(--text-2);max-width:56ch;margin:0}
+.masthead .srcnote{font-size:11.5px;color:var(--text-3);margin-top:14px}
+
+/* ---------- table of contents ---------- */
+.toc{margin:26px 0 8px;display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--hair);border:1px solid var(--hair)}
+.toc a{background:var(--bg);padding:12px 14px;text-decoration:none;color:var(--text-1);
+  display:flex;flex-direction:column;gap:3px;border-left:3px solid var(--s,var(--text-3))}
+.toc a:hover{background:var(--surface-2)}
+.toc .code{font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--s,var(--text-3))}
+.toc .name{font-size:13.5px;font-weight:600;letter-spacing:-.01em}
+.toc .count{font-size:11px;color:var(--text-3);font-variant-numeric:tabular-nums}
+@media (max-width:520px){.toc{grid-template-columns:1fr}}
+
+/* ---------- section ---------- */
+section.topic{scroll-margin-top:84px;padding-top:44px}
+.section-head{border-bottom:2px solid var(--s,var(--ink));padding-bottom:12px;margin-bottom:8px}
+.section-head .code{font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--s)}
+.section-head h2{font-size:clamp(24px,5.5vw,34px);letter-spacing:-.03em;line-height:1.05;
+  margin:6px 0 6px;text-wrap:balance}
+.section-head .meta{font-size:11.5px;color:var(--text-3);font-variant-numeric:tabular-nums}
+
+/* reading group */
+.reading{margin-top:34px}
+.reading>h3{font-size:16.5px;letter-spacing:-.015em;margin:0 0 4px;
+  padding-left:10px;border-left:4px solid var(--s,var(--ink))}
+.reading>.rmeta{font-size:11px;color:var(--text-3);padding-left:14px;margin:0 0 14px}
+
+/* ---------- slide card ---------- */
+.mm{border-top:1.5px solid var(--ink);padding:12px 0 18px;margin-top:16px}
+.mm-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
+.mm-head h4{font-size:14.5px;font-weight:700;letter-spacing:-.01em;margin:0}
+.mm-head .pg{font-size:10.5px;color:var(--text-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.mm ul{margin:6px 0;padding-left:18px;list-style:none}
+.mm ul li{position:relative;font-size:13.5px;color:var(--text-1);margin:5px 0}
+.mm ul li::before{content:"";position:absolute;left:-13px;top:.62em;width:6px;height:1.5px;background:var(--s,var(--ink))}
+.mm ul ul{border-left:1px solid var(--hair);margin-left:2px;padding-left:16px}
+.mm ul ul li{font-size:13px;color:var(--text-2)}
+.mm ul ul li::before{width:4px;background:var(--text-3)}
+.mm ol{margin:6px 0;padding-left:22px}
+.mm ol li{font-size:13.5px;margin:5px 0}
+.mm p{font-size:13.5px;margin:6px 0}
+.mm strong{font-weight:700}
+.mm .sub{color:var(--text-2)}
+
+/* formula block */
+.fx{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+  background:var(--surface-2);border-left:3px solid var(--s,var(--ink));
+  padding:8px 12px;margin:8px 0;overflow-x:auto;white-space:pre-wrap}
+
+/* tables */
+.mm .twrap{overflow-x:auto;margin:10px 0}
+.mm table{border-collapse:collapse;width:100%;font-size:12.5px}
+.mm th{text-align:left;font-weight:700;border-bottom:1.5px solid var(--ink);
+  padding:6px 10px 6px 0;white-space:nowrap}
+.mm td{border-bottom:1px solid var(--hair);padding:6px 10px 6px 0;vertical-align:top;
+  font-variant-numeric:tabular-nums}
+
+/* flow (rebuilt flowcharts) */
+.flow{margin:10px 0;padding:0;list-style:none;counter-reset:step}
+.flow li{position:relative;font-size:13px;padding:8px 12px;margin:0 0 0 10px;
+  border-left:2px solid var(--s,var(--ink));counter-increment:step}
+.flow li::before{content:counter(step,decimal-leading-zero);position:absolute;left:-24px;top:9px;
+  font-size:10px;font-weight:700;color:var(--s,var(--ink));font-variant-numeric:tabular-nums}
+.flow li+li{margin-top:2px}
+.flow.plain li::before{content:""}
+
+/* exam tip flag */
+.tip{border:1px solid var(--flag);border-left:4px solid var(--flag);
+  padding:8px 12px;margin:10px 0;font-size:13px}
+.tip b{color:var(--flag);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  display:block;margin-bottom:3px}
+
+/* branch label chip (mind-map branch headers inside a slide) */
+.chip{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--s,var(--ink));border:1px solid currentColor;
+  padding:1px 7px;margin:10px 0 2px}
+
+/* section scoping: set --s per topic */
+.s-aa{--s:var(--aa)} .s-pc{--s:var(--pc)} .s-pm{--s:var(--pm)}
+.s-dr{--s:var(--dr)} .s-et{--s:var(--et)} .s-pvm{--s:var(--pvm)}
+
+/* footer */
+.page-footer{margin-top:60px;border-top:2px solid var(--ink);padding-top:14px;
+  font-size:11.5px;color:var(--text-3)}
+
+/* back-to-top */
+.totop{position:fixed;right:14px;bottom:14px;z-index:60;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;background:var(--bg);
+  border:1px solid var(--border-strong);color:var(--text-1);text-decoration:none;font-size:16px}
+
+/* ---------- print ---------- */
+@page{size:A4;margin:15mm 13mm}
+@media print{
+  :root{--bg:#fff;--surface:#fff;--surface-2:#f4f4f4;--text-1:#111;--text-2:#333;
+    --text-3:#666;--hair:rgba(17,17,17,.25);
+    --aa:#234a8c;--pc:#0e7a5f;--pm:#b0611c;--dr:#6b3fa0;--et:#a3253a;--pvm:#0f7a99;--flag:#d6001c}
+  body.webpage{background:#fff;color:#111;font-size:12px}
+  body.webpage .page{max-width:none;padding:0}
+  .topbar,.totop{display:none}
+  .masthead{padding:0 0 18px}
+  section.topic{break-before:page;padding-top:0}
+  .toc{grid-template-columns:1fr 1fr}
+  .toc a,.pill{color:#111}
+  .mm{break-inside:avoid}
+  .reading>h3{break-after:avoid}
+  .section-head{break-after:avoid}
+  a{color:inherit;text-decoration:none}
+  .fx{background:#f4f4f4}
+}
