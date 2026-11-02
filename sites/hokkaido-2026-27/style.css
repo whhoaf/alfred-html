@@ -21,11 +21,11 @@
   --r:22px;
   --r-s:14px;
   --shadow:0 6px 0 #f3e6dd, 0 10px 24px rgba(120,90,80,.08);
-  --f-head:'Zen Maru Gothic','LXGW WenKai TC','Noto Sans TC',sans-serif;
+  --f-head:'Zen Maru Gothic','Huninn','Noto Sans TC',sans-serif;
   --f-body:'Noto Sans TC','Zen Maru Gothic',system-ui,sans-serif;
-  --f-cute:'LXGW WenKai TC','Zen Maru Gothic','Noto Sans TC',serif;
+  --f-cute:'Huninn','Zen Maru Gothic','Noto Sans TC',sans-serif;
 }
-html[lang="zh-Hant"]{--f-head:'LXGW WenKai TC','Noto Sans TC',sans-serif}
+html[lang="zh-Hant"]{--f-head:'Huninn','Noto Sans TC',sans-serif;--f-cute:'Huninn','Noto Sans TC',sans-serif}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -261,3 +261,7 @@ details.src li{margin:4px 0;word-break:break-word}
   .panel{display:block!important}
   .day,.card,.rule,.dec{break-inside:avoid}
 }
+
+/* Huninn ships one weight; avoid synthetic bold on Chinese headings */
+html[lang="zh-Hant"] :is(h1,h2,h3,h4,.kicker,.tab,.jump a,.stat .n,.fl-route,.day .date,.card .price,.rule b,.rule .ic,.dec b,.dec .num,.grp,.areahead,.tl b,.pc h5,.langbar,details.why summary,details.src summary,.steps li::before,.fl-top){font-weight:400}
+html[lang="zh-Hant"] .hero h1{letter-spacing:.06em}
