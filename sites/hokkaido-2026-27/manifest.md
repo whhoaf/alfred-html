@@ -12,7 +12,12 @@ sources:
   - /home/hermes/trips/hokkaido-2026-27/research/04-driving.md
   - /home/hermes/trips/hokkaido-2026-27/research/05-stays.md
   - /home/hermes/trips/hokkaido-2026-27/research/06-car-rental.md
+  - /home/hermes/trips/hokkaido-2026-27/research/09-stays-v3.md
+  - /home/hermes/trips/hokkaido-2026-27/research/10-airbnb-v3.md
+  - /home/hermes/trips/hokkaido-2026-27/research/11-tolls-v3.md
+  - /home/hermes/trips/hokkaido-2026-27/route-v3-brief.md
 wiki_links: []
 created: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-03
+# route v3 (3 Nov 2026): en.html rebuilt by trips/hokkaido-2026-27/scripts/build_en_v3.py; index.html (zh-Hant) still shows route v2 until DeepSeek credit is topped up
 ---
