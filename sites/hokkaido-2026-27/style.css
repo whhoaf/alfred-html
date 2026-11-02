@@ -265,3 +265,13 @@ details.src li{margin:4px 0;word-break:break-word}
 /* Huninn ships one weight; avoid synthetic bold on Chinese headings */
 html[lang="zh-Hant"] :is(h1,h2,h3,h4,.kicker,.tab,.jump a,.stat .n,.fl-route,.day .date,.card .price,.rule b,.rule .ic,.dec b,.dec .num,.grp,.areahead,.tl b,.pc h5,.langbar,details.why summary,details.src summary,.steps li::before,.fl-top){font-weight:400}
 html[lang="zh-Hant"] .hero h1{letter-spacing:.06em}
+
+/* ---------- photo strips + airbnb comparison ---------- */
+.pics{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;margin:2px -4px 10px;padding:0 4px 4px;-webkit-overflow-scrolling:touch}
+.pics img{flex:0 0 78%;max-width:78%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-s);scroll-snap-align:start;background:var(--paper-2)}
+.cards.two .pics img{flex-basis:62%;max-width:62%}
+.pics img:only-child{flex-basis:100%;max-width:100%}
+.vs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.vs span{font-size:13px;font-weight:700;border-radius:999px;padding:3px 12px;background:#e9f2fa;color:var(--sky-2)}
+.vs span:last-child{background:#fde7ec;color:var(--sakura-2)}
+#airbnb details.why{margin-top:14px}
