@@ -275,3 +275,15 @@ html[lang="zh-Hant"] .hero h1{letter-spacing:.06em}
 .vs span{font-size:13px;font-weight:700;border-radius:999px;padding:3px 12px;background:#e9f2fa;color:var(--sky-2)}
 .vs span:last-child{background:#fde7ec;color:var(--sakura-2)}
 #airbnb details.why{margin-top:14px}
+
+/* route v5 additions (en.html only; index.html does not use these classes) */
+.card.booked{border-color:var(--matcha)}
+.card.booked::after{content:"Booked";position:absolute;top:-12px;right:14px;padding:3px 12px;border-radius:999px;background:var(--c-move);color:#fff;font-family:var(--f-head);font-weight:700;font-size:13px;transform:rotate(4deg);box-shadow:0 3px 0 rgba(0,0,0,.08)}
+.leg b{font-family:var(--f-head);color:var(--ink)}
+.leg .go{display:inline-block;margin-left:6px;font-weight:700;font-size:12px;text-decoration:none;background:#e9f2fa;border-radius:999px;padding:0 10px;white-space:nowrap}
+.leg.alt{margin-top:-6px}
+.cancel{margin-top:14px}
+.cancel li b{font-family:var(--f-head)}
+.dec .badge{margin-left:0;margin-right:6px}
+.day .meta a,.day li a{overflow-wrap:anywhere}
+.paid{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--c-move);border-radius:999px;padding:0 9px;margin-left:4px}
